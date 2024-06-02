@@ -105,8 +105,8 @@ VALUES (2, '3YearsOld', 250.00, 15),
 INSERT INTO roles (roleName) 
 VALUES ('Manager'),
 	   ('Photographer'),
-       ('Waiting'),
-       ('Client');
+       ('Client'),
+       ('Waiting');
 
 INSERT INTO statuses (statusName) 
 VALUES ('Sent'),

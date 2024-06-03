@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const controller = require("../controllers/WelcomePageController");
+const controller = require("../controllers/PhotographersController");
 
-router.get("/welcomePage", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
+        console.log("router get")
         const photographers = await controller.getAllPhotographers();
         res.status(200).send(photographers);
     } catch (error) {
@@ -11,3 +12,4 @@ router.get("/welcomePage", async (req, res) => {
         return error;
     }
 },);
+module.exports = router;

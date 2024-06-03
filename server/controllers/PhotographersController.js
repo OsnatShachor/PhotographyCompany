@@ -1,4 +1,4 @@
-const model = require('../models/WelcomePageModel');
+const model = require('../models/PhotographersModel');
 async function getAllPhotographers(){
     try{
         return await model.getAllPhotographers() 

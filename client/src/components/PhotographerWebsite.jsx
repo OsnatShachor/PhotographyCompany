@@ -1,13 +1,22 @@
-import React from "react"
-import {Outlet} from 'react-router-dom'
+import React from "react";
+import { useNavigate } from 'react-router-dom';
 
-function PhotographerWebsite() {
-    return (
-      <> 
-    <h1>PhotographerWebsite</h1>
-      </>
-    )
+function PhotographerWebsite(props) {
+  const navigate = useNavigate();
+  const photographer = props.photographer;
+
+  const handleClick = () => {
+    // נווט לכתובת החדשה
+    navigate(`/photographer/${photographer.photographerID}`, { state: { photographer } });
   }
-  
-  export default PhotographerWebsite
-  
+
+  return (
+    <>
+      <button className="photographerInList" onClick={handleClick}>
+        {photographer.photographerName}
+      </button>
+    </>
+  );
+}
+
+export default PhotographerWebsite;

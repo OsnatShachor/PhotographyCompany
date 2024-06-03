@@ -8,8 +8,10 @@ const port = 3000;
 const cors = require('cors'); 
 app.use(cors());
 
-const WelcomePageRoutes = require("../server/routs/WelcomePageRouts")
-app.use("/welcomePage", WelcomePageRoutes);
-
-
+const PhotographersRouter = require("./routs/PhotographersRouter")
+app.use("/", PhotographersRouter);
+app.listen(port, () => {
+    console.log(`app listening on port ${port}`);
+});
+console.log("typeof PhotographersRouter " + typeof PhotographersRouter);
 

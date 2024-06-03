@@ -4,6 +4,8 @@ use photogaphDB;
 
 DROP TABLE IF EXISTS users;
 
+DROP TABLE IF EXISTS photographers;
+
 DROP TABLE IF EXISTS orders;
 
 DROP TABLE IF EXISTS passwords;
@@ -24,11 +26,26 @@ CREATE TABLE
         email varchar(30) DEFAULT NULL,
         phone varchar(100) DEFAULT NULL,
         passwordID int DEFAULT NULL,
-        roleID int NOT NULL,
+        photographerID int NOT NULL,
+--         roleID int NOT NULL,
         PRIMARY KEY (userID),
         FOREIGN KEY (passwordID) REFERENCES passwords (passwordID),
-        FOREIGN KEY (roleID) REFERENCES roles (roleID)
+        FOREIGN KEY (photographerID) REFERENCES photographers (photographerID)
+--         FOREIGN KEY (roleID) REFERENCES roles (roleID)
     );
+
+CREATE TABLE photographers (
+    photographerID INT(9) AUTO_INCREMENT,
+    photographerName VARCHAR(50) NOT NULL,
+    email VARCHAR(30) DEFAULT NULL,
+    phone VARCHAR(100) DEFAULT NULL,
+    passwordID INT DEFAULT NULL,
+    aboutMe VARCHAR(500) DEFAULT NULL,
+    isActive BOOLEAN NOT NULL,
+    PRIMARY KEY (photographerID),
+    FOREIGN KEY (passwordID)
+        REFERENCES passwords (passwordID)
+);
 
 CREATE TABLE
     orders (
@@ -45,7 +62,7 @@ CREATE TABLE
         payment double DEFAULT NULL,
         PRIMARY KEY (orderID),
         FOREIGN KEY (userID) REFERENCES users (userID),
-        FOREIGN KEY (photographerID) REFERENCES users (userID),
+        FOREIGN KEY (photographerID) REFERENCES photographers (photographerID),
         FOREIGN KEY (categoryID) REFERENCES category (categoryID),
         FOREIGN KEY (statusID) REFERENCES statuses (statusID)
     );
@@ -65,15 +82,15 @@ CREATE TABLE
         payPerHour DOUBLE NOT NULL,
         numOfEditPictures INT DEFAULT NULL,
         PRIMARY KEY (categoryID),
-        FOREIGN KEY (photographerID) REFERENCES users (userID)
+        FOREIGN KEY (photographerID) REFERENCES photographers (photographerID)
     );
 
-CREATE TABLE
-    roles (
-        roleID INT AUTO_INCREMENT,
-        roleName VARCHAR(50) NOT NULL,
-        PRIMARY KEY (roleID)
-    );
+-- CREATE TABLE
+--     roles (
+--         roleID INT AUTO_INCREMENT,
+--         roleName VARCHAR(50) NOT NULL,
+--         PRIMARY KEY (roleID)
+--     );
 
 CREATE TABLE
     statuses (
@@ -89,22 +106,29 @@ CREATE TABLE
         request varchar(100) NOT NULL,
         statusID INT NOT NULL,
         PRIMARY KEY (requestID),
-        FOREIGN KEY (photographerID) REFERENCES users (userID) FOREIGN KEY (statusID) REFERENCES statuses (statusID)
+        FOREIGN KEY (photographerID) REFERENCES photographers (photographerID),
+        FOREIGN KEY (statusID) REFERENCES statuses (statusID)
     );
 
 INSERT INTO
-    users (userName, email, phone, passwordID, roleID)
+    users (userName, email, phone, passwordID, photographerID)
 VALUES
     ( 'Yael','yaelr5754@gmail.com','058-3235754',1,1),
     ('שושי', 'Shosh@gmail.com', '058-3285654', 2, 3),
     ('אסנת שחור','osnaty16@gmail.com','055-6777410', 3, 2 ),
     ('אלישבע', 'Eli@gmail.com', '055-6712410', 4, 3);
+    
+INSERT INTO photographers (photographerName, email, phone, passwordID, aboutMe, isActive)
+VALUES 
+('John Doe', 'john.doe@example.com', '123-456-7890', 1, 'Professional photographer specializing in nature and wildlife photography.', TRUE),
+('Jane Smith', 'jane.smith@example.com', '987-654-3210', 2, 'Experienced wedding photographer with a passion for capturing special moments.', TRUE),
+('Alice Johnson', 'alice.johnson@example.com', '555-123-4567', 3, 'Portrait photographer with a creative touch.', TRUE);
 
 INSERT INTO
     orders ( userID, photographerID, confirmed, statusID, categoryID, photoDate, beginningTime, durationTimePhotography,location, payment )
 VALUES
     (
-        2, 3, TRUE, 1,  1, '2024-06-02', '12:00:00', 2.5, 'גן הוורדים', 650.00
+        2, 2, TRUE, 1,  1, '2024-06-02', '12:00:00', 2.5, 'גן הוורדים', 650.00
     ),
     (
         2, 3, TRUE, 2, 2,'2024-06-03','14:00:00', 3.0, 'מתחם התחנה', 540.00
@@ -129,13 +153,13 @@ VALUES
     (3, 'חתונה', 1000.00, 15),
     (3, 'פרוטריט', 180.00, 10);
 
-INSERT INTO
-    roles (roleName)
-VALUES
-    ('Manager'),
-    ('Photographer'),
-    ('Client'),
-    ('Waiting');
+-- INSERT INTO
+--     roles (roleName)
+-- VALUES
+--     ('Manager'),
+--     ('Photographer'),
+--     ('Client'),
+--     ('Waiting');
 
 INSERT INTO
     statuses (statusName)
@@ -149,6 +173,6 @@ VALUES
 INSERT INTO
     requests (photographerID, request, statusID)
 VALUES
-    ( 3,'I need a photographer for my engagement party on July 15th, 2024.',1),
+    ( 2,'I need a photographer for my engagement party on July 15th, 2024.',1),
     ( 3,'I want to open a website for myself. I have been shooting for 3 years',2),
-    ( 3,'Looking for a portrait photographer for family photoshoot next weekend.' 5);
+    ( 3,'Looking for a portrait photographer for family photoshoot next weekend.', 5);

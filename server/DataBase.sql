@@ -1,39 +1,30 @@
 /* Create the database */ CREATE DATABASE IF NOT EXISTS photogaphDB;
 
 use photogaphDB;
-
-DROP TABLE IF EXISTS users;
-
-DROP TABLE IF EXISTS photographers;
-
 DROP TABLE IF EXISTS orders;
-
-DROP TABLE IF EXISTS passwords;
-
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS category;
-
-DROP TABLE IF EXISTS roles;
-
+DROP TABLE IF EXISTS requests;
+DROP TABLE IF EXISTS photographers;
+DROP TABLE IF EXISTS passwords;
 DROP TABLE IF EXISTS statuses;
 
-DROP TABLE IF EXISTS requests;
 
 /* Create the tables */
 CREATE TABLE
-    users (
-        userID int (9) AUTO_INCREMENT,
-        userName varchar(50) NOT NULL,
-        email varchar(30) DEFAULT NULL,
-        phone varchar(100) DEFAULT NULL,
-        passwordID int DEFAULT NULL,
-        photographerID int NOT NULL,
---         roleID int NOT NULL,
-        PRIMARY KEY (userID),
-        FOREIGN KEY (passwordID) REFERENCES passwords (passwordID),
-        FOREIGN KEY (photographerID) REFERENCES photographers (photographerID)
---         FOREIGN KEY (roleID) REFERENCES roles (roleID)
+    passwords (
+        passwordID INT AUTO_INCREMENT,
+        password VARCHAR(255) NOT NULL,
+        PRIMARY KEY (passwordID)
     );
-
+    
+CREATE TABLE
+    statuses (
+        statusID INT AUTO_INCREMENT,
+        statusName VARCHAR(50) NOT NULL,
+        PRIMARY KEY (statusID)
+    );
+    
 CREATE TABLE photographers (
     photographerID INT(9) AUTO_INCREMENT,
     photographerName VARCHAR(50) NOT NULL,
@@ -48,30 +39,18 @@ CREATE TABLE photographers (
 );
 
 CREATE TABLE
-    orders (
-        orderID INT AUTO_INCREMENT,
-        userID INT NOT NULL,
-        photographerID INT NOT NULL,
-        confirmed BOOLEAN NOT NULL,
-        statusID INT NOT NULL,
-        categoryID INT NOT NULL,
-        photoDate DATE NOT NULL,
-        beginningTime TIME NOT NULL,
-        durationTimePhotography double DEFAULT NULL,
-        location VARCHAR(80) DEFAULT NULL,
-        payment double DEFAULT NULL,
-        PRIMARY KEY (orderID),
-        FOREIGN KEY (userID) REFERENCES users (userID),
-        FOREIGN KEY (photographerID) REFERENCES photographers (photographerID),
-        FOREIGN KEY (categoryID) REFERENCES category (categoryID),
-        FOREIGN KEY (statusID) REFERENCES statuses (statusID)
-    );
-
-CREATE TABLE
-    passwords (
-        passwordID INT AUTO_INCREMENT,
-        password VARCHAR(255) NOT NULL,
-        PRIMARY KEY (passwordID)
+    users (
+        userID int (9) AUTO_INCREMENT,
+        userName varchar(50) NOT NULL,
+        email varchar(30) DEFAULT NULL,
+        phone varchar(100) DEFAULT NULL,
+        passwordID int DEFAULT NULL,
+        photographerID int NOT NULL,
+--         roleID int NOT NULL,
+        PRIMARY KEY (userID),
+        FOREIGN KEY (passwordID) REFERENCES passwords (passwordID),
+        FOREIGN KEY (photographerID) REFERENCES photographers (photographerID)
+--         FOREIGN KEY (roleID) REFERENCES roles (roleID)
     );
 
 CREATE TABLE
@@ -92,12 +71,6 @@ CREATE TABLE
 --         PRIMARY KEY (roleID)
 --     );
 
-CREATE TABLE
-    statuses (
-        statusID INT AUTO_INCREMENT,
-        statusName VARCHAR(50) NOT NULL,
-        PRIMARY KEY (statusID)
-    );
 
 CREATE TABLE
     requests (
@@ -109,30 +82,35 @@ CREATE TABLE
         FOREIGN KEY (photographerID) REFERENCES photographers (photographerID),
         FOREIGN KEY (statusID) REFERENCES statuses (statusID)
     );
-
-INSERT INTO
-    users (userName, email, phone, passwordID, photographerID)
-VALUES
-    ( 'Yael','yaelr5754@gmail.com','058-3235754',1,1),
-    ('שושי', 'Shosh@gmail.com', '058-3285654', 2, 3),
-    ('אסנת שחור','osnaty16@gmail.com','055-6777410', 3, 2 ),
-    ('אלישבע', 'Eli@gmail.com', '055-6712410', 4, 3);
     
-INSERT INTO photographers (photographerName, email, phone, passwordID, aboutMe, isActive)
-VALUES 
-('John Doe', 'john.doe@example.com', '123-456-7890', 1, 'Professional photographer specializing in nature and wildlife photography.', TRUE),
-('Jane Smith', 'jane.smith@example.com', '987-654-3210', 2, 'Experienced wedding photographer with a passion for capturing special moments.', TRUE),
-('Alice Johnson', 'alice.johnson@example.com', '555-123-4567', 3, 'Portrait photographer with a creative touch.', TRUE);
+    CREATE TABLE
+    orders (
+        orderID INT AUTO_INCREMENT,
+        userID INT NOT NULL,
+        photographerID INT NOT NULL,
+        confirmed BOOLEAN NOT NULL,
+        statusID INT NOT NULL,
+        categoryID INT NOT NULL,
+        photoDate DATE NOT NULL,
+        beginningTime TIME NOT NULL,
+        durationTimePhotography double DEFAULT NULL,
+        location VARCHAR(80) DEFAULT NULL,
+        payment double DEFAULT NULL,
+        PRIMARY KEY (orderID),
+        FOREIGN KEY (userID) REFERENCES users (userID),
+        FOREIGN KEY (photographerID) REFERENCES photographers (photographerID),
+        FOREIGN KEY (categoryID) REFERENCES category (categoryID),
+        FOREIGN KEY (statusID) REFERENCES statuses (statusID)
+    );
 
 INSERT INTO
-    orders ( userID, photographerID, confirmed, statusID, categoryID, photoDate, beginningTime, durationTimePhotography,location, payment )
+    statuses (statusName)
 VALUES
-    (
-        2, 2, TRUE, 1,  1, '2024-06-02', '12:00:00', 2.5, 'גן הוורדים', 650.00
-    ),
-    (
-        2, 3, TRUE, 2, 2,'2024-06-03','14:00:00', 3.0, 'מתחם התחנה', 540.00
-    );
+    ('Sent'),
+    ('Confirmed'),
+    ('SentForChange '),
+    ('Updated '),
+    ('Cancelled');
 
 INSERT INTO
     passwords (password)
@@ -141,7 +119,21 @@ VALUES
     ('pasrd1234'),
     ('password123'),
     ('pass456');
+    
+INSERT INTO photographers (photographerName, email, phone, passwordID, aboutMe, isActive)
+VALUES 
+('John Doe', 'osnaty16@gmail.com', '123-456-7890', 1, 'Professional photographer specializing in nature and wildlife photography.', TRUE),
+('Jane Smith', 'jane.smith@example.com', '987-654-3210', 2, 'Experienced wedding photographer with a passion for capturing special moments.', TRUE),
+('Alice Johnson', 'alice.johnson@example.com', '555-123-4567', 3, 'Portrait photographer with a creative touch.', TRUE);
 
+INSERT INTO
+    users (userName, email, phone, passwordID, photographerID)
+VALUES
+    ('Yael','yaelr5754@gmail.com','058-3235754',1,1),
+    ('Shosh', 'Shosh@gmail.com', '058-3285654', 2, 3),
+    ('Osnat','osnaty999@gmail.com','055-6777410', 3, 2 ),
+    ('Eli', 'Eli@gmail.com', '055-6712410', 4, 3);
+    
 INSERT INTO
     category (photographerID, categoryName, payPerHour, numOfEditPictures )
 VALUES
@@ -153,6 +145,20 @@ VALUES
     (3, 'חתונה', 1000.00, 15),
     (3, 'פרוטריט', 180.00, 10);
 
+INSERT INTO
+    orders ( userID, photographerID, confirmed, statusID, categoryID, photoDate, beginningTime, durationTimePhotography,location, payment )
+VALUES
+    (
+       1, 2, TRUE, 1,  1, '2024-06-02', '12:00:00', 2.5, 'גן הוורדים', 650.00
+    ),
+    (
+        3, 3, TRUE, 2, 2,'2024-06-03','14:00:00', 3.0, 'מתחם התחנה', 540.00
+    );
+
+
+
+
+
 -- INSERT INTO
 --     roles (roleName)
 -- VALUES
@@ -161,14 +167,7 @@ VALUES
 --     ('Client'),
 --     ('Waiting');
 
-INSERT INTO
-    statuses (statusName)
-VALUES
-    ('Sent'),
-    ('Confirmed'),
-    ('SentForChange '),
-    ('Updated '),
-    ('Cancelled');
+
 
 INSERT INTO
     requests (photographerID, request, statusID)

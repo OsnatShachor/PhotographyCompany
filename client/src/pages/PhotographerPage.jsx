@@ -13,7 +13,7 @@ function PhotographerPage() {
 
   return (
     <div>
-      <h1>{photographer.photographerName}</h1>
+      <h1>{photographer.userName}</h1>
       <p>Photographer ID: {id}</p>
       {/* תוסיף כאן פרטים נוספים על הצלם */}
       <button onClick={handleBackClick}>חזרה לעמוד הבית</button>

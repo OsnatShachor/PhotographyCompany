@@ -5,22 +5,21 @@ import LogIn from "./pages/LogIn";
 import PhotographerPage from "./pages/PhotographerPage";
 import SignUp from "./pages/SignUp";
 import './App.css';
-
-export const AppContext = createContext();
+export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = useState({});
 
   return (
     <BrowserRouter>
-      <AppContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, setUser }}>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/logIn" element={<LogIn />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/photographer/:id" element={<PhotographerPage />} />
         </Routes>
-      </AppContext.Provider>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }

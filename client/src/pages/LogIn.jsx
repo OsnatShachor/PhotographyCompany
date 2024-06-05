@@ -1,17 +1,53 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppContext } from "../App.jsx";
+import { UserContext } from '../App';
 import '../CSS/Registation.css';
 
 function LogIn() {
   const navigate = useNavigate();
-  const { setUser } = useContext(AppContext);
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const context = useContext(UserContext);
+  const { user,setUser } = context;
+  const [formData, setFormData] = useState({})
+  function handleChange(event) {
+    const { name, value } = event.target
+    setFormData(() => {
+      return {
+        ...formData,
+        [name]: value
+      }
+    })
+  }
+  const handleLogInButton = () => {
+ 
+    const request = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username: formData.email, password: formData.password })
+    }
+    fetch(`http://localhost:3000/users/logIn`, request)
+      .then(res => {
+        if (res.status==400) {
+          alert("The user does not exist")
+          navigate("/SignUp")
+        }
+         else 
+        return res.json()
+      })
+      .then(data => {
+        if (data) {
+          setUser(data)
+          navigate("/")
+        }
+      })
+      .catch(error => console.error("Error fetching data from server:", error))
+
+   }
 
   // const handleLogInButton = () => {
 
-  //   setUser({ userName });
+  //   setUser({ userEmail });
   //   navigate('/logIn');
   // };
   const handleHomeClick = () => {
@@ -35,16 +71,16 @@ function LogIn() {
           <h1>Welcome Back!</h1>
           <div className="User-fill">
             <input
-              className="input" id="userName" onChange={(e) => setUserName(e.target.value)} value={userName} type="text" placeholder="UserName" required
+              className="input" id="userEmail" onChange={handleChange}  type="text" placeholder="userEmail" name="email" required
             />
           </div>
           <div className="User-fill">
             <input
-              className="input" onChange={(e) => setPassword(e.target.value)} value={password} id="userPassword" type="password" placeholder="Password" required
+              className="input" onChange={handleChange} id="userPassword" type="password" placeholder="Password"name="password"  required
             />
           </div>
           <button
-            type="button" id="button-save"> LOG-IN</button>
+            type="button" id="button-save" onClick={handleLogInButton}>LOG-IN</button>
         </div>
       </form>
     </div>

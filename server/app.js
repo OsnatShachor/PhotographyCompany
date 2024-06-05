@@ -9,9 +9,12 @@ const cors = require('cors');
 app.use(cors());
 
 const PhotographersRouter = require("./routs/PhotographersRouter")
+const UsersRouter = require("./routs/UsersRouter")
 app.use("/", PhotographersRouter);
+app.use("/users", UsersRouter);
+
 app.listen(port, () => {
     console.log(`app listening on port ${port}`);
 });
-console.log("typeof PhotographersRouter " + typeof PhotographersRouter);
+
 

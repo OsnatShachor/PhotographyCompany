@@ -1,4 +1,5 @@
 const model = require('../models/PhotographersModel');
+
 async function getAllPhotographers(){
     try{
         return await model.getAllPhotographers() 
@@ -6,4 +7,6 @@ async function getAllPhotographers(){
         throw err;
     }
 }
+
+
 module.exports = {getAllPhotographers}

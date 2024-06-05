@@ -7,13 +7,13 @@ function PhotographerWebsite(props) {
 
   const handleClick = () => {
     // נווט לכתובת החדשה
-    navigate(`/photographer/${photographer.photographerID}`, { state: { photographer } });
+    navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
   }
 
   return (
     <>
       <button className="photographerInList" onClick={handleClick}>
-        {photographer.photographerName}
+        {photographer.userName}
       </button>
     </>
   );

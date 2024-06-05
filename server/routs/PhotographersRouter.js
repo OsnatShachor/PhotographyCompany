@@ -9,7 +9,10 @@ router.get("/", async (req, res) => {
         res.status(200).send(photographers);
     } catch (error) {
         res.status(500).send({ error: "Failed to fetch Photographers" });
-        return error;
+        throw error;
     }
-},);
+},
+);
+
+
 module.exports = router;

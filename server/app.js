@@ -10,6 +10,7 @@ app.use(cors());
 
 const PhotographersRouter = require("./routs/PhotographersRouter")
 const UsersRouter = require("./routs/UsersRouter")
+console.log("ffff")
 app.use("/", PhotographersRouter);
 app.use("/users", UsersRouter);
 

@@ -3,6 +3,7 @@ async function getUserByEmail(email) {
     try {
       const sql = 'SELECT * from users WHERE users.email=?';
       const [rows, fields] = await pool.query(sql, [email]);
+      console.log(`model=> ${rows}`)
       return rows;
     } catch (err) {
       throw(err);

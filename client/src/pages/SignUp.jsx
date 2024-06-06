@@ -18,9 +18,8 @@ function SignUp() {
             [name]: value
         }));
     }
-
-    function checkUser(e) {
-        e.preventDefault();
+    
+    const checkUser=()=> {
         if (formData.password == formData.verifyPassword) {
             alert('Passwords do not match.');
         }
@@ -42,7 +41,7 @@ function SignUp() {
 
             fetch('http://localhost:3000/users/signUp',request )
                 .then(response => {
-                    console.log("response "+response);
+                    console.log(response);
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
@@ -88,7 +87,7 @@ function SignUp() {
                         <input type="password" className="input" name="verify-password" placeholder="Verify-Password" onChange={handleChange} required></input>
                     </div>
 
-                    <button id="button-save" onClick={(e) => checkUser(e)}>GET STARTED</button>
+                    <button id="button-save" onClick={() => checkUser()}>GET STARTED</button>
                 </div>
 
             </form>

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/PhotographersController");
 
+
 router.get("/", async (req, res) => {
     try {
         console.log("router get")

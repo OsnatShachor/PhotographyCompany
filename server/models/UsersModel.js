@@ -15,10 +15,10 @@ async function createUser(userName,email,phone,roleID, cryptedPassword) {
       const sql = `INSERT INTO users (userName,email,phone,roleID) values(?,?,?,?)`;
       const [resultUser] = await pool.query(sql, [userName,email,phone,roleID]);
       const userId = resultUser.insertId;
-      console.log(userId)
+      console.log("userModel userId "+userId)
       const sqlPassword = `INSERT INTO passwords (userID, password) values(?, ?)`;
       const [result] = await pool.query(sqlPassword, [userId, cryptedPassword]);
-      return userId;
+      return {userId, userName, email, phone, roleID};
     }
     catch (err) {
       throw(err);

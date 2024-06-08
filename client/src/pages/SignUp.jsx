@@ -6,55 +6,56 @@ import '../CSS/Registation.css';
 function SignUp() {
     const context = useContext(UserContext);
     const { user, setUser } = context;
-    const [formData, setFormData] = useState({});
+    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
+    const [verifyPassword, setVerifyPassword] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
     const roleID = location.state?.roleID;
 
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [name]: value
-        }));
-    }
-    
-    const checkUser=()=> {
-        if (formData.password == formData.verifyPassword) {
+    const handleRegisterButton = (e) => {
+        e.preventDefault(); // חשוב למנוע את הברירת המחדל של הטופס
+        if (!userName || !email || !phone || !password || !verifyPassword) {
+            alert('Please fill in all fields.');
+            return;
+        }
+        if (password !== verifyPassword) {
             alert('Passwords do not match.');
+            return;
         }
-        else {
-            const request = {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    userName: formData.userName,
-                    email: formData.email,
-                    phone: formData.phone,
-                    roleID: roleID,
-                    password: formData.password
-                })
-            };
+        
+        const request = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userName: userName,
+                email: email,
+                phone: phone,
+                roleID: roleID,
+                password: password
+            })
+        };
 
-
-            fetch('http://localhost:3000/users/signUp',request )
-                .then(response => {
-                    console.log(response);
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    setUser(data);
-                    navigate('/Request');
-                })
-                .catch(error => {
-                    console.error('Error making POST request:', error);
-                });
-        }
+        fetch('http://localhost:3000/users/signUp', request)
+            .then(response => {
+             //   console.log("response " + response);
+                // if (!response.ok) {
+                //     throw new Error('Network response was not ok');
+                // }
+                return response.json();
+            })
+            .then(data => {
+                console.log("data sata");
+                setUser(data); 
+                navigate('/Request');
+            })
+            .catch(error => {
+                alert('Error making POST request:', error);
+            });
     }
 
     const handleHomeClick = () => {
@@ -77,22 +78,20 @@ function SignUp() {
                 </ul>
                 <div className="content" id="signUpForm">
                     <h1>Sign-Up</h1>
-                    <input type="text" className="input" name="userName" placeholder="User Name" onChange={handleChange}></input>
-                    <input type="text" className="input" name="email" placeholder="Email" onChange={handleChange}></input>
-                    <input type="text" className="input" name="phone" placeholder="Phone Number" onChange={handleChange}></input>
+                    <input type="text" className="input" name="userName" placeholder="User Name" onChange={(e) => setUserName(e.target.value)} value={userName} />
+                    <input type="text" className="input" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                    <input type="text" className="input" name="phone" placeholder="Phone Number" onChange={(e) => setPhone(e.target.value)} value={phone} />
 
                     <div className="password">
-                        <input type="password" className="input" name="password" placeholder="Set A Password" onChange={handleChange} required></input>
-
-                        <input type="password" className="input" name="verify-password" placeholder="Verify-Password" onChange={handleChange} required></input>
+                        <input type="password" className="input" name="password" placeholder="Set A Password" onChange={(e) => setPassword(e.target.value)} value={password} required />
+                        <input type="password" className="input" name="verify-password" placeholder="Verify-Password" onChange={(e) => setVerifyPassword(e.target.value)} value={verifyPassword} required />
                     </div>
 
-                    <button id="button-save" onClick={() => checkUser()}>GET STARTED</button>
+                    <button id="button-save" onClick={handleRegisterButton}>GET STARTED</button>
                 </div>
-
             </form>
         </div>
     )
-
 }
-export default SignUp
+
+export default SignUp;

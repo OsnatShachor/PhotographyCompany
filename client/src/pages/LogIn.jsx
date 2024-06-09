@@ -55,7 +55,7 @@ function LogIn() {
   };
   return (
     <div>
-      <div className="Sign-up-buttons">
+      <div className="onTopBtn">
         <button onClick={handleHomeClick}>Home page</button>
       </div>
       <form id="form">

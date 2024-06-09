@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+body, html {
+  min-width: 100%;
+  background-color: #ffefe9;
+  height: 100%;
+  font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.request-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #EDF6F9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.top-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* .onTopBtn {
+  background-color: #006D77;
+  color: #EDF6F9;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+} */
+
+/* .onTopBtn:hover {
+  background-color: #004C5C;
+} */
+
+/* #form {
+  padding: 40px;
+  margin-top: 60px;
+  background: rgba(252, 248, 246, 0.3);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(19, 35, 47, 0.6);
+} */
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #006D77;
+  margin-bottom: 10px;
+}
+
+input, textarea {
+  padding: 10px;
+  border: 1px solid #83C5BE;
+  border-radius: 4px;
+  font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.submitBtn {
+  background-color: #83C5BE;
+  color: #EDF6F9;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.submitBtn:hover {
+  background-color: #006D77;
+}
+
+h1 {
+  color: #006D77;
+  text-align: center;
+}
+h3{
+    color: #E29578;
+    text-align: center;
+    margin-top: 0px;
+}
+p {
+  color: #83C5BE;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .request-container {
+    padding: 15px;
+  }
+
+  .onTopBtn {
+    font-size: 0.9em;
+    margin: 5px;
+  }
+
+  input, textarea, .submitBtn {
+    font-size: 0.9em;
+  }
+}

@@ -33,7 +33,7 @@ function WelcomePage() {
 
   return (
     <div id="welcomePage">
-      <div className="Sign-up-buttons">
+      <div className="onTopBtn">
         <button onClick={() => handleSidnUpClick(2)}>SignUp</button>
         <button onClick={handleLogInClick}>LogIn</button>
       </div>

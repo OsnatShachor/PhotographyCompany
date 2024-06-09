@@ -23,8 +23,7 @@ function Request() {
           <button onClick={handleBackClick}>Home page</button>
         </div>
         <h1>Sent Request</h1>
-        <h3>{user.userNamr}</h3>
-        <h3>{user.email}</h3>
+        <h3>{user.userName} {user.email} {user.phone}</h3>
         {/* תוסיף כאן פרטים נוספים על הצלם */}
       </form>
     </div>

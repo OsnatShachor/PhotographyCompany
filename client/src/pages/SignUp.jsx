@@ -42,10 +42,11 @@ function SignUp() {
 
         fetch('http://localhost:3000/users/signUp', request)
             .then(response => {
-             //   console.log("response " + response);
-                // if (!response.ok) {
-                //     throw new Error('Network response was not ok');
-                // }
+              console.log("response " + response);
+                if (response.status==400) {
+                 alert(JSON.stringify(response.error))
+                 navigate("/logIn");
+               }
                 return response.json();
             })
             .then(data => {

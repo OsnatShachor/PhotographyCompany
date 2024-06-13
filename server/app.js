@@ -10,9 +10,12 @@ app.use(cors());
 
 const PhotographersRouter = require("./routs/PhotographersRouter")
 const UsersRouter = require("./routs/UsersRouter")
+const ManagerRouter = require("./routs/ManagerRouter")
+
 console.log("ffff")
 app.use("/", PhotographersRouter);
 app.use("/users", UsersRouter);
+app.use("/requests", ManagerRouter);
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`);

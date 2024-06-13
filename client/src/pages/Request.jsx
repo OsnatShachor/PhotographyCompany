@@ -60,8 +60,8 @@ function Request() {
         </div>
         <h1>Sent Request</h1>
         <h3>{user.userName}, {user.email}, {user.phone}</h3>
-        <input type="text" className="input"  placeholder="Your Request" onChange={(e) => setFillRequest(e.target.value)} value={fillRequest} />
-        <button id="button-send" onClick={handleRequestButton}>SEND YOUR REQUEST</button>
+        <textarea type="text" className="input" id="inputRequest" placeholder="Your Request" onChange={(e) => setFillRequest(e.target.value)} value={fillRequest} />
+        <button id="button-save" onClick={handleRequestButton}>SEND YOUR REQUEST</button>
 
       </form>
     </div>

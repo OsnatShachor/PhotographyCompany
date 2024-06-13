@@ -62,7 +62,9 @@ label {
   color: #006D77;
   margin-bottom: 10px;
 }
-
+#inputRequest{
+  height: 100px;
+}
 input, textarea {
   padding: 10px;
   border: 1px solid #83C5BE;

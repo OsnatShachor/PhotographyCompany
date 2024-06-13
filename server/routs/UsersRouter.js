@@ -46,7 +46,7 @@ router.post("/logIn", async (req, res) => {
 
             if (passwordRecord && passwordRecord.length > 0 && password === passwordRecord[0].password) {
                 console.log("Password matches");
-                res.status(200).json(user);
+                res.status(200).json(user[0]); // מחזיר את כל פרטי המשתמש
             } else {
                 console.error("Incorrect password");
                 res.status(400).json({ error: "Incorrect password" });

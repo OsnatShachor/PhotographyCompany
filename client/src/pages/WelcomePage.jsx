@@ -2,10 +2,14 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import PhotographerWebsite from "../components/PhotographerWebsite";
 import '../CSS/WelcomePage.css';
+import { UserContext } from '../App';
 
 function WelcomePage() {
   const navigate = useNavigate();
+  const context = useContext(UserContext);
+  const { user, setUser } = context;
   const [photographersArray, setPhotographersArray] = useState([]);
+  const roleID = 2;
 
   const getAllPhotographers = async () => {
     const data = await fetch(`http://localhost:3000`);
@@ -18,7 +22,6 @@ function WelcomePage() {
   }, []);
 
   const handleSidnUpClick = () => {
-    const roleID = 2;
     navigate('/SignUp', { state: { roleID } });
   };
 
@@ -27,7 +30,12 @@ function WelcomePage() {
   };
 
   const handleJoinClick = () => {
-    navigate('/Request');
+    if(user.userID){//אם מחובר משתמש
+      navigate('/Request');
+    }
+    else{
+      navigate('/SignUp', { state: { roleID } });
+    }
   };
 
   return (

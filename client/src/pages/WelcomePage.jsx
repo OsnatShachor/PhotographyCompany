@@ -14,7 +14,6 @@ function WelcomePage() {
   };
 
   useEffect(() => {
-    console.log("useEffect");
     getAllPhotographers();
   }, []);
 

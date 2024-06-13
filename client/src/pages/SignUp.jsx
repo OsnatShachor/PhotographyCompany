@@ -41,22 +41,29 @@ function SignUp() {
         };
 
         fetch('http://localhost:3000/users/signUp', request)
-            .then(response => {
-              console.log("response " + response);
-                if (response.status==400) {
-                 alert(JSON.stringify(response.error))
-                 navigate("/logIn");
-               }
-                return response.json();
-            })
-            .then(data => {
-                console.log("data sata");
-                setUser(data); 
-                navigate('/Request');
-            })
-            .catch(error => {
-                alert('Error making POST request:', error);
-            });
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(error => {
+                    throw new Error(JSON.stringify(error));
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("data sata");
+            setUser(data); 
+            navigate('/Request');
+        })
+        .catch(error => {
+            const errorObj = JSON.parse(error.message);
+            if (errorObj.error) {
+                alert(errorObj.error);
+                navigate("/logIn");
+            } else {
+                alert('Error making POST request: ' + error.message);
+            }
+        });
+    
     }
 
     const handleHomeClick = () => {

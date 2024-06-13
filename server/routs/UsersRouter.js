@@ -18,7 +18,7 @@ router.post("/signUp", async (req, res) => {
             res.json(returnedUser);
         } else {
             console.log("User already exists");
-            res.status(400).send({error:"The user already exists"});
+            res.status(400).send({ error: "The user already exists" });
         }
     } catch (err) {
         console.error('Error during signUp:', err);
@@ -26,18 +26,40 @@ router.post("/signUp", async (req, res) => {
     }
 });
 
+// const passwordMatch = await bcrypt.compare(body.password, user[0].password);
 router.post("/logIn", async (req, res) => {
     try {
-        const body = req.body;
-        const user = await controller.CheckIfExist(body.email);
-        if (user && user.length > 0) { // בדיקה נוספת כדי לוודא שהמשתמש נמצא
-            res.status(200).send(user);
+        const { email, password } = req.body;
+        if (!email || !password) {
+            console.error("Missing email or password");
+            return res.status(400).json({ error: "Email and password are required" });
+        }
+
+        console.log("Received login request for email:", email);
+        const user = await controller.CheckIfExist(email);
+        if (user && user.length > 0) {
+            const userId = user[0].userID;
+            console.log("User found with ID:", userId);
+
+            const passwordRecord = await controller.getPasswordByUserId(userId);
+            console.log("Password record:", passwordRecord);
+
+            if (passwordRecord && passwordRecord.length > 0 && password === passwordRecord[0].password) {
+                console.log("Password matches");
+                res.status(200).json(user);
+            } else {
+                console.error("Incorrect password");
+                res.status(400).json({ error: "Incorrect password" });
+            }
         } else {
-            res.sendStatus(400); // שימוש נכון ב-sendStatus להחזרת השגיאה
+            console.error("User does not exist");
+            res.status(400).json({ error: "User does not exist" });
         }
     } catch (err) {
-        res.status(500).send(err); // שימוש נכון ב-send להחזרת השגיאה
+        console.error("Error during login:", err);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
 
 module.exports = router;

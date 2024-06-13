@@ -21,5 +21,15 @@ async function createUser(userName, email, phone, roleID, password) {
         throw err;
     }
 }
+async function getPasswordByUserId(userID) {
+    try {
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const password = await model.getPasswordByUserId(userID);
+        console.log("getPasswordByUserId Controller "+password);
+        return password;
+    } catch (err) {
+        throw err;
+    }
+}
 
-module.exports = { createUser, CheckIfExist }
+module.exports = { createUser, CheckIfExist,getPasswordByUserId }

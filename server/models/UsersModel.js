@@ -9,7 +9,15 @@ async function getUserByEmail(email) {
       throw(err);
     }
   }
-
+  async function getPasswordByUserId(userId) {
+    try {
+        const sql = 'SELECT password FROM passwords WHERE userID = ?';
+        const [rows] = await pool.query(sql, [userId]);
+        return rows;
+    } catch (err) {
+        throw err;
+    }
+}
 async function createUser(userName,email,phone,roleID, cryptedPassword) {
     try {
       const sql = `INSERT INTO users (userName,email,phone,roleID) values(?,?,?,?)`;
@@ -25,4 +33,4 @@ async function createUser(userName,email,phone,roleID, cryptedPassword) {
     }
   }
 
-module.exports = { createUser,getUserByEmail }  
+module.exports = { createUser,getUserByEmail,getPasswordByUserId }  

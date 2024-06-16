@@ -22,7 +22,7 @@ function PriceList() {
   const handleBackClick = () => {
     navigate('/');
   };
-
+//לא מוצג
   return (
     <div>
       <h1>My Price List</h1>

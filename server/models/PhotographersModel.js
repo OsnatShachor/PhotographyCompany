@@ -21,7 +21,7 @@ async function getCategory(photographerId) {
   WHERE photographerId = ?
 `;
     const [rows] = await pool.query(sql, [photographerId]);
-    console.log("model-category=>" + JSON.stringify(rows))
+    // console.log("model-category=>" + JSON.stringify(rows))
     return rows;
   } catch (err) {
     return (err);
@@ -36,7 +36,7 @@ async function getInformation(photographerId) {
   WHERE photographerId = ?
 `;
     const [rows] = await pool.query(sql, [photographerId]);
-    console.log("model=>" + JSON.stringify(rows))
+    console.log("model=>info" + JSON.stringify(rows))
     return rows;
   } catch (err) {
     return (err);

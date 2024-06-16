@@ -13,6 +13,7 @@ const UsersRouter = require("./routs/UsersRouter")
 const ManagerRouter = require("./routs/ManagerRouter")
 
 console.log("ffff")
+app.use("/aboutMe", PhotographersRouter);
 app.use("/category", PhotographersRouter);
 app.use("/", PhotographersRouter);
 app.use("/users", UsersRouter);

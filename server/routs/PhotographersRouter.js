@@ -12,6 +12,16 @@ router.get("/", async (req, res) => {
         throw error;
     }
 },);
+router.get("/:photographerId",async (req, res) => {
+    try {
+        const photographerId = req.params.photographerId;
+        const information = await controller.getInformation(photographerId);
+        res.status(200).send(information);
+    } catch (error) {
+        res.status(500).send({ error: "Failed to fetch price list" });
+        throw error;
+    }
+},);
 router.get("/:id",async (req, res) => {
     try {
         const id = req.params.id;
@@ -24,15 +34,6 @@ router.get("/:id",async (req, res) => {
     }
 },);
 
-router.get("/aboutMe",async (req, res) => {
-    try {
-        const information = await controller.getInformation(photographerId);
-        res.status(200).send(information);
-    } catch (error) {
-        res.status(500).send({ error: "Failed to fetch price list" });
-        throw error;
-    }
-},);
 
 
 module.exports = router;

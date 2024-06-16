@@ -5,15 +5,34 @@ const controller = require("../controllers/PhotographersController");
 
 router.get("/", async (req, res) => {
     try {
-        console.log("router get")
         const photographers = await controller.getAllPhotographers();
         res.status(200).send(photographers);
     } catch (error) {
         res.status(500).send({ error: "Failed to fetch Photographers" });
         throw error;
     }
-},
-);
+},);
+router.get("/:id",async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log("router get")
+        const category = await controller.getCategory(id);
+        res.status(200).send(category);
+    } catch (error) {
+        res.status(500).send({ error: "Failed to fetch price list" });
+        throw error;
+    }
+},);
+
+router.get("/aboutMe",async (req, res) => {
+    try {
+        const information = await controller.getInformation(photographerId);
+        res.status(200).send(information);
+    } catch (error) {
+        res.status(500).send({ error: "Failed to fetch price list" });
+        throw error;
+    }
+},);
 
 
 module.exports = router;

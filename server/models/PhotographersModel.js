@@ -7,12 +7,40 @@ async function getAllPhotographers() {
       JOIN photographers p ON u.userID = p.photographerID
       WHERE p.isActive = TRUE
   `;
-    const [rows, fields] = await pool.query(sql);
-    console.log("model=>" + JSON.stringify(rows))
+    const [rows] = await pool.query(sql);
     return rows;
   } catch (err) {
-    return(err);
+    return (err);
+  }
+}
+async function getCategory(photographerId) {
+  try {
+    const sql = `
+  SELECT  categoryName,  payPerHour, numOfEditPictures
+  FROM category
+  WHERE photographerId = ?
+`;
+    const [rows] = await pool.query(sql, [photographerId]);
+    console.log("model-category=>" + JSON.stringify(rows))
+    return rows;
+  } catch (err) {
+    return (err);
   }
 }
 
-module.exports = { getAllPhotographers }  
+async function getInformation(photographerId) {
+  try {
+    const sql = `
+  SELECT aboutME
+  FROM photographers
+  WHERE photographerId = ?
+`;
+    const [rows] = await pool.query(sql, [photographerId]);
+    console.log("model=>" + JSON.stringify(rows))
+    return rows;
+  } catch (err) {
+    return (err);
+  }
+}
+
+module.exports = { getAllPhotographers, getInformation,getCategory }  

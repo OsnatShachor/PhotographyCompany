@@ -10,7 +10,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.btnPhotographer{
+background-color: antiquewhite;
+color: black;
 
+}
 /* a {
   font-weight: 500;
   color: #646cff;

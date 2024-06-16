@@ -30,10 +30,10 @@ function WelcomePage() {
   };
 
   const handleJoinClick = () => {
-    if(user.userID){//אם מחובר משתמש
+    if (user.userID) {//אם מחובר משתמש
       navigate('/Request');
     }
-    else{
+    else {
       navigate('/SignUp', { state: { roleID } });
     }
   };

@@ -1,5 +1,6 @@
 import {useState,React,useEffect} from "react";
 import { useParams, useLocation, useNavigate} from 'react-router-dom';
+import SinglePriceList from "../components/SinglePriceList";
 
 function PriceList() {
     const { id } = useParams();
@@ -26,10 +27,7 @@ function PriceList() {
   return (
     <div>
       <h1>My Price List</h1>
-    <div> {category.map((category, index)=>{<h2>{category.categoryName}</h2>})}</div>
-    {/* {photographersArray.map((photographer, index) => (
-          <PhotographerWebsite key={index} photographer={photographer} />
-        ))} */}
+    <div> {category.map((category, index)=>(<SinglePriceList key={index} category={category}/>))}</div>
       <button onClick={handleBackClick}>Back</button>
     </div>
   );

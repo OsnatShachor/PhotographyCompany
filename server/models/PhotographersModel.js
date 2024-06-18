@@ -16,12 +16,12 @@ async function getAllPhotographers() {
 async function getCategory(photographerId) {
   try {
     const sql = `
-  SELECT  categoryName,  payPerHour, numOfEditPictures
+  SELECT *
   FROM category
   WHERE photographerId = ?
 `;
     const [rows] = await pool.query(sql, [photographerId]);
-    // console.log("model-category=>" + JSON.stringify(rows))
+     console.log("model-category=>" + JSON.stringify(rows))
     return rows;
   } catch (err) {
     return (err);
@@ -31,12 +31,12 @@ async function getCategory(photographerId) {
 async function getInformation(photographerId) {
   try {
     const sql = `
-  SELECT aboutME
+  SELECT aboutMe
   FROM photographers
   WHERE photographerId = ?
 `;
     const [rows] = await pool.query(sql, [photographerId]);
-    console.log("model=>info" + JSON.stringify(rows))
+    console.log("model=>getInformation" + JSON.stringify(rows))
     return rows;
   } catch (err) {
     return (err);

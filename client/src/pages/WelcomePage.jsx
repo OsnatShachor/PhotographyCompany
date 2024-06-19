@@ -9,7 +9,7 @@ function WelcomePage() {
   const context = useContext(UserContext);
   const { user, setUser } = context;
   const [photographersArray, setPhotographersArray] = useState([]);
-  const roleID = 2;
+  const roleID = 4;
 
   const getAllPhotographers = async () => {
     const data = await fetch(`http://localhost:3000`);

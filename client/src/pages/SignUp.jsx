@@ -74,10 +74,11 @@ function SignUp() {
                     setUser(data);
                     navigate('/Request');
                 }
-                else
+                else {
                     setUser(data);
-                alert("You have successfully registered")
-                navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+                    alert("You have successfully registered")
+                    navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+                }
             })
             .catch(error => {
                 const errorObj = JSON.parse(error.message);

@@ -4,21 +4,55 @@ const controller = require("../controllers/UsersController");
 
 router.post("/signUp", async (req, res) => {
     try {
-        console.log("Received signUp request");
         const body = req.body;
+        const photographerId=body.photographerId
+        console.log(photographerId);
+
         console.log("Request body:", body);
+        switch (body.roleID) {
+            case 1:
+        
+                break;
+            case 2:
+                const user1 = await controller.CheckIfExist(body.email);
+                console.log("User existence check result:", user1);
+                if (!user1[0]) {
+                    const returnedUser = await controller.createUser(body.userName, body.email, body.phone, body.roleID, body.password);
+                    console.log("User created successfully:", returnedUser);
+                    res.json(returnedUser);
+                } else {
+                    console.log("User already exists");
+                    res.status(400).send({ error: "The user already exists" });
+                }
+                break;
+            case 3:
+                const user3 = await controller.CheckIfExist(body.email);
+                console.log(`client ${body.photographerId}`)
+                console.log("User existence check result:", user3);
+                if (!user3[0]) {
+                    const returnedUser = await controller.createClient(body.photographerId,body.userName, body.email, body.phone, body.roleID, body.password);
+                    console.log("User created successfully:", returnedUser);
+                    res.json(returnedUser);
+                } else {
+                    console.log("User already exists");
+                    res.status(400).send({ error: "The user already exists" });
+                }
+                break;
+            case 4:
+                const user4 = await controller.CheckIfExist(body.email);
+                console.log("User existence check result:", user4);
 
-        // בדוק אם המשתמש כבר קיים
-        const user = await controller.CheckIfExist(body.email);
-        console.log("User existence check result:", user);
-
-        if (!user[0]) {
-            const returnedUser = await controller.createUser(body.userName, body.email, body.phone, body.roleID, body.password);
-            console.log("User created successfully:", returnedUser);
-            res.json(returnedUser);
-        } else {
-            console.log("User already exists");
-            res.status(400).send({ error: "The user already exists" });
+                if (!user4[0]) {
+                    const returnedUser = await controller.createUser(body.userName, body.email, body.phone, body.roleID, body.password);
+                    console.log("User created successfully:", returnedUser);
+                    res.json(returnedUser);
+                } else {
+                    console.log("User already exists");
+                    res.status(400).send({ error: "The user already exists" });
+                }
+                break;
+            default:
+                text = "Looking forward to the Weekend";
         }
     } catch (err) {
         console.error('Error during signUp:', err);

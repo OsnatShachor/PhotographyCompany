@@ -1,18 +1,30 @@
-import {React,useState,useEffect} from "react";
-import {useLocation, useNavigate} from 'react-router-dom';
-
+import { React, useState, useEffect ,useContext} from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from '../App';
+//שאלה:
 function PhotographerPage() {
+  const context = useContext(UserContext);
+  const { user, setUser } = context;
   const location = useLocation();
   const navigate = useNavigate();
   const photographer = location.state.photographer;
-  const [aboutMe,setAboutMe]=useState(" ")
+ //const id=photographer.userID;
+  const [aboutMe, setAboutMe] = useState(" ")
+  const roleID = 3;
   useEffect(() => {
     getInformation();
   }, []);
 
   const handleBackClick = () => {
-    navigate('/');
+
   };
+  const handleDisConnectionClick = () => {
+    setUser({})
+  };
+  const handleConnectionClick = () => {
+    navigate('/SignUp', { state: { roleID , photographer } });
+  };
+
   const handlePriceListClick = () => {
     navigate(`/PriceList/${photographer.userID}`, { state: { photographer } });
   };
@@ -24,16 +36,17 @@ function PhotographerPage() {
   };
   return (
     <div>
+      <button className="btnPhotographer" onClick={handleConnectionClick}>connection</button>
+      <button className="btnPhotographer" onClick={handleDisConnectionClick}>disconnection</button>
+     
+      <h4>hello {user.userName}</h4>
       <h1>{photographer.userName}</h1>
       <p>Photographer ID: {photographer.userID}</p>
       <button className="btnPhotographer" onClick={handlePriceListClick}>PriceList</button>
       <button className="btnPhotographer" onClick={handleBackClick}>Booking a photo day</button>
-     <div>{JSON.stringify(aboutMe)}</div>
-   
-      <button className="btnPhotographer" onClick={handleBackClick}>Back to the home page</button>
+      <div>{JSON.stringify(aboutMe)}</div>
     </div>
   );
 }
 
 export default PhotographerPage;
-

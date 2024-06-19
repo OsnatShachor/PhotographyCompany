@@ -14,7 +14,8 @@ function SignUp() {
     const navigate = useNavigate();
     const location = useLocation();
     const roleID = location.state?.roleID;
-
+    const photographer = location.state?.photographer;
+    let body = {};
     const handleRegisterButton = (e) => {
         e.preventDefault(); // חשוב למנוע את הברירת המחדל של הטופס
         if (!userName || !email || !phone || !password || !verifyPassword) {
@@ -25,45 +26,69 @@ function SignUp() {
             alert('Passwords do not match.');
             return;
         }
-        
+        switch (roleID) {
+            case 3:
+
+                body =
+                {
+                    userName: userName,
+                    email: email,
+                    phone: phone,
+                    roleID: roleID,
+                    password: password,
+                    photographerId: photographer.userID
+                };
+                break;
+            default:
+                body =
+                {
+                    userName: userName,
+                    email: email,
+                    phone: phone,
+                    roleID: roleID,
+                    password: password,
+                    photographerId: 0
+                };
+                break;
+        }
         const request = {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                userName: userName,
-                email: email,
-                phone: phone,
-                roleID: roleID,
-                password: password
-            })
+            body: JSON.stringify(body)
         };
 
         fetch('http://localhost:3000/users/signUp', request)
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(error => {
-                    throw new Error(JSON.stringify(error));
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("data sata");
-            setUser(data); 
-            navigate('/Request');
-        })
-        .catch(error => {
-            const errorObj = JSON.parse(error.message);
-            if (errorObj.error) {
-                alert(errorObj.error);
-                navigate("/logIn");
-            } else {
-                alert('Error making POST request: ' + error.message);
-            }
-        });
-    
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(error => {
+                        throw new Error(JSON.stringify(error));
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (body.photographerId == 0) {
+                    console.log("data sata");
+                    setUser(data);
+                    navigate('/Request');
+                }
+                else
+                    setUser(data);
+                alert("You have successfully registered")
+                navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+            })
+            .catch(error => {
+                const errorObj = JSON.parse(error.message);
+                if (errorObj.error) {
+                    alert(errorObj.error);
+                    navigate("/logIn");
+                } else {
+                    alert('Error making POST request: ' + error.message);
+                }
+            });
+
     }
 
     const handleHomeClick = () => {

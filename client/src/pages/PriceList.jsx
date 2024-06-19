@@ -6,7 +6,6 @@ function PriceList() {
     const { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    const photographer = location.state.photographer;
     const [category,setCategory]=useState([])
     useEffect(() => {
         getCategories();
@@ -21,7 +20,7 @@ function PriceList() {
  
 
   const handleBackClick = () => {
-    navigate('/');
+    navigate(`/photographer/${id}`, { state: { photographer }});
   };
 //לא מוצג
   return (

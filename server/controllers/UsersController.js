@@ -21,6 +21,15 @@ async function createUser(userName, email, phone, roleID, password) {
         throw err;
     }
 }
+async function createClient(photographerId,userName, email, phone, roleID, password) {
+    try {
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await model.createClient(photographerId,userName, email, phone, roleID, password);
+        return user;
+    } catch (err) {
+        throw err;
+    }
+}
 async function getPasswordByUserId(userID) {
     try {
         // const hashedPassword = await bcrypt.hash(password, 10);
@@ -32,4 +41,4 @@ async function getPasswordByUserId(userID) {
     }
 }
 
-module.exports = { createUser, CheckIfExist,getPasswordByUserId }
+module.exports = { createUser, CheckIfExist,getPasswordByUserId,createClient }

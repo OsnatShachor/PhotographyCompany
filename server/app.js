@@ -8,16 +8,17 @@ const port = 3000;
 const cors = require('cors'); 
 app.use(cors());
 
+const PhotographerDetailsRouter=require("./routs/PhotographerDetailsRouter")
 const PhotographersRouter = require("./routs/PhotographersRouter")
 const UsersRouter = require("./routs/UsersRouter")
 const ManagerRouter = require("./routs/ManagerRouter")
 
-console.log("ffff")
+console.log("enjoy!!")
 app.use("/aboutMe", PhotographersRouter);
-//app.use("/category", PhotographersRouter);
 app.use("/", PhotographersRouter);
 app.use("/users", UsersRouter);
 app.use("/requests", ManagerRouter);
+app.use("/category",PhotographerDetailsRouter)
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`);

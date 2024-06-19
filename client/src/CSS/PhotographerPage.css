@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+body, html {
+    min-width: 100%;
+    background-color: #f8e3db;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* .photographer-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+} */
+h1 {
+    color: #00AFB9;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-align: center;
+    margin: 20px 0;
+}
+
+h3 {
+    color: #006D77;
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+.btnPhotographer{
+    width: 170px;
+    height: 120px;
+    font-size: x-large;
+    background-color: #E29578 !important;
+    margin: 10px;
+    border: 1px solid transparent;
+    font-weight: 500;
+    color: #EDF6F9;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+button:focus,
+button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (max-width: 768px) {
+    .photographer-page {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
+
+    button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .onTopBtn {
+        flex-direction: column;
+        align-items: center;
+    }
+}

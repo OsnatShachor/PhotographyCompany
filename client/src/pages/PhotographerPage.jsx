@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, Link, useParams } from 'react-router-dom';
 import { UserContext } from '../App';
+import "../CSS/PhotographerPage.css"
 
 function PhotographerPage() {
   const context = useContext(UserContext);
@@ -43,7 +44,7 @@ function PhotographerPage() {
       const data = await fetch(`http://localhost:3000/aboutMe/${photographer.userID}`);
       const aboutMe = await data.json();
       console.log(aboutMe);
-      setAboutMe(aboutMe);
+      setAboutMe(aboutMe.aboutMe);
     }
   };
 
@@ -54,14 +55,20 @@ function PhotographerPage() {
   return (
     <div>
       <div className="onTopBtn">
-        <button className="btnPhotographer" onClick={handleConnectionClick}>connection</button>
-        <button className="btnPhotographer" onClick={handleDisConnectionClick}>disconnection</button>
+        <button onClick={handleConnectionClick}>Connection</button>
+        <button onClick={handleDisConnectionClick}>Disconnection</button>
       </div>
-      <h3>hello {user.userName}</h3>
+      {(user.userName != null) && (<h3>hello {user.userName}</h3>)}
+
       <h1>{photographer.userName}</h1>
-      <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
-      <button className="btnPhotographer" onClick={handleOrderClick}>Order a photo day</button>
-      <p id="aboutMe">{JSON.stringify(aboutMe)}</p>
+      <div id="photographers">
+        <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
+        <button className="btnPhotographer" onClick={handleOrderClick}>Order a photo day</button>
+      </div>
+      <div id="aboutMe">
+        <p >{JSON.stringify(aboutMe)}</p>
+      </div>
+
     </div>
   );
 }

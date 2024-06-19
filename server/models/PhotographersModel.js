@@ -36,8 +36,8 @@ async function getInformation(photographerId) {
   WHERE photographerId = ?
 `;
     const [rows] = await pool.query(sql, [photographerId]);
-    console.log("model=>getInformation" + JSON.stringify(rows))
-    return rows;
+    console.log("model=>getInformation" + JSON.stringify(rows[0]))
+    return rows[0];
   } catch (err) {
     return (err);
   }

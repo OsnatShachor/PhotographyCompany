@@ -66,7 +66,7 @@ function PhotographerPage() {
         <button className="btnPhotographer" onClick={handleOrderClick}>Order a photo day</button>
       </div>
       <div id="aboutMe">
-        <p >{JSON.stringify(aboutMe)}</p>
+        <p >{aboutMe}</p>
       </div>
 
     </div>

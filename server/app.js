@@ -7,6 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 const port = 3000;
 const cors = require('cors'); 
 app.use(cors());
+const jwt= require('jsonwebtoken');
 
 const PhotographerDetailsRouter=require("./routs/PhotographerDetailsRouter")
 const PhotographersRouter = require("./routs/PhotographersRouter")

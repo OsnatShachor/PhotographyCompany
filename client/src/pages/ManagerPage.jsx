@@ -4,40 +4,37 @@ import PhotographerWebsite from "../components/PhotographerWebsite";
 import '../CSS/WelcomePage.css';
 import { UserContext } from '../App';
 
-function WelcomePage() {
+function ManagerPage() {
     const navigate = useNavigate();
     const context = useContext(UserContext);
+    const [waitingRequests,setwaitingRequest]=useState([])
     const { user, setUser } = context;
-    const [photographersArray, setPhotographersArray] = useState([]);
-    const roleID = 4;
-
-    const getAllPhotographers = async () => {
-        const data = await fetch(`http://localhost:3000`);
-        const photographers = await data.json();
-        setPhotographersArray(photographers);
-    };
-
     useEffect(() => {
-        getAllPhotographers();
-    }, []);
-    const handleSidnOutClick = () => {
-        navigate('/');
-    }
+        getAllWaitingRequest();
+      }, []); 
+ 
+      const getAllWaitingRequest = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/requests`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const waitingRequests = await response.json();
+            setwaitingRequest(waitingRequests);
+        } catch (error) {
+            console.error('Error fetching waiting requests:', error);
+        }
+    };
+    
 
-    const handleOrdersClick =async () => {
-
-    }
 
     return (
-        <div id="welcomePage">
-            <div className="onTopBtn">
-                <button onClick={handleSidnOutClick}>SignOut</button>
-            </div>
-            <button onClick={handleOrdersClick}></button>
-            <h1 id="mainTitle">Welcome to our community of photographers!</h1>
-
-        </div>
+        <div id="waitingRequests">
+        {waitingRequests.map((waitingRequest, index) => (
+          <PhotographerWebsite key={index} waitingRequest={waitingRequest} />
+        ))}
+      </div>
     );
 }
 
-export default WelcomePage;
+export default ManagerPage;

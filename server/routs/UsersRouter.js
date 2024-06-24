@@ -13,18 +13,7 @@ router.post("/signUp", async (req, res) => {
             case 1:
         
                 break;
-            case 2:
-                const user1 = await controller.CheckIfExist(body.email);
-                console.log("User existence check result:", user1);
-                if (!user1[0]) {
-                    const returnedUser = await controller.createUser(body.userName, body.email, body.phone, body.roleID, body.password);
-                    console.log("User created successfully:", returnedUser);
-                    res.json(returnedUser);
-                } else {
-                    console.log("User already exists");
-                    res.status(400).send({ error: "The user already exists" });
-                }
-                break;
+               
             case 3:
                 const user3 = await controller.CheckIfExist(body.email);
                 console.log(`client ${body.photographerId}`)
@@ -38,7 +27,7 @@ router.post("/signUp", async (req, res) => {
                     res.status(400).send({ error: "The user already exists" });
                 }
                 break;
-            case 4:
+            default:
                 const user4 = await controller.CheckIfExist(body.email);
                 console.log("User existence check result:", user4);
 
@@ -51,8 +40,6 @@ router.post("/signUp", async (req, res) => {
                     res.status(400).send({ error: "The user already exists" });
                 }
                 break;
-            default:
-                text = "Looking forward to the Weekend";
         }
     } catch (err) {
         console.error('Error during signUp:', err);
@@ -63,11 +50,7 @@ router.post("/signUp", async (req, res) => {
 // const passwordMatch = await bcrypt.compare(body.password, user[0].password);
 router.post("/logIn", async (req, res) => {
     try {
-        // const { email, password } = req.body;
-        // if (!email || !password) {
-        //     console.error("Missing email or password");
-        //     return res.status(400).json({ error: "Email and password are required" });
-        // }
+        const { email, password } = req.body;
 
         console.log("Received login request for email:", email);
         const user = await controller.CheckIfExist(email);

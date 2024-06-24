@@ -26,7 +26,7 @@ function WelcomePage() {
   };
 
   const handleLogInClick = () => {
-    navigate('/LogIn');
+    navigate('/LogIn', { state: { roleID } });// הוא צריך את הרול כדי שאם יעברו ממנו להרשמה - שההרשמה תתאפשר
   };
 
   const handleJoinClick = () => {

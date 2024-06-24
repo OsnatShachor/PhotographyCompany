@@ -69,14 +69,11 @@ function SignUp() {
             })
             .then(data => {
                 if (body.photographerId == 0) {
-                    console.log("data sata");
-                    setUser(user=>data);
-                    console.log("user "+JSON.stringify(user))
+                    setUser(data);
                     navigate('/Request');
                 }
                 else {
                     setUser(data);
-                    console.log(user)
                     alert("You have successfully registered")
                     navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
                 }
@@ -103,12 +100,12 @@ function SignUp() {
                 <button onClick={handleHomeClick}>Home page</button>
             </div>
             <form id="form">
-                <ul id="tabs" className="register-buttons active">
+            <ul id="tabs" className="register-buttons active">
                     <li className="tab active">
                         <Link to="/SignUp" className="link-btn">Sign Up</Link>
                     </li>
                     <li className="tab">
-                        <Link to="/logIn" className="link-btn">Log In</Link>
+                        <Link to="/logIn" state={{ photographer,roleID }} className="link-btn">Log In</Link>
                     </li>
                 </ul>
                 <div className="content" id="signUpForm">

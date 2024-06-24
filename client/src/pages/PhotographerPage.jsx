@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation, useNavigate, Link, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, Link, useParams,Outlet  } from 'react-router-dom';
 import { UserContext } from '../App';
 import "../CSS/PhotographerPage.css"
 
@@ -10,7 +10,6 @@ function PhotographerPage() {
   // const { photographer, setPhotographer } = context;
   const location = useLocation();
   const navigate = useNavigate();
-  const [orders,setOrders]=useState([])
   const photographer = location.state?.photographer;
   const { id } = useParams();
   const [aboutMe, setAboutMe] = useState(" ");
@@ -39,17 +38,16 @@ function PhotographerPage() {
   };
 
   const handlePriceListClick = () => {
-    navigate(`/PriceList/${photographer.userID}`, { state: { photographer } });
+    navigate(`/photographer/${id}/PriceList`, { state: { photographer } });
   };
   const handlePrivateAreaClick = () => {
-    navigate(`/PrivateArea/${photographer.userID}`);
+    navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
   };
   const handleOrderClick = () => {
-    if (user.userId) {
-      navigate(`/order/${photographer.userID}`, { state: { photographer } });
+    if (user && user.userId) {
+      navigate(`/photographer/${id}/order`, { state: { photographer } });
     } else {
       navigate('/SignUp', { state: { roleID, photographer } });
-
     }
   };
 
@@ -72,7 +70,7 @@ function PhotographerPage() {
       </div>
       {(user.userName != null) && (<h3>hello {user.userName}</h3>)}
 
-      <h1>{photographer.userName}</h1>
+    <h1>{photographer.userName}</h1>
       <div id="photographers">
         <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
         <button className="btnPhotographer" onClick={handleOrderClick}>Order a photo day</button>
@@ -80,7 +78,7 @@ function PhotographerPage() {
       <div id="aboutMe">
         <p >{aboutMe}</p>
       </div>
-
+      <Outlet /> 
     </div>
   );
 }

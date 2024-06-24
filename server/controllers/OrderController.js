@@ -16,7 +16,7 @@ async function createOrder(body) {
 async function getAllMyOrders(userId,photographerId) {
     try {
         const resultOrderRequest = await model.getAllMyOrders(userId,photographerId);
-        console.log("get order Controller "+resultOrderRequest);
+        console.log("getAllMY order Controller "+resultOrderRequest);
         return resultOrderRequest;
     } catch (err) {
         throw err;

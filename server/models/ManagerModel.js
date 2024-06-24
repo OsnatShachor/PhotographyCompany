@@ -13,5 +13,18 @@ async function createRequest(photographerID, request,statusID) {
       throw(err);
     }
   }
+  async function getWaitingRequests() {
+    try {
+      console.log("getWaitingRequests model");
+      const sql = `
+       SELECT * FROM requests;
+    `;
+      const [rows,fields] = await pool.query(sql);
+      console.log(rows);
+      return rows;
+    } catch (err) {
+      return (err);
+    }
+  }
 
-module.exports = {createRequest}  
+module.exports = {createRequest,getWaitingRequests}  

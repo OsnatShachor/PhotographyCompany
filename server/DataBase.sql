@@ -128,6 +128,7 @@ VALUES
 -- הכנסת מספר רשומות לטבלת users
 INSERT INTO users (userName, email, phone, roleID)
 VALUES 
+    ('Osnat Shachor', 'osnaty16@gmail.com', '0556777410',  1),
     ('John Doe', 'john.doe@example.com', '123-456-7890',  2),
     ('Jane Smith', 'jane.smith@example.com', '987-654-3210', 3),
     ('Alice Johnson', 'alice.johnson@example.com', '555-123-4567', 2),
@@ -141,6 +142,7 @@ VALUES
     (2,'pasrd1234'),
     (3,'password123'),
     (4,'paty123'),
+    (6,'patry123'),
     (5,'pass456');
     
 -- הכנסת מספר רשומות לטבלת photographers

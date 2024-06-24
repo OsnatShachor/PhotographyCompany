@@ -8,6 +8,7 @@ async function getAllMyOrders(userId,photographerId) {
       WHERE userID = ? AND photographerID = ?
     `;
       const [rows] = await pool.query(sql,[userId,photographerId]);
+      console.log("model get all myorders "+JSON.stringify(rows))
       return rows;
     } catch (err) {
       return (err);

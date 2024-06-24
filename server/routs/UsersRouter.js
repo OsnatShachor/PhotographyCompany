@@ -63,11 +63,11 @@ router.post("/signUp", async (req, res) => {
 // const passwordMatch = await bcrypt.compare(body.password, user[0].password);
 router.post("/logIn", async (req, res) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
-            console.error("Missing email or password");
-            return res.status(400).json({ error: "Email and password are required" });
-        }
+        // const { email, password } = req.body;
+        // if (!email || !password) {
+        //     console.error("Missing email or password");
+        //     return res.status(400).json({ error: "Email and password are required" });
+        // }
 
         console.log("Received login request for email:", email);
         const user = await controller.CheckIfExist(email);

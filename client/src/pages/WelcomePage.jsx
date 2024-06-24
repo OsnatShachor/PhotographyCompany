@@ -11,14 +11,14 @@ function WelcomePage() {
   const [photographersArray, setPhotographersArray] = useState([]);
   const roleID = 4;
 
-  const getAllPhotographers = async () => {
+  const getAllActivePhotographers = async () => {
     const data = await fetch(`http://localhost:3000`);
     const photographers = await data.json();
     setPhotographersArray(photographers);
   };
 
   useEffect(() => {
-    getAllPhotographers();
+    getAllActivePhotographers();
   }, []);
 
   const handleSidnUpClick = () => {

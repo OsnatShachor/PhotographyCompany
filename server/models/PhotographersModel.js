@@ -1,5 +1,5 @@
 const pool = require('../DB.js');
-async function getAllPhotographers() {
+async function getAllActivePhotographers() {
   try {
     const sql = `
       SELECT u.*
@@ -43,4 +43,4 @@ async function getInformation(photographerId) {
   }
 }
 
-module.exports = { getAllPhotographers, getInformation,getCategory }  
+module.exports = { getAllActivePhotographers, getInformation,getCategory }  

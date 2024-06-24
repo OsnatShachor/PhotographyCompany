@@ -17,6 +17,11 @@ function LogIn() {
   }
 
   const handleLogInButton = () => {
+      // const { email, password } = req.body;
+      //   if (!email || !password) {
+      //       console.error("Missing email or password");
+      //       return res.status(400).json({ error: "Email and password are required" });
+      //   }
     const request = {
       method: "POST",
       headers: {

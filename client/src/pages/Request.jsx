@@ -33,14 +33,9 @@ function Request() {
 
     fetch('http://localhost:3000/requests', request)
       .then(response => {
-        //   console.log("response " + response);
-        // if (!response.ok) {
-        //     throw new Error('Network response was not ok');
-        // }
         return response.json();
       })
       .then(() => {
-        console.log("data sata");
         alert("Your request has been successfully sent")
         navigate('/');
       })

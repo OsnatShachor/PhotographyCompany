@@ -1,8 +1,8 @@
 const model = require('../models/PhotographersModel');
 
-async function getAllPhotographers(){
+async function getAllActivePhotographers(){
     try{
-        return await model.getAllPhotographers() 
+        return await model.getAllActivePhotographers() 
     }catch(err){
         throw err;
     }
@@ -23,4 +23,4 @@ async function getInformation(photographerId){
     }
 }
 
-module.exports = {getAllPhotographers,getCategory,getInformation}
+module.exports = {getAllActivePhotographers,getCategory,getInformation}

@@ -9,23 +9,25 @@ import PriceList from "./pages/PriceList";
 import Order from "./pages/Order";
 import './App.css';
 export const UserContext = createContext();
+export const PhotographerContext = createContext();
 
 function App() {
   const [user, setUser] = useState({});
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ user, setUser }}>
-        <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/logIn" element={<LogIn />} />
-          <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/Request" element={<Request />} />
-          <Route path="/photographer/:id" element={<PhotographerPage />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/PriceList/:id" element={<PriceList />} />
-        </Routes>
-      </UserContext.Provider>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Routes>
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="/logIn" element={<LogIn />} />
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/Request" element={<Request />} />
+            <Route path="/photographer/:id" element={<PhotographerPage />} />
+            <Route path="/order/:id" element={<Order />} />
+            <Route path="/PriceList/:id" element={<PriceList />} />
+            <Route path="/PrivateArea/:id" element={<PriceList />} />
+          </Routes>
+        </UserContext.Provider>
     </BrowserRouter>
   );
 }

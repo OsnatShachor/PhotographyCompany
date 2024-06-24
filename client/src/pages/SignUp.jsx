@@ -28,7 +28,6 @@ function SignUp() {
         }
         switch (roleID) {
             case 3:
-
                 body =
                 {
                     userName: userName,
@@ -71,11 +70,13 @@ function SignUp() {
             .then(data => {
                 if (body.photographerId == 0) {
                     console.log("data sata");
-                    setUser(data);
+                    setUser(user=>data);
+                    console.log("user "+JSON.stringify(user))
                     navigate('/Request');
                 }
                 else {
                     setUser(data);
+                    console.log(user)
                     alert("You have successfully registered")
                     navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
                 }

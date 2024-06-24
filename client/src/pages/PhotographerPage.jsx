@@ -6,8 +6,11 @@ import "../CSS/PhotographerPage.css"
 function PhotographerPage() {
   const context = useContext(UserContext);
   const { user, setUser } = context;
+  // const PhotographerContext = useContext(PhotographerContext);
+  // const { photographer, setPhotographer } = context;
   const location = useLocation();
   const navigate = useNavigate();
+  const [orders,setOrders]=useState([])
   const photographer = location.state?.photographer;
   const { id } = useParams();
   const [aboutMe, setAboutMe] = useState(" ");
@@ -22,7 +25,11 @@ function PhotographerPage() {
   const handleBackClick = () => {
     navigate(-1);
   };
-
+  //  const getPhotographer =async()=>{
+  //   const data = await fetch(`http://localhost:3000/photographer/:id`);
+  //   const photographers = await data.json();
+  //   setPhotographersArray(photographers);
+  // }
   const handleDisConnectionClick = () => {
     setUser({});
   };
@@ -34,9 +41,16 @@ function PhotographerPage() {
   const handlePriceListClick = () => {
     navigate(`/PriceList/${photographer.userID}`, { state: { photographer } });
   };
-
+  const handlePrivateAreaClick = () => {
+    navigate(`/PrivateArea/${photographer.userID}`);
+  };
   const handleOrderClick = () => {
-    navigate(`/order`, { state: { photographer } });
+    if (user.userId) {
+      navigate(`/order/${photographer.userID}`, { state: { photographer } });
+    } else {
+      navigate('/SignUp', { state: { roleID, photographer } });
+
+    }
   };
 
   const getInformation = async () => {
@@ -48,15 +62,13 @@ function PhotographerPage() {
     }
   };
 
-  if (!photographer) {
-    return <div>Photographer not found</div>;
-  }
-
   return (
     <div>
       <div className="onTopBtn">
         <button onClick={handleConnectionClick}>Connection</button>
         <button onClick={handleDisConnectionClick}>Disconnection</button>
+        <button onClick={handlePrivateAreaClick}>Private Area</button>
+
       </div>
       {(user.userName != null) && (<h3>hello {user.userName}</h3>)}
 

@@ -5,7 +5,7 @@ const controller = require("../controllers/PhotographersController");
 
 router.get("/", async (req, res) => {
     try {
-        const photographers = await controller.getAllPhotographers();
+        const photographers = await controller.getAllActivePhotographers();
         res.status(200).send(photographers);
     } catch (error) {
         res.status(500).send({ error: "Failed to fetch Photographers" });

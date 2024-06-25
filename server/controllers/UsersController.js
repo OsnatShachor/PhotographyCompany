@@ -10,7 +10,16 @@ async function CheckIfExist(email) {
         throw err;
     }
 }
-
+async function checkRelation(userId,photographerId) {
+    try {
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const photographerUser = await model.checkRelation(userId,photographerId);
+        console.log("createUserController "+photographerUser);
+        return photographerUser;
+    } catch (err) {
+        throw err;
+    }
+}
 async function createUser(userName, email, phone, roleID, password) {
     try {
         // const hashedPassword = await bcrypt.hash(password, 10);
@@ -30,6 +39,15 @@ async function createClient(photographerId,userName, email, phone, roleID, passw
         throw err;
     }
 }
+async function createRelation(userId,photographerId) {
+    try {
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const relation = await model.createRelation(userId,photographerId);
+        return relation;
+    } catch (err) {
+        throw err;
+    }
+}
 async function getPasswordByUserId(userID) {
     try {
         // const hashedPassword = await bcrypt.hash(password, 10);
@@ -40,5 +58,14 @@ async function getPasswordByUserId(userID) {
         throw err;
     }
 }
-
-module.exports = { createUser, CheckIfExist,getPasswordByUserId,createClient }
+async function getUserByUserId(userID) {
+    try {
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await model.getUserByUserId(userID);
+        console.log("getPasswordByUserId Controller "+user);
+        return user;
+    } catch (err) {
+        throw err;
+    }
+}
+module.exports = { createUser, CheckIfExist,getPasswordByUserId,createClient,getUserByUserId,checkRelation,createRelation }

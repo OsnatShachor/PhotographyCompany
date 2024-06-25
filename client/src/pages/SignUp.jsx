@@ -90,14 +90,14 @@ function SignUp() {
 
     }
 
-    const handleHomeClick = () => {
-        navigate('/');
+    const handleBackClick = () => {
+        navigate(-1);
     };
 
     return (
         <div>
             <div className="onTopBtn">
-                <button onClick={handleHomeClick}>Home page</button>
+                <button onClick={handleBackClick}>Back</button>
             </div>
             <form id="form">
             <ul id="tabs" className="register-buttons active">

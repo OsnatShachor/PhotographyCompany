@@ -1,26 +1,23 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import PhotographerWebsite from "../components/PhotographerWebsite";
+import RequestOnScreen from "../components/RequestOnScreen";
 import '../CSS/WelcomePage.css';
 import { UserContext } from '../App';
 
 function ManagerPage() {
     const navigate = useNavigate();
     const context = useContext(UserContext);
-    const [waitingRequests,setwaitingRequest]=useState([])
+    const [allRequests,setAllRequests]=useState([])
     const { user, setUser } = context;
     useEffect(() => {
-        getAllWaitingRequest();
+      getAllRequest();
       }, []); 
  
-      const getAllWaitingRequest = async () => {
+      const getAllRequest = async () => {
         try {
             const response = await fetch(`http://localhost:3000/requests`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const waitingRequests = await response.json();
-            setwaitingRequest(waitingRequests);
+            const allRequest = await response.json();
+            setAllRequests(allRequest);
         } catch (error) {
             console.error('Error fetching waiting requests:', error);
         }
@@ -30,8 +27,8 @@ function ManagerPage() {
 
     return (
         <div id="waitingRequests">
-        {waitingRequests.map((waitingRequest, index) => (
-          <PhotographerWebsite key={index} waitingRequest={waitingRequest} />
+        {allRequests.map((request, index) => (
+          <RequestOnScreen key={index} request={request} />
         ))}
       </div>
     );

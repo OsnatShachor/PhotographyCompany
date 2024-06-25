@@ -138,7 +138,7 @@ VALUES
 INSERT INTO
     passwords (userID, password)
 VALUES
-    (1,'managerPass'),
+    (1,'123'),
     (2,'pasrd1234'),
     (3,'password123'),
     (4,'paty123'),
@@ -148,11 +148,11 @@ VALUES
 -- הכנסת מספר רשומות לטבלת photographers
 INSERT INTO photographers (photographerID, aboutMe, isActive)
 VALUES 
-    (1, 'I am a professional photographer specializing in weddings and portraits.', TRUE),
     (2, 'Nature and landscape photographer with 10 years of experience.', FALSE),
     (3, 'Fashion photographer based in New York.', TRUE),
     (4, 'Freelance photographer working on travel and adventure photography.', TRUE),
-    (5, 'Experienced in food photography for restaurants and cookbooks.', FALSE);
+    (5, 'Experienced in food photography for restaurants and cookbooks.', FALSE),
+	(6, 'I am a professional photographer specializing in weddings and portraits.', TRUE);
 
  
 

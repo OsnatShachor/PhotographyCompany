@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-
+import '../CSS/List.css'
 function SinglePriceList(props) {
   const navigate = useNavigate();
   const category = props.category;
@@ -9,10 +9,10 @@ function SinglePriceList(props) {
 
   return (
     <>
-      <div className="priceListOnScreen">
-        <h2>{category.categoryName}</h2>
-        <h2>{category.payPerHour}</h2>
-        <h2>{category.numOfEditPictures}</h2>
+      <div className="box">
+        <h2><span className='bold'> {category.categoryName}</span></h2>
+        <h3><span className='bold'>Pay Per Hour: </span>{category.payPerHour}</h3>
+        <h3><span className='bold'>Number Of Edit Img: </span>{category.numOfEditPictures}</h3>
       </div>
     </>
   );

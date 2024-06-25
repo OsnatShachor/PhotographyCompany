@@ -13,16 +13,6 @@ body, html {
     align-items: center;
 }
 
-
-/* .photographer-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    width: 100%;
-    max-width: 800px;
-    margin: auto;
-} */
 h1 {
     color: #00AFB9;
     font-size: 2.5em;
@@ -30,7 +20,18 @@ h1 {
     text-align: center;
     margin: 20px 0;
 }
-
+#photographers {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    padding-left: 2px;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-top: 1%;
+    margin-bottom: 5%;
+    justify-content: center;
+    align-items: center;
+}
 h3 {
     color: #006D77;
     font-size: 1.5em;
@@ -52,6 +53,10 @@ h3 {
 button:focus,
 button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
+}
+.btnPhotographer:hover{
+    border-style: double;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {

@@ -9,7 +9,7 @@ function WelcomePage() {
   const context = useContext(UserContext);
   const { user, setUser } = context;
   const [photographersArray, setPhotographersArray] = useState([]);
-  const roleID = 4;
+  const roleID = 2;
 
   const getAllActivePhotographers = async () => {
     const data = await fetch(`http://localhost:3000`);
@@ -41,8 +41,9 @@ function WelcomePage() {
   return (
     <div id="welcomePage">
       <div className="onTopBtn">
-        <button onClick={() => handleSidnUpClick(2)}>SignUp</button>
-        <button onClick={handleLogInClick}>LogIn</button>
+      <button onClick={handleSidnUpClick}>Connection</button>
+        {/* <button onClick={handleSidnUpClick}>SignUp</button>
+        <button onClick={handleLogInClick}>LogIn</button> */}
       </div>
 
       <h1 id="mainTitle">Welcome to our community of photographers!</h1>

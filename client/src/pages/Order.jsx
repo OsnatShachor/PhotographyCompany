@@ -12,15 +12,22 @@ function Order() {
     const location = useLocation();
     const navigate = useNavigate();
     const photographer = location.state?.photographer;
-
-    if (!photographer) {
-        return <div>Photographer not found</div>;
-    }
+    const roleID=3;
 
     const handleBackClick = () => {
         navigate(-1); // חזרה לעמוד הקודם
     };
+    const handleDisConnectionClick = () => {
+        setUser({});
+    };
 
+    const handleConnectionClick = () => {
+        navigate('/SignUp', { state: { roleID, photographer } });
+    };
+
+    const handlePrivateAreaClick = () => {
+        navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+    };
     const handleDateClick = (value) => {
         setDate(value);
         setShowModal(true);
@@ -43,12 +50,15 @@ function Order() {
 
     return (
         <div>
-            <div className='onTopBtn'>
+            <div className="onTopBtn">
                 <button onClick={handleBackClick}>Back</button>
+                <button onClick={handleConnectionClick}>Connection</button>
+                <button onClick={handleDisConnectionClick}>Disconnection</button>
+                <button onClick={handlePrivateAreaClick}>Private Area</button>
             </div>
             <h1>לוח שנה של {photographer.userName}</h1>
             <Calendar onChange={handleDateClick} value={date} />
-    
+
             {showModal && (
                 <OrderPopUp
                     photographerID={id}

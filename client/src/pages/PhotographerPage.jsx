@@ -1,35 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation, useNavigate, Link, useParams,Outlet  } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, Outlet } from 'react-router-dom';
 import { UserContext } from '../App';
-import "../CSS/PhotographerPage.css"
+import "../CSS/PhotographerPage.css";
 
 function PhotographerPage() {
   const context = useContext(UserContext);
   const { user, setUser } = context;
-  // const PhotographerContext = useContext(PhotographerContext);
-  // const { photographer, setPhotographer } = context;
   const location = useLocation();
   const navigate = useNavigate();
-  const photographer = location.state?.photographer;
   const { id } = useParams();
-  const [aboutMe, setAboutMe] = useState(" ");
+  const [aboutMe, setAboutMe] = useState("");
   const roleID = 3;
+  const [photographer, setPhotographer] = useState(null); // Adding state variable for photographer
 
   useEffect(() => {
-    if (photographer) {
-      getInformation();
+    if (location.state && location.state.photographer) {
+      setPhotographer(location.state.photographer);
+      getInformation(location.state.photographer.userID);
+    } else {
+      getPhotographer(id);
     }
-  }, [photographer]);
+  }, [id, location.state]);
 
-  const handleBackClick = () => {
-    navigate(-1);
-  };
-  //  const getPhotographer =async()=>{
-  //   const data = await fetch(`http://localhost:3000/photographer/:id`);
-  //   const photographers = await data.json();
-  //   setPhotographersArray(photographers);
-  // }
-  const handleDisConnectionClick = () => {
+  const handleDisconnectionClick = () => {
     setUser({});
   };
 
@@ -40,9 +33,11 @@ function PhotographerPage() {
   const handlePriceListClick = () => {
     navigate(`/photographer/${id}/PriceList`, { state: { photographer } });
   };
+
   const handlePrivateAreaClick = () => {
     navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
   };
+
   const handleOrderClick = () => {
     if (user && user.userId) {
       navigate(`/photographer/${id}/order`, { state: { photographer } });
@@ -51,34 +46,53 @@ function PhotographerPage() {
     }
   };
 
-  const getInformation = async () => {
-    if (photographer && photographer.userID) {
-      const data = await fetch(`http://localhost:3000/aboutMe/${photographer.userID}`);
-      const aboutMe = await data.json();
-      console.log(aboutMe);
-      setAboutMe(aboutMe.aboutMe);
+  const getInformation = async (userID) => {
+    try {
+      const response = await fetch(`http://localhost:3000/aboutMe/${userID}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const aboutMeData = await response.json();
+      setAboutMe(aboutMeData.aboutMe);
+    } catch (error) {
+      console.error('Error fetching about me:', error);
     }
   };
+
+
+  const getPhotographer = async (userId) => {
+    try {
+      const data = await fetch(`http://localhost:3000/users/${userId}`);
+      const photographerData = await data.json();
+      setPhotographer(photographerData[0]);
+      getInformation(userId);
+    } catch (error) {
+      console.error("Error fetching photographer:", error);
+    }
+  };
+
+  if (!photographer) {
+    return null; // Return early if photographer data is not yet loaded
+  }
 
   return (
     <div>
       <div className="onTopBtn">
         <button onClick={handleConnectionClick}>Connection</button>
-        <button onClick={handleDisConnectionClick}>Disconnection</button>
+        <button onClick={handleDisconnectionClick}>Disconnection</button>
         <button onClick={handlePrivateAreaClick}>Private Area</button>
-
       </div>
-      {(user.userName != null) && (<h3>hello {user.userName}</h3>)}
+      {user.userName && <h3>Hello {user.userName}</h3>}
 
-    <h1>{photographer.userName}</h1>
+      <h1>{photographer.userName}</h1>
       <div id="photographers">
         <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
-        <button className="btnPhotographer" onClick={handleOrderClick}>Order a photo day</button>
+        <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
       </div>
       <div id="aboutMe">
-        <p >{aboutMe}</p>
+        <p>{aboutMe}</p>
       </div>
-      <Outlet /> 
+      <Outlet />
     </div>
   );
 }

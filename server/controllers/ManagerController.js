@@ -12,14 +12,14 @@ async function createRequest(photographerID, request,statusID) {
     }
 }
 
-async function getWaitingRequests() {
+async function getALLRequests() {
     try {
-        const requestResult = await model.getWaitingRequests();
-        console.log("getWaitingRequests" +requestResult);
+        const requestResult = await model.getALLRequests();
+        console.log("getALLRequests" +requestResult);
         return requestResult;
     } catch (err) {
         throw err;
     }
 }
 
-module.exports = { createRequest ,getWaitingRequests}
+module.exports = { createRequest ,getALLRequests}

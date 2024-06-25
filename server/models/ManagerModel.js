@@ -13,9 +13,9 @@ async function createRequest(photographerID, request,statusID) {
       throw(err);
     }
   }
-  async function getWaitingRequests() {
+  async function getALLRequests() {
     try {
-      console.log("getWaitingRequests model");
+      console.log("getALLRequests model");
       const sql = `
        SELECT * FROM requests;
     `;
@@ -27,4 +27,4 @@ async function createRequest(photographerID, request,statusID) {
     }
   }
 
-module.exports = {createRequest,getWaitingRequests}  
+module.exports = {createRequest,getALLRequests}  

@@ -5,14 +5,14 @@ function PhotographerWebsite(props) {
   const navigate = useNavigate();
   const photographer = props.photographer;
 
-  const handleClick = () => {
+  const handlePhotographerClick = () => {
     // נווט לכתובת החדשה
     navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
   }
 
   return (
     <>
-      <button className="photographerInList" onClick={handleClick}>
+      <button className="photographerInList" onClick={handlePhotographerClick}>
         {photographer.userName}
       </button>
     </>

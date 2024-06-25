@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/ManagerController");
-
+//בקשה מהצלם למנהל
 router.post("/", async (req, res) => {
     try {
         const body = req.body;
@@ -14,13 +14,14 @@ router.post("/", async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
 router.get("/", async (req, res) => {
     try {
         console.log("Hi there:)")
-        const waitingRequests = await controller.getWaitingRequests();
+        const waitingRequests = await controller.getALLRequests();
         res.json(waitingRequests);
     } catch (error) {
-        res.json({ error: "Failed to fetch Photographers" });
+         res.sendStatus(400)
         throw error;
     }
 },);

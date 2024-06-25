@@ -11,7 +11,7 @@ function LogIn() {
   const roleID = location.state?.roleID;
   const photographer = location.state?.photographer;
   const [formData, setFormData] = useState({})
-
+  let body = {};
   function handleChange(event) {
     const { name, value } = event.target;
     setFormData(prevFormData => ({
@@ -26,12 +26,33 @@ function LogIn() {
       alert("Must Fill All Details");
       return;
     }
+    switch (roleID) {
+      case 3:
+        body =
+        {
+          email: formData.email,
+          password: formData.password,
+          roleID: roleID,
+          photographerId: photographer.userID
+        };
+        break;
+      default:
+        body =
+        {
+          email: formData.email,
+          password: formData.password,
+          roleID: roleID,
+          photographerId: 0
+        };
+        break;
+    }
     const request = {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email: formData.email, password: formData.password })
+      body: JSON.stringify(body)
+
     };
 
     fetch(`http://localhost:3000/users/logIn`, request)
@@ -47,11 +68,11 @@ function LogIn() {
           alert("You entered successfully")
           navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
         }
-        else if(data.roleID == 1){
+        else if (data.roleID == 1) {
           alert("You entered successfully")
           navigate('/maneger');
         }
-        else{
+        else {
           alert("You entered successfully")
           navigate('/');
         }
@@ -61,18 +82,18 @@ function LogIn() {
       });
   };
 
-  const handleHomeClick = () => {
-    navigate('/');
+  const handleBackClick = () => {
+    navigate(-1);
   };
 
   return (
     <div>
       <div className="onTopBtn">
-        <button onClick={handleHomeClick}>Home page</button>
+        <button onClick={handleBackClick}>Back</button>
       </div>
       <form id="form">
         <ul id="tabs" className="register-buttons active">
-        <li className="tab">
+          <li className="tab">
             <Link to="/SignUp" state={{ roleID, photographer }} className="link-btn">Sign Up</Link>
           </li>
           <li className="tab active">

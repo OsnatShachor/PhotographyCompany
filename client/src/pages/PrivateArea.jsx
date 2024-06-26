@@ -16,7 +16,7 @@ function PrivateArea() {
     const handleBackClick = () => {
         navigate(-1);
     };
-   
+
     useEffect(() => {
         handleViewingMyOrders();
     }, [id]);
@@ -32,12 +32,16 @@ function PrivateArea() {
     };
     const handleHomeClick = () => {
         navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
-      }
+    }
     const handleViewingMyOrders = async () => {
-        const data = await fetch(`http://localhost:3000/order/${user.userId}/${id}`);
-        const myOrders = await data.json();
-        console.log(myOrders);
-        setOrders(myOrders);
+        try {
+            const data = await fetch(`http://localhost:3000/order/${user.userID}/${id}`);
+            const myOrders = await data.json();
+            console.log(myOrders);
+            setOrders(myOrders);
+        }catch (error) {
+            alert(error);
+          }
     }
 
     //לא מוצג

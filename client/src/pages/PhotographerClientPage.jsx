@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams, Outlet } from 'react-router-dom';
 import { UserContext } from '../App';
 import "../CSS/PhotographerPage.css";
 
-function PhotographerPage() {
+function PhotographerClientPage() {
   const context = useContext(UserContext);
   const { user, setUser } = context;
   const location = useLocation();
@@ -17,6 +17,7 @@ function PhotographerPage() {
     if (location.state && location.state.photographer) {
       setPhotographer(location.state.photographer);
       getInformation(location.state.photographer.userID);
+      console.log(JSON.stringify(user));
     } else {
       getPhotographer(id);
     }
@@ -35,11 +36,15 @@ function PhotographerPage() {
   };
 
   const handlePrivateAreaClick = () => {
-    navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+    if (user &&(user.userID||user.userId)) {
+      navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+    }else {
+      navigate('/SignUp', { state: { roleID, photographer } });
+    }
   };
 
   const handleOrderClick = () => {
-    if (user && user.userId) {
+    if (user &&(user.userID||user.userId)) {
       navigate(`/photographer/${id}/order`, { state: { photographer } });
     } else {
       navigate('/SignUp', { state: { roleID, photographer } });
@@ -58,7 +63,6 @@ function PhotographerPage() {
       console.error('Error fetching about me:', error);
     }
   };
-
 
   const getPhotographer = async (userId) => {
     try {
@@ -97,4 +101,4 @@ function PhotographerPage() {
   );
 }
 
-export default PhotographerPage;
+export default PhotographerClientPage;

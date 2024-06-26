@@ -16,23 +16,24 @@ function PrivateArea() {
     const handleBackClick = () => {
         navigate(-1);
     };
+   
     useEffect(() => {
-        handleViewingRequestClick();
-    }, []);
+        handleViewingMyOrders();
+    }, [id]);
 
     const handleDisConnectionClick = () => {
         setUser({});
+        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+
     };
 
     const handleConnectionClick = () => {
         navigate('/SignUp', { state: { roleID, photographer } });
     };
     const handleHomeClick = () => {
-        // נווט לכתובת החדשה
         navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
       }
-    const handleViewingRequestClick = async () => {
-
+    const handleViewingMyOrders = async () => {
         const data = await fetch(`http://localhost:3000/order/${user.userId}/${id}`);
         const myOrders = await data.json();
         console.log(myOrders);

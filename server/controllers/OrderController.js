@@ -3,11 +3,25 @@ const model = require('../models/OrderModel');
 
 async function createOrder(body) {
     try {
-        // const hashedPassword = await bcrypt.hash(password, 10);
-        console.log(body)
+        // בדיקה אם הצלם זמין בתאריך המבוקש
+        const availabilityResult = await model.checkPhotographerAvailability(body.photographerID, body.photoDate);
+
+        if (availabilityResult.length > 0) {
+            throw new Error("Photographer is not available on this date");
+        }
+        // אם הצלם זמין, ניצור את ההזמנה
         const resultOrderRequest = await model.createOrder(body);
-        console.log("create order Controller "+resultOrderRequest);
+        console.log("create order Controller:", resultOrderRequest);
         return resultOrderRequest;
+    } catch (err) {
+        throw err;
+    }
+}
+
+async function getUnavailableDates(photographerID) {
+    try {
+        const unavailableDates = await model.getUnavailableDates(photographerID);
+        return unavailableDates;
     } catch (err) {
         throw err;
     }
@@ -23,4 +37,4 @@ async function getAllMyOrders(userId,photographerId) {
     }
 }
 
-module.exports = { createOrder,getAllMyOrders }
+module.exports = { createOrder,getAllMyOrders ,getUnavailableDates}

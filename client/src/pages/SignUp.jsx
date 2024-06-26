@@ -16,8 +16,9 @@ function SignUp() {
     const roleID = location.state?.roleID;
     const photographer = location.state?.photographer;
     let body = {};
+
     const handleRegisterButton = (e) => {
-        e.preventDefault(); // חשוב למנוע את הברירת המחדל של הטופס
+        e.preventDefault();
         if (!userName || !email || !phone || !password || !verifyPassword) {
             alert('Please fill in all fields.');
             return;
@@ -26,10 +27,10 @@ function SignUp() {
             alert('Passwords do not match.');
             return;
         }
+
         switch (roleID) {
             case 3:
-                body =
-                {
+                body = {
                     userName: userName,
                     email: email,
                     phone: phone,
@@ -39,8 +40,7 @@ function SignUp() {
                 };
                 break;
             default:
-                body =
-                {
+                body = {
                     userName: userName,
                     email: email,
                     phone: phone,
@@ -50,6 +50,7 @@ function SignUp() {
                 };
                 break;
         }
+
         const request = {
             method: "POST",
             headers: {
@@ -59,36 +60,25 @@ function SignUp() {
         };
 
         fetch('http://localhost:3000/users/signUp', request)
-            .then(response => {
+            .then(async (response) => {
                 if (!response.ok) {
-                    return response.json().then(error => {
-                        throw new Error(JSON.stringify(error));
-                    });
+                    const errorText = await response.text();
+                    throw new Error(errorText);
                 }
-                return response.json();
-            })
-            .then(data => {
-                if (body.photographerId == 0) {
-                    setUser(data);
+                const data = await response.json();
+                setUser(data);
+                if (body.photographerId === 0) {
                     navigate('/Request');
-                }
-                else {
-                    setUser(data);
-                    alert("You have successfully registered")
+                } else {
+                    alert("You have successfully registered");
                     navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
                 }
             })
             .catch(error => {
-                const errorObj = JSON.parse(error.message);
-                if (errorObj.error) {
-                    alert(errorObj.error);
-                    navigate("/logIn");
-                } else {
-                    alert('Error making POST request: ' + error.message);
-                }
+                alert('Error making POST request: ' + error.message);
             });
+    };
 
-    }
 
     const handleBackClick = () => {
         navigate(-1);
@@ -100,12 +90,12 @@ function SignUp() {
                 <button onClick={handleBackClick}>Back</button>
             </div>
             <form id="form">
-            <ul id="tabs" className="register-buttons active">
+                <ul id="tabs" className="register-buttons active">
                     <li className="tab active">
                         <Link to="/SignUp" className="link-btn">Sign Up</Link>
                     </li>
                     <li className="tab">
-                        <Link to="/logIn" state={{ photographer,roleID }} className="link-btn">Log In</Link>
+                        <Link to="/logIn" state={{ photographer, roleID }} className="link-btn">Log In</Link>
                     </li>
                 </ul>
                 <div className="content" id="signUpForm">

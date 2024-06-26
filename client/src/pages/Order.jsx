@@ -1,24 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import OrderPopUp from '../components/OrderPopUp'; // ניתן להתאים את הנתיב כפי הצורך
+import '../CSS/Order.css'
+import OrderPopUp from '../components/OrderPopUp';
+import { UserContext } from '../App';
 
 function Order() {
     const [date, setDate] = useState(new Date());
     const [showModal, setShowModal] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [disabledDates, setDisabledDates] = useState([]);
     const { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
     const photographer = location.state?.photographer;
-    const roleID=3;
+    const { user, setUser } = useContext(UserContext); // הוספת קונטקסט המשתמש
+    const roleID = 3;
+
+    useEffect(() => {
+        fetchCategories();
+        fetchDisabledDates();
+    }, [id]);
+
+    const fetchCategories = async () => {
+        const response = await fetch(`http://localhost:3000/category/${id}`);
+        const data = await response.json();
+        setCategories(data);
+    };
+
+    const fetchDisabledDates = async () => {
+        const response = await fetch(`http://localhost:3000/order/unavailable-dates/${id}`);
+        const data = await response.json();
+        setDisabledDates(data.map(d => new Date(d)));
+    };
 
     const handleBackClick = () => {
-        navigate(-1); // חזרה לעמוד הקודם
+        navigate(-1);
     };
+
     const handleDisConnectionClick = () => {
         setUser({});
+        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
     };
 
     const handleConnectionClick = () => {
@@ -28,36 +51,57 @@ function Order() {
     const handlePrivateAreaClick = () => {
         navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
     };
+
     const handleDateClick = (value) => {
         setDate(value);
         setShowModal(true);
     };
-    useEffect(() => {
-        // Simulate fetching categories from your database or API
-        const fetchCategories = async () => {
-            // Replace with your actual fetch logic
-            const response = await fetch(`http://localhost:3000/category/${id}`);
-            const data = await response.json();
-            setCategories(data); // Assuming data is an array of category objects
-        };
 
-        fetchCategories();
-    }, []);
 
+    const tileDisabled = ({ date, view }) => {
+        if (view === 'month') {
+            // Disable past dates
+            if (date < new Date().setHours(0, 0, 0, 0)) {
+                return true;
+            }
+            if (date.getDay() === 6) {
+                return true;
+            }
+            // Disable dates where the photographer is unavailable
+            return disabledDates.some(disabledDate =>
+                date.getFullYear() === disabledDate.getFullYear() &&
+                date.getMonth() === disabledDate.getMonth() &&
+                date.getDate() === disabledDate.getDate()
+            );
+        }
+        return false;
+    };
+    const handleHomeClick = () => {
+        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+      }
     const handleCloseModal = () => {
         setShowModal(false);
     };
 
     return (
-        <div>
+        <div id="welcomePage">
             <div className="onTopBtn">
-                <button onClick={handleBackClick}>Back</button>
+                <button onClick={handleHomeClick}>Home page</button>
                 <button onClick={handleConnectionClick}>Connection</button>
                 <button onClick={handleDisConnectionClick}>Disconnection</button>
                 <button onClick={handlePrivateAreaClick}>Private Area</button>
+                <button onClick={handleBackClick}>Back</button>
             </div>
-            <h1>לוח שנה של {photographer.userName}</h1>
-            <Calendar onChange={handleDateClick} value={date} />
+            <h1>Choose a date for the photo shoot</h1>
+            <div id="Calendar">
+                <Calendar
+                    onChange={handleDateClick}
+                    value={date}
+                    tileDisabled={tileDisabled}
+                    locale="en-US"
+                />
+            </div>
+
 
             {showModal && (
                 <OrderPopUp

@@ -22,6 +22,7 @@ function PriceList() {
 
   const handleDisConnectionClick = () => {
     setUser({});
+    navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
   };
 
   const handleConnectionClick = () => {
@@ -29,7 +30,12 @@ function PriceList() {
   };
 
   const handlePrivateAreaClick = () => {
-    navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+    if (user &&(user.userID||user.userId)){
+      navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+
+    }else{
+      navigate('/SignUp', { state: { roleID, photographer } });
+    }
   };
 
   const handleHomeClick = () => {

@@ -24,7 +24,7 @@ router.post("/signUp", async (req, res) => {
                 }
                 break;
             case 3:
-                const returnedUser={};
+                let returnedUser={};
                 const user3 = await controller.CheckIfExist(body.email);
                 console.log(`client ${body.photographerId}`)
                 console.log("User existence check result:", user3);

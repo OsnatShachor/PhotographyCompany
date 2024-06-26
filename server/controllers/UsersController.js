@@ -20,6 +20,15 @@ async function checkRelation(userId,photographerId) {
         throw err;
     }
 }
+async function createRelation(userId,photographerId) {
+    try {
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const relation = await model.createRelation(userId,photographerId);
+        return relation;
+    } catch (err) {
+        throw err;
+    }
+}
 async function createUser(userName, email, phone, roleID, password) {
     try {
         // const hashedPassword = await bcrypt.hash(password, 10);
@@ -39,15 +48,7 @@ async function createClient(photographerId,userName, email, phone, roleID, passw
         throw err;
     }
 }
-async function createRelation(userId,photographerId) {
-    try {
-        // const hashedPassword = await bcrypt.hash(password, 10);
-        const relation = await model.createRelation(userId,photographerId);
-        return relation;
-    } catch (err) {
-        throw err;
-    }
-}
+
 async function getPasswordByUserId(userID) {
     try {
         // const hashedPassword = await bcrypt.hash(password, 10);

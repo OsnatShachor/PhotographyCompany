@@ -9,16 +9,16 @@ async function getUserByEmail(email) {
     throw (err);
   }
 }
-async function checkRelation(userId,photographerId) {
+async function checkRelation(userId, photographerId) {
   try {
     const sql = 'SELECT * FROM relations WHERE clientID = ? AND photographerID= ?';
-    const [rows] = await pool.query(sql, [userId,photographerId]);
+    const [rows] = await pool.query(sql, [userId, photographerId]);
     return rows;
   } catch (err) {
     throw err;
   }
 }
-async function createRelation(userId,photographerId) {
+async function createRelation(userId, photographerId) {
   try {
     const sqlRelations = `INSERT INTO relations (photographerID,clientID) values(?,?)`;
     const [relation] = await pool.query(sqlRelations, [photographerId, userId]);
@@ -59,23 +59,25 @@ async function createUser(userName, email, phone, roleID, cryptedPassword) {
     throw (err);
   }
 }
+
 async function createClient(photographerId, userName, email, phone, roleID, cryptedPassword) {
   try {
-    console.log(photographerId)
-    const sql = `INSERT INTO users (userName,email,phone,roleID) values(?,?,?,?)`;
+    console.log(photographerId);
+    const sql = `INSERT INTO users (userName, email, phone, roleID) values (?, ?, ?, ?)`;
     const [resultUser] = await pool.query(sql, [userName, email, phone, roleID]);
-    console.log("hhhh")
     const userId = resultUser.insertId;
-    console.log("userModel userId " + userId)
-    const sqlPassword = `INSERT INTO passwords (userID, password) values(?, ?)`;
-    const [result] = await pool.query(sqlPassword, [userId, cryptedPassword]);
-    const relations = checkRelation(userId,photographerId)
-    //  const sqlRelations = `INSERT INTO relations (photographerID,clientID) values(?,?)`;
-    // const [resultClient] = await pool.query(sqlRelations, [photographerId, userId]);
-   return { userId, userName, email, phone, roleID };
-  }
-  catch (err) {
-    throw (err);
+    console.log("userModel userId " + userId);
+    const sqlPassword = `INSERT INTO passwords (userID, password) values (?, ?)`;
+    await pool.query(sqlPassword, [userId, cryptedPassword]);
+
+    const relations = await checkRelation(userId, photographerId);
+    if (relations.length === 0) {
+      await createRelation(userId, photographerId);
+    }
+    return { userId, userName, email, phone, roleID };
+  } catch (err) {
+    throw err;
   }
 }
-module.exports = { createUser, getUserByEmail, getPasswordByUserId, createClient,getUserByUserId,checkRelation ,createRelation}  
+
+module.exports = { createUser, getUserByEmail, getPasswordByUserId, createClient, getUserByUserId, checkRelation, createRelation }  

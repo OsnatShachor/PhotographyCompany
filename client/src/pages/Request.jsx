@@ -13,11 +13,11 @@ function Request() {
   const navigate = useNavigate();
   // const photographer = location.state.photographer;
   const handleRequestButton = (e) => {
-    e.preventDefault(); // חשוב למנוע את הברירת המחדל של הטופס
-    // if (!request) {
-    //   alert('Please fill in all fields.');
-    //   return;
-    // }
+    e.preventDefault();
+     if (!fillRequest) {
+      alert('Please fill in all fields');
+      return;
+    }
 
     const request = {
       method: "POST",

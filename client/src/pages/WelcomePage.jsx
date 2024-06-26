@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import PhotographerWebsite from "../components/PhotographerWebsite";
+import PhotographerButton from "../components/PhotographerButton";
 import '../CSS/WelcomePage.css';
 import { UserContext } from '../App';
 
@@ -25,9 +25,6 @@ function WelcomePage() {
     navigate('/SignUp', { state: { roleID } });
   };
 
-  const handleLogInClick = () => {
-    navigate('/LogIn', { state: { roleID } });// הוא צריך את הרול כדי שאם יעברו ממנו להרשמה - שההרשמה תתאפשר
-  };
 
   const handleJoinClick = () => {
     if (user.userID) {//אם מחובר משתמש
@@ -49,7 +46,7 @@ function WelcomePage() {
       <h1 id="mainTitle">Welcome to our community of photographers!</h1>
       <div id="photographers">
         {photographersArray.map((photographer, index) => (
-          <PhotographerWebsite key={index} photographer={photographer} />
+          <PhotographerButton key={index} photographer={photographer} />
         ))}
       </div>
       <button id="join" onClick={handleJoinClick}>

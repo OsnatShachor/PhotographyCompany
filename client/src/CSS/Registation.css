@@ -18,7 +18,8 @@
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   min-width: 100%;
   background-color: #ffefe9;
   background-attachment: fixed;
@@ -31,7 +32,8 @@ body, html {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  overflow: hidden; /* מונע גלילה אם כל התוכן נכנס בעמוד */
+  overflow: hidden;
+  /* מונע גלילה אם כל התוכן נכנס בעמוד */
 }
 
 #form {
@@ -117,7 +119,7 @@ textarea {
   background: none;
   background-image: none;
   border: 1px solid #ffffff;
-  color: #636363;
+  color: #343131;
   border-radius: 0;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
   outline: 0;

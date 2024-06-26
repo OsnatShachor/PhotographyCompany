@@ -1,12 +1,15 @@
-import React from "react";
+import { React, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../App';
 
-function PhotographerWebsite(props) {
+function PhotographerButton(props) {
+  const context = useContext(UserContext);
+  const { user, setUser } = context;
   const navigate = useNavigate();
   const photographer = props.photographer;
 
   const handlePhotographerClick = () => {
-    // נווט לכתובת החדשה
+    setUser({})
     navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
   }
 
@@ -19,4 +22,4 @@ function PhotographerWebsite(props) {
   );
 }
 
-export default PhotographerWebsite;
+export default PhotographerButton;

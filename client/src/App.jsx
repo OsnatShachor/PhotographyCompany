@@ -2,7 +2,7 @@ import React, { useState, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import LogIn from "./pages/LogIn";
-import PhotographerPage from "./pages/PhotographerPage";
+import PhotographerClientPage from "./pages/PhotographerClientPage";
 import SignUp from "./pages/SignUp";
 import Request from "./pages/Request";
 import PriceList from "./pages/PriceList";
@@ -24,7 +24,7 @@ function App() {
           <Route path="/logIn" element={<LogIn />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Request" element={<Request />} />
-          <Route path="/photographer/:id" element={<PhotographerPage />} />
+          <Route path="/photographer/:id" element={<PhotographerClientPage />} />
           <Route path="/photographer/:id/order" element={<Order />} />
           <Route path="/photographer/:id/PriceList" element={<PriceList />} />
           <Route path="/photographer/:id/PrivateArea" element={<PrivateArea />} />

@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+body {
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 100%;
+    /* הגבלת הרוחב למקסימום */
+    padding: 20px;
+    /* ריווחים סביב התוכן */
+    display: flex;
+    /* תצוגה כמערך גמיש */
+    flex-wrap: wrap;
+    /* אפשר פיצול על המסך */
+    justify-content: center;
+    /* כדי למקד את הריבועים באמצע */
+    margin: 0;
+}
+
+
+/* Modal */
+.modal {
+    position: fixed;
+    /* חלון קופץ עליון קבוע */
+    z-index: 1;
+    /* הכי מעל לכולם */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* רוחב העמוד */
+    height: 100%;
+    /* גובה העמוד */
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.input {
+    height: 40px;
+    margin-bottom: 7px;
+    border-color: #636363;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #EDF6F9;
+    padding: 20px;
+    border: 1px solid #343131;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.close {
+    position: absolute;
+    color: #000;
+    top: 5px;
+    right: 10px;
+    margin-right: 5px;
+    font-size: 34px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.orderh3 {
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+h2 {
+    color: #343131;
+    font-size: 40px;
+}
+
+#hour {
+    font-size: 22px;
+    display: block;
+    background: none;
+    background-image: none;
+    border: 1px solid #ffffff;
+    color: #636363;
+    border-radius: 0;
+    transition: 0.25s ease, box-shadow 0.25s ease;
+    outline: 0;
+    border-color: #636363;
+}
+
+#finalPrice {
+    color: #83C5BE;
+    font-size: larger;
+}
+
+.close:hover,
+.close:focus {
+    color: #006D77;
+    text-decoration: none;
+    cursor: pointer;
+    /* לחיצה */
+}
+
+.colorfull {
+    color: #83C5BE;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+        /* רוחב */
+    }
+}
+
+/*
+כאן העיצוב של הלוח שנה
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
+/* CSS/Calendar.css */
+#Calendar {
+    justify-content: center;
+}
+
+.react-calendar {
+    width: 600px;
+    height: 387px;
+    background: #f0f0f0;
+    /* רקע אפור בהיר */
+    border: 1px solid #006D77;
+    /* מסגרת אפורה בהירה */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    /* צל אפור קל */
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+}
+
+
+/* Override calendar tile styles */
+.react-calendar__tile {
+    font-size: 24px;
+    /* גודל פונט קטן */
+    min-height: 48px;
+    padding: 10px;
+    /* ריווחים פנימיים */
+    color: #555;
+    /* צבע טקסט כהה יותר */
+}
+
+/* Override disabled calendar tile styles */
+.react-calendar__tile--disabled {
+    background: #f0f0f0;
+    /* רקע אפור בהיר לא מאופשר */
+    color: #ccc;
+    /* צבע טקסט אפור כהה */
+    border-color: #343131;
+    border-radius: 2px;
+}
+
+/* Override active calendar tile styles */
+.react-calendar__tile--active {
+    background: #e0e0e0;
+    /* רקע אפור בהיר */
+    color: #333;
+    /* צבע טקסט כהה יותר */
+}
+
+/* Override calendar navigation button styles */
+.react-calendar__navigation__label,
+.react-calendar__navigation__arrow {
+    font-size: 20px;
+    /* גודל פונט גדול יותר ללחצנים */
+    color: #006D77;
+    /* צבע טקסט כהה יותר */
+}
+
+/* Override calendar navigation button hover styles */
+.react-calendar__navigation__arrow:hover {
+    background: #ddd;
+    height: 18px;
+}

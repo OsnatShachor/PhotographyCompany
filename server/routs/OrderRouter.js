@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/OrderController");
 
-// GET request to fetch all orders for a specific user and photographer
+// מביא את כל ההזמנות של הצלם
 router.get("/:userId/:photographerId", async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -16,7 +16,7 @@ router.get("/:userId/:photographerId", async (req, res) => {
     }
 });
 
-// GET request to fetch unavailable dates for a specific photographer
+// מביא את התאריכים הפנויים של הצלם
 router.get('/unavailable-dates/:photographerId', async (req, res) => {
     try {
         const photographerId = req.params.photographerId;
@@ -28,7 +28,6 @@ router.get('/unavailable-dates/:photographerId', async (req, res) => {
     }
 });
 
-// POST request to create a new order
 router.post("/", async (req, res) => {
     try {
         const returnedOrder = await controller.createOrder(req.body);
@@ -41,6 +40,18 @@ router.post("/", async (req, res) => {
         } else {
             res.status(500).send('Internal Server Error');
         }
+    }
+});
+
+//  update an existing order
+router.put("/:orderId", async (req, res) => {
+    try {
+        const orderId = req.params.orderId;
+        const updatedOrder = await controller.updateOrder(orderId, req.body);
+        res.status(200).send(updatedOrder);
+    } catch (error) {
+        console.error('Error updating order:', error);
+        res.status(500).send({ error: "Failed to update order" });
     }
 });
 

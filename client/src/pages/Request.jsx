@@ -25,7 +25,7 @@ function Request() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        photographerID:user.userId,
+        photographerID:user.userID,
         request: fillRequest,
         statusID: 1
       })

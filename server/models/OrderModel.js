@@ -46,5 +46,18 @@ async function getUnavailableDates(photographerID) {
   }
 }
 
-
-module.exports = { createOrder,getAllMyOrders,checkPhotographerAvailability,getUnavailableDates }  
+async function updateOrder(orderId, updatedOrderData) {
+  try {
+      const sql = `
+      UPDATE orders
+      SET beginningTime = ?, durationTimePhotography = ?, location = ?, payment = ?
+      WHERE orderID = ?
+      `;
+      const { beginningTime, durationTimePhotography, location, payment } = updatedOrderData;
+      const [result] = await pool.query(sql, [beginningTime, durationTimePhotography, location, payment, orderId]);
+      return result.affectedRows > 0 ? { orderID: orderId, ...updatedOrderData } : null;
+  } catch (err) {
+      throw err;
+  }
+}
+module.exports = { createOrder,getAllMyOrders,checkPhotographerAvailability,getUnavailableDates ,updateOrder}  

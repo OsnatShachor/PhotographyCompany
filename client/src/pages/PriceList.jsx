@@ -30,7 +30,7 @@ function PriceList() {
   };
 
   const handlePrivateAreaClick = () => {
-    if (user &&(user.userID||user.userId)){
+    if (user &&(user.userID||user.userID)){
       navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
 
     }else{

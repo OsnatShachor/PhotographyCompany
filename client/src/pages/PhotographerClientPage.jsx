@@ -36,7 +36,7 @@ function PhotographerClientPage() {
   };
 
   const handlePrivateAreaClick = () => {
-    if (user &&(user.userID||user.userId)) {
+    if (user &&(user.userId||user.userID)) {
       navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
     }else {
       navigate('/SignUp', { state: { roleID, photographer } });
@@ -44,7 +44,7 @@ function PhotographerClientPage() {
   };
 
   const handleOrderClick = () => {
-    if (user &&(user.userID||user.userId)) {
+    if (user &&(user.userId||user.userID)) {
       navigate(`/photographer/${id}/order`, { state: { photographer } });
     } else {
       navigate('/SignUp', { state: { roleID, photographer } });
@@ -64,12 +64,12 @@ function PhotographerClientPage() {
     }
   };
 
-  const getPhotographer = async (userId) => {
+  const getPhotographer = async (userID) => {
     try {
-      const data = await fetch(`http://localhost:3000/users/${userId}`);
+      const data = await fetch(`http://localhost:3000/users/${userID}`);
       const photographerData = await data.json();
       setPhotographer(photographerData[0]);
-      getInformation(userId);
+      getInformation(userID);
     } catch (error) {
       console.error("Error fetching photographer:", error);
     }

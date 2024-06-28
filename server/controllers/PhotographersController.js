@@ -7,9 +7,17 @@ async function getAllActivePhotographers(){
         throw err;
     }
 }
-async function getCategory(photographerId){
+async function getAllCategories(photographerId){
     try{
-        return await model.getCategory(photographerId) 
+        return await model.getAllCategories(photographerId) 
+    }catch(err){
+        throw err;
+    }
+}
+
+async function getOrderCategory(categoryID){
+    try{
+        return await model.getOrderCategory(categoryID) 
     }catch(err){
         throw err;
     }
@@ -23,4 +31,4 @@ async function getInformation(photographerId){
     }
 }
 
-module.exports = {getAllActivePhotographers,getCategory,getInformation}
+module.exports = {getAllActivePhotographers,getAllCategories,getInformation,getOrderCategory}

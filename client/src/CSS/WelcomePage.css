@@ -31,7 +31,6 @@ body, html {
     margin: 1% 10% 5%;
     justify-content: center;
     align-items: center;
-   
 
 }
 
@@ -68,6 +67,7 @@ button:focus-visible {
 }
 
 .onTopBtn {
+    margin-bottom: 80px;
     position: fixed;
     top: 0;
     left: 0;

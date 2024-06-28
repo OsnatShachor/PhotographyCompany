@@ -37,4 +37,13 @@ async function getAllMyOrders(userId,photographerId) {
     }
 }
 
-module.exports = { createOrder,getAllMyOrders ,getUnavailableDates}
+async function updateOrder(orderId, updatedOrderData) {
+    try {
+        const updatedOrder = await model.updateOrder(orderId, updatedOrderData);
+        return updatedOrder;
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { createOrder,getAllMyOrders ,getUnavailableDates,updateOrder}

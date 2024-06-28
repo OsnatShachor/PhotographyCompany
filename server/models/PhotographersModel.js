@@ -13,7 +13,7 @@ async function getAllActivePhotographers() {
     return (err);
   }
 }
-async function getCategory(photographerId) {
+async function getAllCategories(photographerId) {
   try {
     const sql = `
        SELECT *
@@ -21,6 +21,20 @@ async function getCategory(photographerId) {
        WHERE photographerId = ?
     `;
     const [rows] = await pool.query(sql, [photographerId]);
+    return rows;
+  } catch (err) {
+    return (err);
+  }
+}
+
+async function getOrderCategory(categoryID) {
+  try {
+    const sql = `
+       SELECT *
+       FROM category
+       WHERE categoryID = ?
+    `;
+    const [rows] = await pool.query(sql, [categoryID]);
     return rows;
   } catch (err) {
     return (err);
@@ -35,11 +49,11 @@ async function getInformation(photographerId) {
    WHERE photographerId = ?
     `;
     const [rows] = await pool.query(sql, [photographerId]);
-    console.log("model get information "+JSON.stringify(rows[0]));
+    console.log("model get information " + JSON.stringify(rows[0]));
     return rows[0];
   } catch (err) {
     return (err);
   }
 }
 
-module.exports = { getAllActivePhotographers, getInformation, getCategory }  
+module.exports = { getAllActivePhotographers, getInformation, getAllCategories, getOrderCategory }  

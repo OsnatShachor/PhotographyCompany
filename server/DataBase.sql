@@ -119,10 +119,11 @@ INSERT INTO
     statuses (statusName)
 VALUES
     ('Sent'),
-    ('Confirmed'),
     ('SentForChange '),
     ('Updated '),
-    ('Cancelled');
+    ('Confirmed'),
+    ('Cancelled'),
+    ('Completed');
 
 
 -- הכנסת מספר רשומות לטבלת users

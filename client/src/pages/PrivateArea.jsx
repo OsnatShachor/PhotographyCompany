@@ -42,7 +42,7 @@ function PrivateArea() {
 
     const handleUpdateOrder = (updatedOrder) => {
         setOrders((prevOrders) =>
-            prevOrders.map((order) => (order.orderID === updatedOrder.orderID ? updatedOrder : order));
+            prevOrders.map((order) => (order.orderID === updatedOrder.orderID ? updatedOrder : order))
         );
     };
 

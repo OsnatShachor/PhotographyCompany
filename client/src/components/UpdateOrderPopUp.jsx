@@ -11,14 +11,14 @@ const UpdateOrderPopUp = (props) => {
     const [location, setLocation] = useState(order.location);
     const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
-        getAllCategories();
-    }, [selectedCategory, hours]); // Removed 'categories' from dependency array
+    // useEffect(() => {
+    //     getAllCategories();
+    // }, [selectedCategory]); // Removed 'categories' from dependency array
 
     useEffect(() => {
         getAllCategories();
-    }, [id]); // Removed 'categories' from dependency array
-
+    }, [id]); 
+    
     const getAllCategories = async () => {
         try {
             const data = await fetch(`http://localhost:3000/category/${id}`);

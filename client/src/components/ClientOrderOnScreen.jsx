@@ -7,7 +7,7 @@ function ClientOrderOnScreen(props) {
     const [enableUpdate, setEnableUpdate] = useState(false);
     const [orderCategory, setOrderCategory] = useState({});
     const navigate = useNavigate();
-    const { id } = useParams();
+    const {id} = useParams();
     const order = props.order;
 
     useEffect(() => {
@@ -15,13 +15,13 @@ function ClientOrderOnScreen(props) {
         if (order.statusID !== 5 && order.statusID !== 6) {
             setEnableUpdate(true);
         }
-    }, [order.statusID, id, order.categoryID]); // Added 'id' and 'order.categoryID' to dependency array
+    }, [order.statusID, id, order.categoryID]);
 
     const getOrderCategory = async () => {
         try {
             const data = await fetch(`http://localhost:3000/category/${id}/${order.categoryID}`);
-            const categories = await data.json(); // Changed 'category' to 'categories'
-            setOrderCategory(categories[0]); // Assuming only one category is fetched
+            const categories = await data.json();
+            setOrderCategory(categories[0]); 
         } catch (error) {
             console.error('Error fetching categories:', error);
         }

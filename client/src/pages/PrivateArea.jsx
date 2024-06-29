@@ -42,7 +42,7 @@ function PrivateArea() {
 
     const handleUpdateOrder = (updatedOrder) => {
         setOrders((prevOrders) =>
-            prevOrders.map((order) => (order.orderID === updatedOrder.orderID ? updatedOrder : order))
+            prevOrders.map((order) => (order.orderID === updatedOrder.orderID ? updatedOrder : order));
         );
     };
 
@@ -57,7 +57,7 @@ function PrivateArea() {
             <h1>My Orders</h1>
             <div className="orderShow">
                 {orders.map(order => (
-                    <ClientOrderOnScreen  key={order.orderID} order={order} photographer={photographer} onUpdate={handleUpdateOrder} />
+                    <ClientOrderOnScreen  key={order.orderID} order={order} onUpdate={handleUpdateOrder} />
                 ))}
             </div>
         </div>

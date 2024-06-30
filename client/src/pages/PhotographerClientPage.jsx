@@ -36,7 +36,7 @@ function PhotographerClientPage() {
   };
 
   const handlePrivateAreaClick = () => {
-    if (user &&(user.userId||user.userID)) {
+    if (user &&(user.userID)) {
       navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
     }else {
       navigate('/SignUp', { state: { roleID, photographer } });
@@ -44,7 +44,7 @@ function PhotographerClientPage() {
   };
 
   const handleOrderClick = () => {
-    if (user &&(user.userId||user.userID)) {
+    if (user &&(user.userID)) {
       navigate(`/photographer/${id}/order`, { state: { photographer } });
     } else {
       navigate('/SignUp', { state: { roleID, photographer } });
@@ -83,7 +83,7 @@ function PhotographerClientPage() {
     <div>
       <div className="onTopBtn">
         <button onClick={handleConnectionClick}>Connection</button>
-        <button onClick={handleDisconnectionClick}>Disconnection</button>
+        {(user &&(user.userID))&&(<button onClick={handleDisconnectionClick}>Disconnection</button>)}
         <button onClick={handlePrivateAreaClick}>Private Area</button>
       </div>
       {user.userName && <h3>Hello {user.userName}</h3>}

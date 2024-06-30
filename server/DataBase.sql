@@ -130,11 +130,11 @@ VALUES
 INSERT INTO users (userName, email, phone, roleID)
 VALUES 
     ('Osnat Shachor', 'osnaty16@gmail.com', '0556777410',  1),
-    ('John Doe', 'yaelr5754@gmail.com', '123-456-7890',  2),
-    ('Jane Smith', 'jane.smith@example.com', '987-654-3210', 3),
-    ('Alice Johnson', 'alice.johnson@example.com', '555-123-4567', 2),
+    ('Yael Korenfeld', 'yaelr5754@gmail.com', '050-456-7890',  2),
+    ('Chaya Smith', 'chayaosn@g.jct.ac.il', '987-654-3210', 3),
+    ('Ariel Kramer', 'torasolider@gmail.com', '555-123-4567', 2),
     ('Bob Brown', 'bob.brown@example.com', '444-555-6666', 3),
-    ('Charlie Davis', 'charlie.davis@example.com', '333-444-5555', 2);
+    ('Mosh Davis', 'osnaty999@gmail.com', '052-444-5555', 2);
 
 INSERT INTO
     passwords (userID, password)

@@ -1,13 +1,13 @@
 const pool = require('../DB.js');
 
-async function getAllMyOrders(userId,photographerId) {
+async function getAllMyOrders(userID,photographerId) {
     try {
       const sql = `
       SELECT *
       FROM orders
       WHERE userID = ? AND photographerID = ?
     `;
-      const [rows] = await pool.query(sql,[userId,photographerId]);
+      const [rows] = await pool.query(sql,[userID,photographerId]);
       console.log("model get all myorders "+JSON.stringify(rows))
       return rows;
     } catch (err) {

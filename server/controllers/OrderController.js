@@ -27,9 +27,9 @@ async function getUnavailableDates(photographerID) {
     }
 }
 
-async function getAllMyOrders(userId,photographerId) {
+async function getAllMyOrders(userID,photographerId) {
     try {
-        const resultOrderRequest = await model.getAllMyOrders(userId,photographerId);
+        const resultOrderRequest = await model.getAllMyOrders(userID,photographerId);
         console.log("getAllMY order Controller "+resultOrderRequest);
         return resultOrderRequest;
     } catch (err) {

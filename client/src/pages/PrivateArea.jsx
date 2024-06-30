@@ -35,7 +35,7 @@ function PrivateArea() {
     };
 
     const handleViewingMyOrders = async () => {
-        const data = await fetch(`http://localhost:3000/order/${user.userId}/${id}`);
+        const data = await fetch(`http://localhost:3000/order/${user.userID}/${id}`);
         const myOrders = await data.json();
         setOrders(myOrders);
     };

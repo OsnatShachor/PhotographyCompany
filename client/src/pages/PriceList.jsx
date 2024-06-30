@@ -1,12 +1,15 @@
-import { useState, React, useEffect } from "react";
+import { useState, React, useEffect,useContext } from "react";
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import SinglePriceList from "../components/SinglePriceList";
+import { UserContext } from '../App';
 
 function PriceList() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const [category, setCategory] = useState([])
+  const { user, setUser } = useContext(UserContext); // הוספת קונטקסט המשתמש
+
   const photographer = location.state?.photographer;
   const roleID = 3;
   useEffect(() => {
@@ -30,7 +33,7 @@ function PriceList() {
   };
 
   const handlePrivateAreaClick = () => {
-    if (user &&(user.userID||user.userID)){
+    if (user &&(user.userID)){
       navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
 
     }else{

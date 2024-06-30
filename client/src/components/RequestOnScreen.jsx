@@ -44,23 +44,24 @@ function RequestOnScreen(props) {
       .then(async (response) => {
         console.log('Email sent successfully!', response.status, response.text);
         setShowModal(false);
-        // Update the request status in the server
-        await updateRequestStatus(request.requestID, 4);
-        // setRequest({ ...request, statusID: 4 });
+
+        await updateRequestStatus(request.requestID, 4, request.photographerID);
+        setRequest({ ...request, statusID: 4 });
         props.onRequestUpdate();
+
       }, (error) => {
         console.error('Failed to send email:', error);
       });
   };
 
-  const updateRequestStatus = async (requestId, statusID) => {
+  const updateRequestStatus = async (requestID, statusID, photographerID) => {
     try {
-      const response = await fetch(`http://localhost:3000/requests/requests/${requestId}`, {
+      const response = await fetch(`http://localhost:3000/requests/${requestID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ requestId, statusID }),
+        body: JSON.stringify({ statusID, photographerID }),
       });
       if (!response.ok) {
         throw new Error('Failed to update request status');

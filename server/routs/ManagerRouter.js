@@ -9,8 +9,6 @@ router.get("/", async (req, res) => {
         // res.json(waitingRequests);
     } catch (error) {
         res.status(500).send({ error: "Failed to fetch requests" });
-         
-        //res.sendStatus(400)
         throw error;
     }
 },);
@@ -31,9 +29,8 @@ router.post("/", async (req, res) => {
 //עדכון סטטוס
 router.put("/:orderId", async (req, res) => {
     try {
-        const orderId = req.params.orderId;
-        const statusID= req.body.statusID;
-        const updatedStatus = await controller.updateStatus(orderId, statusID);
+        const body = req.body;
+        const updatedStatus = await controller.updateStatus(body.requestId, body.statusID, body.photographerID);
         res.status(200).send(updatedStatus);
     } catch (error) {
         console.error('Error updating order:', error);

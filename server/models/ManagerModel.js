@@ -37,5 +37,16 @@ async function updateStatus(requestId, statusID) {
 
 }
 
+async function updateActivePhotographer(photographerID) {
+  try {
+    const sql = `UPDATE photographers SET isActive = ? WHERE photographerID = ?`;
+    const [result] = await pool.query(sql, [true, photographerID]);
+    return result;
+  } catch (err) {
+    return (err);
+  }
 
-module.exports = { createRequest, getALLRequests, updateStatus }  
+}
+
+
+module.exports = { createRequest, getALLRequests, updateStatus, updateActivePhotographer }  

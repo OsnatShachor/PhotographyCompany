@@ -21,10 +21,17 @@ async function getALLRequests() {
         throw err;
     }
 }
-async function updateStatus(requestId, statusID) {
+async function updateStatus(requestId, statusID, photographerID) {
   
        try {
         const result = await model.updateStatus(requestId, statusID);
+        if (result){
+            try{
+                await model.updateActivePhotographer(photographerID);
+            }catch (err) {
+                throw err;
+            }
+        }
         return result;
     } catch (err) {
         throw err;

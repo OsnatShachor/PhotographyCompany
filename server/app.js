@@ -15,6 +15,7 @@ const UsersRouter = require("./routs/UsersRouter")
 const ManagerRouter = require("./routs/ManagerRouter")
 const OrderRouter = require("./routs/OrderRouter")
 const EmailRouter=require("./routs/emailRouter")
+const PhotographerManagementRouter=require('./routs/PhotographerManagementRouter')
 
 console.log("enjoy!!")
 app.use("/aboutMe", PhotographersRouter);
@@ -24,6 +25,8 @@ app.use("/requests/requests", ManagerRouter);
 app.use("/category",PhotographerDetailsRouter)
 app.use("/order",  OrderRouter)
 app.use('/send-email', EmailRouter);
+app.use('/photographer', PhotographerManagementRouter);
+
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`);

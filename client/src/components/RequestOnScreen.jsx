@@ -5,7 +5,7 @@ import emailjs from 'emailjs-com';
 function RequestOnScreen(props) {
   const [photographer, setPhotographer] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [request,setRequest] =useState (props.request);
+  const [request, setRequest] = useState(props.request);
 
   useEffect(() => {
     getPhotographer();
@@ -20,12 +20,12 @@ function RequestOnScreen(props) {
       console.error("Error fetching photographer:", error);
     }
   };
+
   const handleConfirmClick = () => {
     setShowModal(true);
-  }
+  };
+
   const handleSendEmail = async () => {
-
-
     const emailDetails = {
       from_name: `${photographer.userName}`,
       To_Email: photographer.email,
@@ -41,43 +41,34 @@ function RequestOnScreen(props) {
       emailDetails,
       'sVdp577QDfBGZC2gO' // Your user ID
     )
-      .then((response) => {
+      .then(async (response) => {
         console.log('Email sent successfully!', response.status, response.text);
-        setShowModal(false)
-        setRequest(
-          {...request,
-          statusID:4}
-        )
-
+        setShowModal(false);
+        // Update the request status in the server
+        await updateRequestStatus(request.requestID, 4);
+        // setRequest({ ...request, statusID: 4 });
+        props.onRequestUpdate();
       }, (error) => {
         console.error('Failed to send email:', error);
       });
+  };
 
-  }
-
-
-
-
-
-  //   try {
-  //     const response = await fetch(`http://localhost:3000/send-email`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(emailDetails),
-  //     });
-  //     if (response.ok) {
-  //       setShowModal(false); // סגור את החלונית
-  //       console.log('Email sent successfully!');
-  //     } else {
-  //       console.error('Failed to send email');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error sending email:', error);
-  //   }
-  // };
-
+  const updateRequestStatus = async (requestId, statusID) => {
+    try {
+      const response = await fetch(`http://localhost:3000/requests/requests/${requestId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ requestId, statusID }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update request status');
+      }
+    } catch (error) {
+      console.error('Error updating request status:', error);
+    }
+  };
 
   return (
     <>

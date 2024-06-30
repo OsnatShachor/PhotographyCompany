@@ -21,5 +21,15 @@ async function getALLRequests() {
         throw err;
     }
 }
+async function updateStatus(requestId, statusID) {
+  
+       try {
+        const result = await model.updateStatus(requestId, statusID);
+        return result;
+    } catch (err) {
+        throw err;
+    }
+  
+}
 
-module.exports = { createRequest ,getALLRequests}
+module.exports = { createRequest ,getALLRequests,updateStatus}

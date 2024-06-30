@@ -33,9 +33,13 @@ function ManagerPage() {
     const filterRequests = () => {
         if (filter === "all") {
             setFilteredRequests(allRequests);
-        } else if (filter === "waiting") {
+        } else if (filter === "pending") {
             setFilteredRequests(allRequests.filter(request => request.statusID === 1));
         }
+    };
+
+    const handleRequestUpdate = async () => {
+        await getAllRequest();
     };
 
     const handleBackClick = () => {
@@ -51,8 +55,8 @@ function ManagerPage() {
         setFilter("all");
     };
 
-    const handleShowNotApprovalClick = () => {
-        setFilter("waiting");
+    const handleShowPendingClick = () => {
+        setFilter("pending");
     };
 
     return (
@@ -65,12 +69,12 @@ function ManagerPage() {
                 <br></br>
             </div>
             <div className="filterButtons">
-                <button onClick={handleShowAllClick}>All Requests</button>
-                <button onClick={handleShowNotApprovalClick}>Not Approval Request</button>
+                <button onClick={handleShowAllClick}>Show All Requests</button>
+                <button onClick={handleShowPendingClick}>Show Pending Requests</button>
             </div>
             <div id="waitingRequests">
                 {filteredRequests.map((request, index) => (
-                    <RequestOnScreen key={index} request={request} />
+                    <RequestOnScreen key={index} request={request} onRequestUpdate={handleRequestUpdate} />
                 ))}
             </div>
         </>

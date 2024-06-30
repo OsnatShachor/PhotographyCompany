@@ -23,4 +23,10 @@ router.get("/:photographerId/:categoryID", async (req, res) => {
         res.status(500).send({ error: "Failed to fetch orders" });
     }
 });
+router.put('/:id', controller.updateCategory);
+
+router.post('/', controller.addCategory);
+
+router.delete('/:id', controller.deleteCategory);
+
 module.exports = router;

@@ -1,19 +1,24 @@
-import { React, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { UserContext } from '../App';
 
 function PhotographerPage() {
-    const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
     const [aboutMe, setAboutMe] = useState('');
-    const [enableUpdate, setEnableUpdate] = useState(false);
+    const [enableUpdateAbout, setEnableUpdateAbout] = useState(false);
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
     const { id } = useParams();
+    const { user, setUser } = useContext(UserContext);
 
     useEffect(() => {
+        if (!user.userID) {
+            navigate('/');
+        }
         getAbout();
     }, []);
 
     const getAbout = async () => {
         const data = await fetch(`http://localhost:3000/aboutMe/${id}`);
-        console.log(data)
         const aboutMeData = await data.json();
         setAboutMe(aboutMeData.aboutMe);
     };
@@ -25,9 +30,9 @@ function PhotographerPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id, aboutMe }), // הוספת id
+                body: JSON.stringify({ id, aboutMe }),
             });
-            setEnableUpdate(false);
+            setEnableUpdateAbout(false);
             if (!response.ok) {
                 throw new Error('Failed to update request status');
             }
@@ -36,20 +41,50 @@ function PhotographerPage() {
         }
     };
 
-    const handleSitePolicyClick = async () => { };
+    const handleDisconnectionClick = () => {
+        setUser({});
+        navigate(`/photographer/${user.userID}`, { state: { user } });
+    };
 
-    const handlePriceListClick = async () => { };
+    const handleSitePolicyClick = async () => { };
+    const handlePriceListClick = () => {
+        navigate(`/photographer/${id}/PriceList`, { state: { user } });    }
+
 
     const handleOrderClick = async () => { };
 
     const handleAddingPhotosClick = async () => { };
 
+    const handleSaveCategory = async (category) => {
+        try {
+            const response = await fetch(`http://localhost:3000/category`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...category, photographerID: id }),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add category');
+            }
+        } catch (error) {
+            console.error('Error adding category:', error);
+        }
+    };
+
     return (
         <>
-            <button onClick={handleSitePolicyClick}>Your site policy</button>
-            <button onClick={handlePriceListClick}>Price List</button>
-            <button onClick={handleOrderClick}>Order management</button>
-            <button onClick={handleAddingPhotosClick}>Adding photos to the gallery</button>
+            <div className="onTopBtn">
+                <button onClick={handleSitePolicyClick}>Your site policy</button>
+                <button onClick={handleDisconnectionClick}>Disconnection</button>
+                <button onClick={handleOrderClick}>Order management</button>
+            </div>
+            <h1>{user.userName}</h1>
+            <div id="photographers">
+                <button className="btnPhotographer" onClick={handleAddingPhotosClick}>Adding photos to the gallery</button>
+                <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
+                <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
+            </div>
             <input
                 type="text"
                 value={aboutMe}
@@ -57,10 +92,12 @@ function PhotographerPage() {
                 placeholder="About Me"
                 onChange={(e) => {
                     setAboutMe(e.target.value);
-                    setEnableUpdate(true);
+                    setEnableUpdateAbout(true);
                 }}
             />
-            {enableUpdate && (<button onClick={handleUpdateAboutClick}>Update</button>)}
+            {enableUpdateAbout && (<button onClick={handleUpdateAboutClick}>Update</button>)}
+
+
         </>
     );
 }

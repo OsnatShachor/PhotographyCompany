@@ -1,69 +1,106 @@
-import { useState, React, useEffect,useContext } from "react";
+import { useState, React, useEffect, useContext } from "react";
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import SinglePriceList from "../components/SinglePriceList";
 import { UserContext } from '../App';
+import CategoryPopUp from '../components/CategoryPopUp'; // Import the new modal component
 
 function PriceList() {
-  const { id } = useParams();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [category, setCategory] = useState([])
-  const { user, setUser } = useContext(UserContext); // הוספת קונטקסט המשתמש
+    const { id } = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [category, setCategory] = useState([]);
+    const { user, setUser } = useContext(UserContext);
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
-  const photographer = location.state?.photographer;
-  const roleID = 3;
-  useEffect(() => {
-    getCategories();
+    const photographer = location.state?.photographer;
+    const roleID = 3;
 
-  }, []);
+    useEffect(() => {
+        getCategories();
+    }, []);
 
-  const getCategories = async () => {
-    const data = await fetch(`http://localhost:3000/category/${id}`);
-    const category = await data.json();
-    setCategory(category);
-  };
+    const getCategories = async () => {
+        const data = await fetch(`http://localhost:3000/category/${id}`);
+        const categoryData = await data.json();
+        setCategory(categoryData);
+    };
 
-  const handleDisConnectionClick = () => {
-    setUser({});
-    navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
-  };
+    const handleDisConnectionClick = () => {
+        setUser({});
+        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+    };
 
-  const handleConnectionClick = () => {
-    navigate('/SignUp', { state: { roleID, photographer } });
-  };
+    const handleConnectionClick = () => {
+        navigate('/SignUp', { state: { roleID, photographer } });
+    };
 
-  const handlePrivateAreaClick = () => {
-    if (user &&(user.userID)){
-      navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+    const handlePrivateAreaClick = () => {
+        if (user && user.userID) {
+            navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+        } else {
+            navigate('/SignUp', { state: { roleID, photographer } });
+        }
+    };
 
-    }else{
-      navigate('/SignUp', { state: { roleID, photographer } });
-    }
-  };
+    const handlePriceListClick = () => {
+        setShowModal(true); // Show the modal when button is clicked
+    };
 
-  const handleHomeClick = () => {
-    // נווט לכתובת החדשה
-    navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
-  }
+    const handleHomeClick = () => {
+        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+    };
 
-  const handleBackClick = () => {
-    navigate(-1);
-  };
-  
-  return (
-    <div>
-      <div className="onTopBtn">
-        <button onClick={handleHomeClick}>Home page</button>
-        <button onClick={handleConnectionClick}>Connection</button>
-        {(user &&(user.userID))&&(<button onClick={handleDisconnectionClick}>Disconnection</button>)}
-        <button onClick={handlePrivateAreaClick}>Private Area</button>
-        <button onClick={handleBackClick}>Back</button>
+    const handleBackClick = () => {
+        navigate(-1);
+    };
 
-      </div>
-      <h1>My Price List</h1>
-      <div className="boxShow"> {category.map((category, index) => (<SinglePriceList key={index} category={category} />))}</div>
-    </div>
-  );
+    const handleSaveCategory = async (category) => {
+        try {
+            const response = await fetch(`http://localhost:3000/category`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...category, photographerID: id }),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add category');
+            }
+            // Refresh the category list after adding a new category
+            getCategories();
+        } catch (error) {
+            console.error('Error adding category:', error);
+        }
+    };
+
+    return (
+        <div>
+            <div className="onTopBtn">
+                <button onClick={handleHomeClick}>Home page</button>
+                <button onClick={handleConnectionClick}>Connection</button>
+                {(user && user.userID) && (<button onClick={handleDisConnectionClick}>DisConnection</button>)}
+                <button onClick={handlePrivateAreaClick}>Private Area</button>
+                <button onClick={handleBackClick}>Back</button>
+            </div>
+            <h1>My Price List</h1>
+            <div className="boxShow">
+                {category.map((category, index) => (
+                    <SinglePriceList
+                        key={index}
+                        user={user}
+                        category={category}
+                        refreshCategories={getCategories}
+                    />
+                ))}
+            </div>
+            {(id == user.userID) && (<button onClick={handlePriceListClick}>Add Category</button>)}
+            <CategoryPopUp
+                showModal={showModal}
+                handleClose={() => setShowModal(false)}
+                handleSave={handleSaveCategory}
+            />
+        </div>
+    );
 }
 
 export default PriceList;

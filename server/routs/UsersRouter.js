@@ -88,7 +88,7 @@ router.post("/logIn", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-router.get("/:userId", async (req, res) => {
+router.get("/:userID", async (req, res) => {
     try {
         const userID = req.params.userID;
         const user = await controller.getUserByUserID(userID);

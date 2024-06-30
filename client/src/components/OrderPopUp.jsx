@@ -37,7 +37,7 @@ const OrderPopUp = ({ photographerID, date, photographer, categories, onClose })
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userID: user.userID,
+                userID: user.userId,
                 photographerID: photographerID,
                 confirmed: 0,
                 statusID: 1,

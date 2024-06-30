@@ -30,6 +30,35 @@ function ClientOrderOnScreen(props) {
     const handleUpdateClick = () => {
         setShowUpdateModal(true);
     };
+    const handleDeleteRequestClick = async (e) => {
+        e.preventDefault();
+        const updatedOrder = {
+            ...order,
+            statusID: 5,
+
+        };
+
+        const request = {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedOrder)
+        };
+
+        try {
+            const response = await fetch(`http://localhost:3000/order/${order.orderID}`, request);
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error);
+            }
+            alert("The deletion of the order has been sent to the administrator for approval - you can see in the private email when it will be approved")
+
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+    
 
     const handleCloseModal = (updatedOrder) => {
         setShowUpdateModal(false);
@@ -49,6 +78,12 @@ function ClientOrderOnScreen(props) {
                 <h3><span className='bold'>Location: </span>{order.location}</h3>
                 <h3><span className='bold'>Payment: </span>{order.payment}</h3>
                 {enableUpdate && <button onClick={handleUpdateClick}>Update</button>}
+                {order.statusID !== 5 && order.statusID !== 6 && (
+                    <button onClick={handleDeleteRequestClick}>Request Deletion</button>
+                )}
+                  {order.statusID == 5 (
+                    <h3>Awaiting admin approval</h3>
+                )}
             </div>
 
             {showUpdateModal && (

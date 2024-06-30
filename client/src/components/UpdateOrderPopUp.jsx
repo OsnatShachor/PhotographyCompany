@@ -74,7 +74,7 @@ const UpdateOrderPopUp = (props) => {
                 throw new Error(error.error);
             }
             alert("Order updated successfully!");
-            props.onClose(updatedOrder); // Pass updated order back to parent component
+            props.onClose(updatedOrder); 
         } catch (error) {
             alert(error.message);
         }

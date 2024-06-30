@@ -1,6 +1,7 @@
 const emailjs = require('emailjs-com');
 
-exports.sendEmail = async ({ toEmail, subject, message, fromName }) => {
+async function sendEmail({ toEmail, subject, message, fromName }) 
+ {
   const templateParams = {
     from_name: fromName,
     to_email: toEmail,
@@ -10,13 +11,15 @@ exports.sendEmail = async ({ toEmail, subject, message, fromName }) => {
 
   try {
     const response = await emailjs.send(
-      'service_s3d1178',  // Your service ID
-      'template_mqwk8qr', // Your template ID
+      'service_u2ebeds',  // Your service ID
+      'template_1r1fvrt', // Your template ID
       templateParams,
-      'sj2if0qSB4CuS6Prm' // Your user ID
+      'sVdp577QDfBGZC2gO' // Your user ID
     );
+    console.log(response);
     return response;
   } catch (error) {
     throw new Error('Failed to send email');
   }
 };
+module.exports={sendEmail}

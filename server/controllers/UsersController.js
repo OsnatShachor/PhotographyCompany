@@ -61,7 +61,6 @@ async function getPasswordByUserId(userID) {
 }
 async function getUserByUserId(userID) {
     try {
-        // const hashedPassword = await bcrypt.hash(password, 10);
         const user = await model.getUserByUserId(userID);
         console.log("getPasswordByUserId Controller "+user);
         return user;

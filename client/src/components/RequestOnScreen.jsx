@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
-import ConfirmManegerWindow from "./ConfirmManegerWindow"; 
+import ConfirmManegerWindow from "./ConfirmManegerWindow";
+import emailjs from 'emailjs-com';
 
 function RequestOnScreen(props) {
   const [photographer, setPhotographer] = useState(null);
@@ -19,35 +20,60 @@ function RequestOnScreen(props) {
       console.error("Error fetching photographer:", error);
     }
   };
-
+  const handleConfirmClick = () => {
+    setShowModal(true);
+  }
   const handleSendEmail = async () => {
+
+
     const emailDetails = {
-      toEmail: photographer.email,
+      from_name: `${photographer.userName}`,
+      to_email: photographer.email,
       fromName: 'YO-Photography',
       subject: 'Your request has been approved',
-      message: `Hello ${photographer.userName},\n\nYour request has been approved.
+      message: `Hello ${photographer.userName},\nYour request has been approved.
       \nYour website link: http://localhost:5173/photographer/${photographer.userID}`
     };
-  
-    try {
-      const response = await fetch(`http://localhost:3000/send-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(emailDetails),
+
+    emailjs.send(
+      'service_u2ebeds',  // Your service ID
+      'template_1r1fvrt', // Your template ID
+      emailDetails,
+      'sVdp577QDfBGZC2gO' // Your user ID
+    )
+      .then((response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+        setShowModal(false)
+
+      }, (error) => {
+        console.error('Failed to send email:', error);
       });
-      if (response.ok) {
-        setShowModal(false); // סגור את החלונית
-        console.log('Email sent successfully!');
-      } else {
-        console.error('Failed to send email');
-      }
-    } catch (error) {
-      console.error('Error sending email:', error);
-    }
-  };
-  
+
+  }
+
+
+
+
+
+  //   try {
+  //     const response = await fetch(`http://localhost:3000/send-email`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(emailDetails),
+  //     });
+  //     if (response.ok) {
+  //       setShowModal(false); // סגור את החלונית
+  //       console.log('Email sent successfully!');
+  //     } else {
+  //       console.error('Failed to send email');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error sending email:', error);
+  //   }
+  // };
+
 
   return (
     <>

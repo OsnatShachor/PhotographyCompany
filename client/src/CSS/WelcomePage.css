@@ -103,7 +103,10 @@ button:focus-visible {
     text-align: center;
     padding: 80px 20px 100px; /* הוספת padding כדי לקחת בחשבון את הכפתורים המקובעים */
 }
-
+#space{
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
 @media (max-width: 768px) {
     #photographers {
         margin: 1% 5%;

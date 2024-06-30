@@ -130,7 +130,7 @@ VALUES
 INSERT INTO users (userName, email, phone, roleID)
 VALUES 
     ('Osnat Shachor', 'osnaty16@gmail.com', '0556777410',  1),
-    ('John Doe', 'john.doe@example.com', '123-456-7890',  2),
+    ('John Doe', 'yaelr5754@gmail.com', '123-456-7890',  2),
     ('Jane Smith', 'jane.smith@example.com', '987-654-3210', 3),
     ('Alice Johnson', 'alice.johnson@example.com', '555-123-4567', 2),
     ('Bob Brown', 'bob.brown@example.com', '444-555-6666', 3),

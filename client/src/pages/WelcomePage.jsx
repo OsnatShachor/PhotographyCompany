@@ -40,8 +40,6 @@ function WelcomePage() {
     <div id="welcomePage">
       <div className="onTopBtn">
       <button onClick={handleSidnUpClick}>Connection</button>
-        {/* <button onClick={handleSidnUpClick}>SignUp</button>
-        <button onClick={handleLogInClick}>LogIn</button> */}
       </div>
 
       <h1 id="mainTitle">Welcome to our community of photographers!</h1>

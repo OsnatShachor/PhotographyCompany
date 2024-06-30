@@ -34,7 +34,7 @@ function ManagerPage() {
         if (filter === "all") {
             setFilteredRequests(allRequests);
         } else if (filter === "pending") {
-            setFilteredRequests(allRequests.filter(request => request.statusID === 1));
+            setFilteredRequests(allRequests=>allRequests.filter(request => request.statusID!==4));
         }
     };
 

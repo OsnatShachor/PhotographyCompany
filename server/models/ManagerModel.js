@@ -26,10 +26,11 @@ async function getALLRequests() {
   }
 }
 
-async function updateStatus(requestId, statusID) {
+async function updateStatus(requestID, statusID) {
   try {
-    const sql = `UPDATE requests SET statusID = ? WHERE id = ?`;
-    const [result] = await pool.query(sql, [statusID, requestId]);
+    const sql = `UPDATE requests SET statusID = ? WHERE requestID = ?`;
+    console.log("model-req")
+    const [result] = await pool.query(sql, [statusID, requestID]);
     return result;
   } catch (err) {
     return (err);

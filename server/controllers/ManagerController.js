@@ -21,10 +21,11 @@ async function getALLRequests() {
         throw err;
     }
 }
-async function updateStatus(requestId, statusID, photographerID) {
+async function updateStatus(requestID, statusID, photographerID) {
   
        try {
-        const result = await model.updateStatus(requestId, statusID);
+        const result = await model.updateStatus(requestID, statusID);
+        console.log("controller-maneger")
         if (result){
             try{
                 await model.updateActivePhotographer(photographerID);

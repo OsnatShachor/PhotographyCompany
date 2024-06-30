@@ -29,8 +29,9 @@ router.post("/", async (req, res) => {
 //עדכון סטטוס
 router.put("/:orderId", async (req, res) => {
     try {
+        console.log("I am in aprovel req")
         const body = req.body;
-        const updatedStatus = await controller.updateStatus(body.requestId, body.statusID, body.photographerID);
+        const updatedStatus = await controller.updateStatus(body.requestID, body.statusID, body.photographerID);
         res.status(200).send(updatedStatus);
     } catch (error) {
         console.error('Error updating order:', error);

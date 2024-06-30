@@ -56,12 +56,12 @@ function RequestOnScreen(props) {
 
   const updateRequestStatus = async (requestID, statusID, photographerID) => {
     try {
-      const response = await fetch(`http://localhost:3000/requests/${requestID}`, {
+      const response = await fetch(`http://localhost:3000/requests/requests/${requestID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ statusID, photographerID }),
+        body: JSON.stringify({ statusID, photographerID,requestID }),
       });
       if (!response.ok) {
         throw new Error('Failed to update request status');
@@ -79,7 +79,7 @@ function RequestOnScreen(props) {
             <h5>Photographer Name: {photographer.userName}</h5>
             <h5>Photographer Email: {photographer.email}</h5>
             <h3>{request.request}</h3>
-            {request.statusID === 1 && (
+            {request.statusID !=4 && (
               <button onClick={handleConfirmClick}>Confirm</button>
             )}
           </>

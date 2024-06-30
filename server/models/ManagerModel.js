@@ -17,8 +17,7 @@ async function createRequest(photographerID, request,statusID) {
     try {
       console.log("getALLRequests model");
       const sql = `
-       SELECT * FROM requests;
-    `;
+       SELECT * FROM requests;`;
       const [rows,fields] = await pool.query(sql);
       console.log(rows);
       return rows;

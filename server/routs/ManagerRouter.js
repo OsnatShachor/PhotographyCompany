@@ -1,6 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/ManagerController");
+router.get("/", async (req, res) => {
+    try {
+        console.log("Hi there:)")
+        const waitingRequests = await controller.getALLRequests();
+        res.status(200).send(waitingRequests);
+        // res.json(waitingRequests);
+    } catch (error) {
+        res.status(500).send({ error: "Failed to fetch requests" });
+         
+        //res.sendStatus(400)
+        throw error;
+    }
+},);
+
 //בקשה מהצלם למנהל
 router.post("/", async (req, res) => {
     try {
@@ -15,14 +29,4 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.get("/", async (req, res) => {
-    try {
-        console.log("Hi there:)")
-        const waitingRequests = await controller.getALLRequests();
-        res.json(waitingRequests);
-    } catch (error) {
-         res.sendStatus(400)
-        throw error;
-    }
-},);
 module.exports = router;

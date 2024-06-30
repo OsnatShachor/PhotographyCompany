@@ -23,12 +23,12 @@ function App() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/logIn" element={<LogIn />} />
           <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/maneger" element={<ManagerPage/>}/>
           <Route path="/Request" element={<Request />} />
           <Route path="/photographer/:id" element={<PhotographerClientPage />} />
           <Route path="/photographer/:id/order" element={<Order />} />
           <Route path="/photographer/:id/PriceList" element={<PriceList />} />
           <Route path="/photographer/:id/PrivateArea" element={<PrivateArea />} />
-          <Route path="/maneger" element={<ManagerPage/>}/>
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

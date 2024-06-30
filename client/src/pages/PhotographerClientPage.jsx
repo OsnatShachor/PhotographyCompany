@@ -63,7 +63,7 @@ function PhotographerClientPage() {
       console.error('Error fetching about me:', error);
     }
   };
-
+//הבאת הצלם שהאתר שלו
   const getPhotographer = async (userID) => {
     try {
       const data = await fetch(`http://localhost:3000/users/${userID}`);

@@ -62,14 +62,15 @@ router.post("/logIn", async (req, res) => {
             const userId = user[0].userID;
             const passwordRecord = await controller.getPasswordByUserId(userId);
             if (passwordRecord && passwordRecord.length > 0 && body.password === passwordRecord[0].password) {
-                console.log("Password matches");
+               console.log("Password matches");
+              
                 if (user[0].roleID == 1 || user[0].roleID == 2) {// אם הוא צלם או מנהל - אין צורך לבדוק בטבלת הקשרים
-                    res.status(200).json(user[0]);
+                  res.status(200).send(user[0]);
                 } else {
                     const photographerUser = await controller.checkRelation(userId, body.photographerId)
                     console.log("checkRelation " + JSON.stringify(photographerUser));
                     if (photographerUser && photographerUser.length > 0) {//אם חזר שרשום כזה קשר בין הלקוח לצלם
-                        res.status(200).json(user[0]);
+                        res.status(200).send(user[0]);
                     } // מחזיר את כל פרטי המשתמש
                     else {// ם הזהמראה שלא נרשם לצל
                         res.status(400).json({ error: "User does not exist" });

@@ -13,6 +13,7 @@ function WelcomePage() {
 
   const getAllActivePhotographers = async () => {
     const data = await fetch(`http://localhost:3000`);
+    console.log(data)
     const photographers = await data.json();
     setPhotographersArray(photographers);
   };

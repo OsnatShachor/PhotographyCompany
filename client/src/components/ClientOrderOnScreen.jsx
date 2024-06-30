@@ -48,7 +48,7 @@ function ClientOrderOnScreen(props) {
                 <h3><span className='bold'>Duration Time: </span>{order.durationTimePhotography}</h3>
                 <h3><span className='bold'>Location: </span>{order.location}</h3>
                 <h3><span className='bold'>Payment: </span>{order.payment}</h3>
-                {enableUpdate && <button className='btnTodo' onClick={handleUpdateClick}>Update</button>}
+                {enableUpdate && <button onClick={handleUpdateClick}>Update</button>}
             </div>
 
             {showUpdateModal && (

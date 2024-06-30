@@ -55,7 +55,7 @@ function PriceList() {
       <div className="onTopBtn">
         <button onClick={handleHomeClick}>Home page</button>
         <button onClick={handleConnectionClick}>Connection</button>
-        <button onClick={handleDisConnectionClick}>Disconnection</button>
+        {(user &&(user.userID))&&(<button onClick={handleDisconnectionClick}>Disconnection</button>)}
         <button onClick={handlePrivateAreaClick}>Private Area</button>
         <button onClick={handleBackClick}>Back</button>
 

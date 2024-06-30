@@ -8,11 +8,17 @@ function ManagerPage() {
     const navigate = useNavigate();
     const context = useContext(UserContext);
     const [allRequests, setAllRequests] = useState([]);
+    const [filteredRequests, setFilteredRequests] = useState([]);
+    const [filter, setFilter] = useState("all");
     const { user, setUser } = context;
 
     useEffect(() => {
         getAllRequest();
     }, []);
+
+    useEffect(() => {
+        filterRequests();
+    }, [allRequests, filter]);
 
     const getAllRequest = async () => {
         try {
@@ -23,22 +29,47 @@ function ManagerPage() {
             console.error('Error fetching waiting requests:', error);
         }
     };
+
+    const filterRequests = () => {
+        if (filter === "all") {
+            setFilteredRequests(allRequests);
+        } else if (filter === "waiting") {
+            setFilteredRequests(allRequests.filter(request => request.statusID === 1));
+        }
+    };
+
     const handleBackClick = () => {
         navigate(-1);
-    }
+    };
+
     const handleDisConnectionClick = () => {
         setUser({});
         navigate('/');
     };
+
+    const handleShowAllClick = () => {
+        setFilter("all");
+    };
+
+    const handleShowNotApprovalClick = () => {
+        setFilter("waiting");
+    };
+
     return (
         <>
             <div className="onTopBtn">
                 <button onClick={handleDisConnectionClick}>DisConnection</button>
                 <button onClick={handleBackClick}>Back</button>
             </div>
-            <div id="space">     <br></br>  </div>
+            <div id="space">
+                <br></br>
+            </div>
+            <div className="filterButtons">
+                <button onClick={handleShowAllClick}>All Requests</button>
+                <button onClick={handleShowNotApprovalClick}>Not Approval Request</button>
+            </div>
             <div id="waitingRequests">
-                {allRequests.map((request, index) => (
+                {filteredRequests.map((request, index) => (
                     <RequestOnScreen key={index} request={request} />
                 ))}
             </div>

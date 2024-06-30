@@ -13,6 +13,9 @@ function ManagerPage() {
     const { user, setUser } = context;
 
     useEffect(() => {
+        if(!user.userID){
+            navigate('/');
+        }
         getAllRequest();
     }, []);
 

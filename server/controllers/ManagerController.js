@@ -26,7 +26,7 @@ async function updateStatus(requestID, statusID, photographerID) {
        try {
         const result = await model.updateStatus(requestID, statusID);
         console.log("controller-maneger")
-        if (result){
+        if (result&& statusID==4){
             try{
                 await model.updateActivePhotographer(photographerID);
             }catch (err) {

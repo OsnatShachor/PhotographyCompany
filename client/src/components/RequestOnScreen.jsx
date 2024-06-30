@@ -1,10 +1,12 @@
 import { React, useEffect, useState } from "react";
 import ConfirmManegerWindow from "./ConfirmManegerWindow";
+import RefuseManagerWindow from "./RefuseManagerWindow";
 import emailjs from 'emailjs-com';
 
 function RequestOnScreen(props) {
   const [photographer, setPhotographer] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showOkModal, setShowOkModal] = useState(false);
+  const [showRefuseModal, setShowRefuseModal] = useState(false);
   const [request, setRequest] = useState(props.request);
 
   useEffect(() => {
@@ -22,10 +24,13 @@ function RequestOnScreen(props) {
   };
 
   const handleConfirmClick = () => {
-    setShowModal(true);
+    setShowOkModal(true);
+  };
+  const handleRefuseClick =()=>{
+    setShowRefuseModal(true);
   };
 
-  const handleSendEmail = async () => {
+  const handleSendOkEmail = async () => {
     const emailDetails = {
       from_name: `${photographer.userName}`,
       To_Email: photographer.email,
@@ -43,10 +48,39 @@ function RequestOnScreen(props) {
     )
       .then(async (response) => {
         console.log('Email sent successfully!', response.status, response.text);
-        setShowModal(false);
+        setShowOkModal(false);
 
         await updateRequestStatus(request.requestID, 4, request.photographerID);
         setRequest({ ...request, statusID: 4 });
+        props.onRequestUpdate();
+
+      }, (error) => {
+        console.error('Failed to send email:', error);
+      });
+  };
+
+  const handleSendRefuseEmail = async () => {
+    const emailDetails = {
+      from_name: `${photographer.userName}`,
+      To_Email: photographer.email,
+      fromName: 'YO-Photography',
+      subject: 'Your request has been refused',
+      message: `Your request has been refused.
+      We are sorry for rejecting your request.\nUnfortunately, your data did not match our requirements`
+    };
+
+    emailjs.send(
+      'service_u2ebeds',  // Your service ID
+      'template_1r1fvrt', // Your template ID
+      emailDetails,
+      'sVdp577QDfBGZC2gO' // Your user ID
+    )
+      .then(async (response) => {
+        console.log('Email sent successfully!', response.status, response.text);
+        setShowRefuseModal(false);
+
+        await updateRequestStatus(request.requestID, 5, request.photographerID);
+        setRequest({ ...request, statusID: 5 });
         props.onRequestUpdate();
 
       }, (error) => {
@@ -61,7 +95,7 @@ function RequestOnScreen(props) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ statusID, photographerID,requestID }),
+        body: JSON.stringify({ statusID, photographerID, requestID }),
       });
       if (!response.ok) {
         throw new Error('Failed to update request status');
@@ -79,18 +113,24 @@ function RequestOnScreen(props) {
             <h5>Photographer Name: {photographer.userName}</h5>
             <h5>Photographer Email: {photographer.email}</h5>
             <h3>{request.request}</h3>
-            {request.statusID !=4 && (
-              <button onClick={handleConfirmClick}>Confirm</button>
-            )}
+            {request.statusID != 4 &&(request.statusID !=5)&&
+              (<button onClick={handleConfirmClick}>Confirm</button>)}
+             {(request.statusID != 4) &&(request.statusID !=5)&&
+              (<button onClick={handleRefuseClick}>Refuse</button>)}
           </>
         )}
       </div>
-      {showModal && (
+      {showOkModal && (
         <ConfirmManegerWindow
-          onClose={() => setShowModal(false)}
-          onConfirm={handleSendEmail}
+          onClose={() => setShowOkModal(false)}
+          onConfirm={handleSendOkEmail}
         />
       )}
+      {showRefuseModal&&
+      (<RefuseManagerWindow
+        onClose={() => setShowRefuseModal(false)}
+        onRefuse={handleSendRefuseEmail}
+      />)}
     </>
   );
 }

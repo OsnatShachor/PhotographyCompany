@@ -184,5 +184,5 @@ INSERT INTO
     requests (photographerID, request, statusID)
 VALUES
     ( 2,'I need a photographer for my engagement party on July 15th, 2024.',1),
-    ( 3,'I want to open a website for myself. I have been shooting for 3 years',2),
+    ( 3,'I want to open a website for myself. I have been shooting for 3 years',1),
     ( 3,'Looking for a portrait photographer for family photoshoot next weekend.', 5);

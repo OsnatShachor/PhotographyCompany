@@ -33,10 +33,10 @@ function ManagerPage() {
     return (
         <>
             <div className="onTopBtn">
-                <button onClick={handleDisConnectionClick}>Connection</button>
+                <button onClick={handleDisConnectionClick}>DisConnection</button>
                 <button onClick={handleBackClick}>Back</button>
             </div>
-            <div id="space"></div>
+            <div id="space">     <br></br>  </div>
             <div id="waitingRequests">
                 {allRequests.map((request, index) => (
                     <RequestOnScreen key={index} request={request} />

@@ -10,20 +10,20 @@ async function CheckIfExist(email) {
         throw err;
     }
 }
-async function checkRelation(userId,photographerId) {
+async function checkRelation(userID,photographerId) {
     try {
         // const hashedPassword = await bcrypt.hash(password, 10);
-        const photographerUser = await model.checkRelation(userId,photographerId);
+        const photographerUser = await model.checkRelation(userID,photographerId);
         console.log("createUserController "+photographerUser);
         return photographerUser;
     } catch (err) {
         throw err;
     }
 }
-async function createRelation(userId,photographerId) {
+async function createRelation(userID,photographerId) {
     try {
         // const hashedPassword = await bcrypt.hash(password, 10);
-        const relation = await model.createRelation(userId,photographerId);
+        const relation = await model.createRelation(userID,photographerId);
         return relation;
     } catch (err) {
         throw err;
@@ -49,23 +49,23 @@ async function createClient(photographerId,userName, email, phone, roleID, passw
     }
 }
 
-async function getPasswordByUserId(userID) {
+async function getPasswordByUserID(userID) {
     try {
         // const hashedPassword = await bcrypt.hash(password, 10);
-        const password = await model.getPasswordByUserId(userID);
-        console.log("getPasswordByUserId Controller "+password);
+        const password = await model.getPasswordByUserID(userID);
+        console.log("getPasswordByuserID Controller "+password);
         return password;
     } catch (err) {
         throw err;
     }
 }
-async function getUserByUserId(userID) {
+async function getUserByUserID(userID) {
     try {
-        const user = await model.getUserByUserId(userID);
-        console.log("getPasswordByUserId Controller "+user);
+        const user = await model.getUserByUserID(userID);
+        console.log("getPasswordByuserID Controller "+user);
         return user;
     } catch (err) {
         throw err;
     }
 }
-module.exports = { createUser, CheckIfExist,getPasswordByUserId,createClient,getUserByUserId,checkRelation,createRelation }
+module.exports = { createUser, CheckIfExist,getPasswordByUserID,createClient,getUserByUserID,checkRelation,createRelation }

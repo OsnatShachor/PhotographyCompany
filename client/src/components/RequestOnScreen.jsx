@@ -5,7 +5,7 @@ import emailjs from 'emailjs-com';
 function RequestOnScreen(props) {
   const [photographer, setPhotographer] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const request = props.request;
+  const [request,setRequest] =useState (props.request);
 
   useEffect(() => {
     getPhotographer();
@@ -28,10 +28,10 @@ function RequestOnScreen(props) {
 
     const emailDetails = {
       from_name: `${photographer.userName}`,
-      to_email: photographer.email,
+      To_Email: photographer.email,
       fromName: 'YO-Photography',
       subject: 'Your request has been approved',
-      message: `Hello ${photographer.userName},\nYour request has been approved.
+      message: `Your request has been approved.
       \nYour website link: http://localhost:5173/photographer/${photographer.userID}`
     };
 
@@ -44,6 +44,10 @@ function RequestOnScreen(props) {
       .then((response) => {
         console.log('Email sent successfully!', response.status, response.text);
         setShowModal(false)
+        setRequest(
+          {...request,
+          statusID:4}
+        )
 
       }, (error) => {
         console.error('Failed to send email:', error);

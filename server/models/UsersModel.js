@@ -9,37 +9,37 @@ async function getUserByEmail(email) {
     throw (err);
   }
 }
-async function checkRelation(userId, photographerId) {
+async function checkRelation(userID, photographerId) {
   try {
     const sql = 'SELECT * FROM relations WHERE clientID = ? AND photographerID= ?';
-    const [rows] = await pool.query(sql, [userId, photographerId]);
+    const [rows] = await pool.query(sql, [userID, photographerId]);
     return rows;
   } catch (err) {
     throw err;
   }
 }
-async function createRelation(userId, photographerId) {
+async function createRelation(userID, photographerId) {
   try {
     const sqlRelations = `INSERT INTO relations (photographerID,clientID) values(?,?)`;
-    const [relation] = await pool.query(sqlRelations, [photographerId, userId]);
+    const [relation] = await pool.query(sqlRelations, [photographerId, userID]);
     return relation;
   } catch (err) {
     throw err;
   }
 }
-async function getPasswordByUserId(userId) {
+async function getPasswordByUserID(userID) {
   try {
     const sql = 'SELECT password FROM passwords WHERE userID = ?';
-    const [rows] = await pool.query(sql, [userId]);
+    const [rows] = await pool.query(sql, [userID]);
     return rows;
   } catch (err) {
     throw err;
   }
 }
-async function getUserByUserId(userId) {
+async function getUserByUserID(userID) {
   try {
     const sql = 'SELECT * FROM users WHERE userID = ?';
-    const [rows] = await pool.query(sql, [userId]);
+    const [rows] = await pool.query(sql, [userID]);
     return rows;
   } catch (err) {
     throw err;
@@ -49,35 +49,38 @@ async function createUser(userName, email, phone, roleID, cryptedPassword) {
   try {
     const sql = `INSERT INTO users (userName,email,phone,roleID) values(?,?,?,?)`;
     const [resultUser] = await pool.query(sql, [userName, email, phone, roleID]);
-    const userId = resultUser.insertId;
-    console.log("userModel userId " + userId)
+    const userID = resultUser.insertId;
+    console.log("userModel userID " + userID)
     const sqlPassword = `INSERT INTO passwords (userID, password) values(?, ?)`;
-    const [result] = await pool.query(sqlPassword, [userId, cryptedPassword]);
-    return { userId, userName, email, phone, roleID };
+    await pool.query(sqlPassword, [userID, cryptedPassword]);
+    const sqlPhotographer = `INSERT INTO photographers (photographerID, isActive) values(?, ?)`;
+    await pool.query(sqlPhotographer, [userID, false]);
+    return { userID, userName, email, phone, roleID };
   }
   catch (err) {
     throw (err);
   }
 }
 
+
 async function createClient(photographerId, userName, email, phone, roleID, cryptedPassword) {
   try {
     console.log(photographerId);
     const sql = `INSERT INTO users (userName, email, phone, roleID) values (?, ?, ?, ?)`;
     const [resultUser] = await pool.query(sql, [userName, email, phone, roleID]);
-    const userId = resultUser.insertId;
-    console.log("userModel userId " + userId);
+    const userID = resultUser.insertId;
+    console.log("userModel userID " + userID);
     const sqlPassword = `INSERT INTO passwords (userID, password) values (?, ?)`;
-    await pool.query(sqlPassword, [userId, cryptedPassword]);
+    await pool.query(sqlPassword, [userID, cryptedPassword]);
 
-    const relations = await checkRelation(userId, photographerId);
+    const relations = await checkRelation(userID, photographerId);
     if (relations.length === 0) {
-      await createRelation(userId, photographerId);
+      await createRelation(userID, photographerId);
     }
-    return { userId, userName, email, phone, roleID };
+    return { userID, userName, email, phone, roleID };
   } catch (err) {
     throw err;
   }
 }
 
-module.exports = { createUser, getUserByEmail, getPasswordByUserId, createClient, getUserByUserId, checkRelation, createRelation }  
+module.exports = { createUser, getUserByEmail, getPasswordByUserID, createClient, getUserByUserID, checkRelation, createRelation }  

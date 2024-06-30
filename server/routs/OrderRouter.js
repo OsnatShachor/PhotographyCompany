@@ -5,9 +5,9 @@ const controller = require("../controllers/OrderController");
 // מביא את כל ההזמנות של הצלם
 router.get("/:userId/:photographerId", async (req, res) => {
     try {
-        const userId = req.params.userId;
+        const userID = req.params.userId;
         const photographerId = req.params.photographerId;
-        const orders = await controller.getAllMyOrders(userId, photographerId);
+        const orders = await controller.getAllMyOrders(userID, photographerId);
         console.log("Fetched orders: "+ JSON.stringify (orders));
         res.status(200).send(orders);
     } catch (error) {

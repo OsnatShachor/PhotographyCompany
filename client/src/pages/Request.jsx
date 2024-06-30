@@ -31,7 +31,7 @@ function Request() {
       })
     };
 
-    fetch('http://localhost:3000/requests', request)
+    fetch('http://localhost:3000/requests/requests', request)
       .then(response => {
         return response.json();
       })
@@ -54,7 +54,7 @@ function Request() {
           <button onClick={handleBackClick}>Home page</button>
         </div>
         <h1>Sent Request</h1>
-        <h3>{user.userName}, {user.email}, {user.phone}</h3>
+        <h3>{user.userID}, {user.userName}, {user.email}, {user.phone}</h3>
         <textarea type="text" className="input" id="inputRequest" placeholder="Your Request" onChange={(e) => setFillRequest(e.target.value)} value={fillRequest} />
         <button id="button-save" onClick={handleRequestButton}>SEND YOUR REQUEST</button>
 

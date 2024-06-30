@@ -9,7 +9,7 @@ const cors = require('cors');
 app.use(cors());
 const jwt= require('jsonwebtoken');
 
-const PhotographerDetailsRouter=require("./routs/PhotographerDetailsRouter")
+const PhotographerCategoriesRouter=require("./routs/PhotographerCategoriesRouter")
 const PhotographersRouter = require("./routs/PhotographersRouter")
 const UsersRouter = require("./routs/UsersRouter")
 const ManagerRouter = require("./routs/ManagerRouter")
@@ -22,7 +22,7 @@ app.use("/aboutMe", PhotographersRouter);
 app.use("/", PhotographersRouter);
 app.use("/users", UsersRouter);
 app.use("/requests/requests", ManagerRouter);
-app.use("/category",PhotographerDetailsRouter)
+app.use("/category",PhotographerCategoriesRouter)
 app.use("/order",  OrderRouter)
 app.use('/send-email', EmailRouter);
 app.use('/photographer', PhotographerManagementRouter);

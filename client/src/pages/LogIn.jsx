@@ -12,6 +12,7 @@ function LogIn() {
   const photographer = location.state?.photographer;
   const [formData, setFormData] = useState({})
   let body = {};
+
   function handleChange(event) {
     const { name, value } = event.target;
     setFormData(prevFormData => ({
@@ -21,24 +22,21 @@ function LogIn() {
   }
 
   const handleLogInButton = () => {
-
     if (!formData.email || !formData.password) {
       alert("Must Fill All Details");
       return;
     }
     switch (roleID) {
       case 3:
-        body =
-        {
+        body = {
           email: formData.email,
           password: formData.password,
           roleID: roleID,
-          photographerId: photographer.userID
+          photographerId: photographer?.userID || 0 // תוודא שיש ערך תקין
         };
         break;
       default:
-        body =
-        {
+        body = {
           email: formData.email,
           password: formData.password,
           roleID: roleID,
@@ -52,7 +50,6 @@ function LogIn() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
-
     };
 
     fetch(`http://localhost:3000/users/logIn`, request)
@@ -64,22 +61,37 @@ function LogIn() {
       })
       .then(data => {
         setUser(data);
-        if (data.roleID == 3) {
+        if (data.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
           alert("You entered successfully")
-          navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
-        }
-        else if (data.roleID == 1) {
+          navigate(`/photographer/${data.userID}`, { state: { photographer: data } });
+        } 
+        else if (data.roleID === 1) {// מנהל
           alert("You entered successfully")
           navigate('/maneger');
-        }
-        else {
-          alert("You entered successfully")
-          navigate('/');
+        } 
+        else if (data.roleID === 2) {// צלם - בודק אם הוא פעיל
+          checkIfPhotographerActive(data.userID).then(isActive => {
+            if (isActive) {
+              alert("You entered successfully")
+              navigate(`/photographerManagement/${data.userID}`);
+            }
+          });
         }
       })
       .catch(error => {
         alert(error.message);
       });
+  };
+
+  const checkIfPhotographerActive = async (userID) => {
+    try {
+      const response = await fetch(`http://localhost:3000/photographer/${userID}`);
+      const data = await response.json();
+      return data.isActive;
+    } catch (error) {
+      console.error('Failed to check if photographer is active:', error);
+      return false;
+    }
   };
 
   const handleBackClick = () => {

@@ -8,8 +8,9 @@ import Request from "./pages/Request";
 import PriceList from "./pages/PriceList";
 import Order from "./pages/Order";
 import PrivateArea from './pages/PrivateArea'
-import './App.css';
 import ManagerPage from "./pages/ManagerPage";
+import PhotographerPage from "./pages/PhotographerPage"
+import './App.css';
 export const UserContext = createContext();
 export const PhotographerContext = createContext();
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/maneger" element={<ManagerPage/>}/>
           <Route path="/Request" element={<Request />} />
           <Route path="/photographer/:id" element={<PhotographerClientPage />} />
+          <Route path="/photographerManagement/:id" element={<PhotographerPage />} />
           <Route path="/photographer/:id/order" element={<Order />} />
           <Route path="/photographer/:id/PriceList" element={<PriceList />} />
           <Route path="/photographer/:id/PrivateArea" element={<PrivateArea />} />

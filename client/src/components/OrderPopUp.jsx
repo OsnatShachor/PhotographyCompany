@@ -36,6 +36,7 @@ const OrderPopUp = ({ photographerID, date, photographer, categories, onClose })
         const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
         const formattedDate = utcDate.toISOString().slice(0, 19).replace('T', ' ');
         console.log(formattedDate);
+       
         const request = {
             method: "POST",
             headers: {

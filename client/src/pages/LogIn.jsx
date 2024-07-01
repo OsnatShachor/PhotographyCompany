@@ -67,13 +67,16 @@ function LogIn() {
         } 
         else if (data.roleID === 1) {// מנהל
           alert("You entered successfully")
-          navigate('/maneger');
+          navigate('/manager');
         } 
         else if (data.roleID === 2) {// צלם - בודק אם הוא פעיל
           checkIfPhotographerActive(data.userID).then(isActive => {
             if (isActive) {
               alert("You entered successfully")
               navigate(`/photographerManagement/${data.userID}`);
+            }else{
+              alert("You entered successfully")
+              navigate(`/`);
             }
           });
         }

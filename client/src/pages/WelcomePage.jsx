@@ -26,6 +26,9 @@ function WelcomePage() {
     navigate('/SignUp', { state: { roleID } });
   };
 
+  const handlrequestsClick = () => {
+    navigate('/manager');
+  };
 
   const handleJoinClick = () => {
     if (user.userID) {//אם מחובר משתמש
@@ -35,11 +38,16 @@ function WelcomePage() {
       navigate('/SignUp', { state: { roleID } });
     }
   };
-
+  const handleDisConnectionClick = () => {
+    setUser({});
+    navigate('/');
+};
   return (
     <div id="welcomePage">
       <div className="onTopBtn">
-      <button onClick={handleSidnUpClick}>Connection</button>
+        {!(user.userID)&&<button onClick={handleSidnUpClick}>Connection</button>}
+        {(user && user.userID) &&(<button onClick={handleDisConnectionClick}>Disconnection</button>)}
+        {(user.roleID == 1) && <button onClick={handlrequestsClick}>Handling requests</button>}
       </div>
 
       <h1 id="mainTitle">Welcome to our community of photographers!</h1>

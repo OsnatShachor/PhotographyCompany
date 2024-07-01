@@ -1,4 +1,18 @@
-body, html {
+.onTopBtn {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    background-color: #006D77;
+    padding: 10px;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  body, html {
     min-width: 100%;
     background-color: #f8e3db;
     background-position: center;
@@ -11,25 +25,28 @@ body, html {
     align-items: center;
     overflow-x: hidden; /* כדי למנוע גלילה אופקית */
     overflow-y: auto;
-}
-.box {
-    margin-left:0% ;
+  }
+  
+  .box {
+    margin-left: 0%;
     min-width: 280px !important;
-}
-
-.orderShow {
-    margin-top: 50px;
+    min-height: 600 px !important;
+  }
+  
+  .orderShow {
+    margin-top: 180px; /* הגדר מרווח עליון גדול מספיק כדי להמנע מהסתרת תוכן */
     display: flex;
     flex-wrap: wrap;
     padding: 0 4px;
     margin: 1% 10% 5%;
     justify-content: center;
     align-items: center;
-}
-
-@media (max-width: 768px) {
+  }
+  
+  @media (max-width: 768px) {
     .orderShow {
-        grid-template-columns: 1fr;
-        /* Single column on smaller screens */
+      grid-template-columns: 1fr;
+      /* עמודה אחת במסכים קטנים יותר */
     }
-}
+  }
+  

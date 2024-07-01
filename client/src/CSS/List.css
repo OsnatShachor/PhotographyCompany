@@ -10,18 +10,23 @@ body {
   margin: 0;
 }
 
-.changeStateBtn{
+.changeStateBtn {
   justify-content: center;
-    align-items: center;
+  align-items: center;
 }
-.btnInBox{
+.btnInOrder{
+  height: 40px;
+  width: 110px;
+}
+
+.btnInBox {
   height: 40px;
   width: 100px;
   margin-left: 3px;
   margin-right: 0%;
   padding: 0;
-
 }
+
 .box {
   border-color: #006D77;
   border-radius: 3px;
@@ -33,19 +38,23 @@ body {
   text-align: center; 
   padding: 20px; 
   background-color: #ffe3d8; 
+  display: flex; /* הוספת תכונת תצוגה גמישה */
+  flex-wrap: wrap; /* אפשרות לגלישה */
+  justify-content: space-around; /* ריווח שווה בין האלמנטים */
 }
 
 .bold {
   color: #000000;
 }
+
 .boxShow, #waitingRequests {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 4px;
-    margin-right: 10%;
-    margin-left: 10%;
-    margin-top: 1%;
-    margin-bottom: 5%;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-top: 1%;
+  margin-bottom: 5%;
+  justify-content: center;
+  align-items: center;
 }

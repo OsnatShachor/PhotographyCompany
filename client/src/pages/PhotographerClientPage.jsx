@@ -89,7 +89,7 @@ function PhotographerClientPage() {
       {user.userName && <h3>Hello {user.userName}</h3>}
 
       <h1>{photographer.userName}</h1>
-      <div id="photographers">
+      <div id="photographersBtn">
         <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
         <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
       </div>

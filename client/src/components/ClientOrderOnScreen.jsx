@@ -81,8 +81,8 @@ function ClientOrderOnScreen(props) {
                 {order.statusID !== 5 && order.statusID !== 6 && (
                     <button onClick={handleDeleteRequestClick}>Request Deletion</button>
                 )}
-                  {order.statusID == 5 (
-                    <h3>Awaiting admin approval</h3>
+                  {(order.statusID == 1 ||order.statusID == 3 ) &&(
+                    <h3> status: <span className="bold">waiting admin approval</span></h3>
                 )}
             </div>
 

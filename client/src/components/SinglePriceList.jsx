@@ -34,16 +34,13 @@ function SinglePriceList(props) {
     const handleSaveUpdate = async (updatedCategory) => {
         try {
           console.log(updatedCategory.categoryID);
-            const response = await fetch(`http://localhost:3000/category/${updatedCategory.categoryID}`, {
+             await fetch(`http://localhost:3000/category/${updatedCategory.categoryID}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(updatedCategory),
             });
-            if (!response.ok) {
-                throw new Error('Failed to update category');
-            }
             setShowUpdateModal(false); 
             props.refreshCategories();
         } catch (error) {

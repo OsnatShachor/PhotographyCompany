@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require("../controllers/PhotographersController");
+const controller = require("../controllers/CategoryController");
 router.get("/:id",async (req, res) => {
     try {
         const id = req.params.id;

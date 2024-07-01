@@ -63,7 +63,7 @@ function LogIn() {
         setUser(data);
         if (data.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
           alert("You entered successfully")
-          navigate(`/photographer/${data.userID}`, { state: { photographer: data } });
+          navigate(`/photographer/${photographer.userID}`, { state: { photographer: photographer } });
         } 
         else if (data.roleID === 1) {// מנהל
           alert("You entered successfully")

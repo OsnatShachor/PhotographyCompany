@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import UpdateOrderPopUp from '../components/UpdateOrderPopUp';
-
+import '../CSS/PrivateArea.css'
 function ClientOrderOnScreen(props) {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [enableUpdate, setEnableUpdate] = useState(false);
     const [orderCategory, setOrderCategory] = useState({});
     const navigate = useNavigate();
-    const {id} = useParams();
+    const { id } = useParams();
     const order = props.order;
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function ClientOrderOnScreen(props) {
         try {
             const data = await fetch(`http://localhost:3000/category/${id}/${order.categoryID}`);
             const categories = await data.json();
-            setOrderCategory(categories[0]); 
+            setOrderCategory(categories[0]);
         } catch (error) {
             console.error('Error fetching categories:', error);
         }
@@ -58,7 +58,7 @@ function ClientOrderOnScreen(props) {
             alert(error.message);
         }
     };
-    
+
 
     const handleCloseModal = (updatedOrder) => {
         setShowUpdateModal(false);
@@ -77,12 +77,18 @@ function ClientOrderOnScreen(props) {
                 <h3><span className='bold'>Duration Time: </span>{order.durationTimePhotography}</h3>
                 <h3><span className='bold'>Location: </span>{order.location}</h3>
                 <h3><span className='bold'>Payment: </span>{order.payment}</h3>
-                {enableUpdate && <button onClick={handleUpdateClick}>Update</button>}
-                {order.statusID !== 5 && order.statusID !== 6 && (
-                    <button onClick={handleDeleteRequestClick}>Request Deletion</button>
+                <div className="changeStateBtn">
+                    {enableUpdate && <button className="btnInBox" onClick={handleUpdateClick}>Update</button>}
+                    {enableUpdate && <button className="btnInBox" onClick={handleDeleteRequestClick}>Request Deletion</button>}
+                </div>
+                {(order.statusID == 1 || order.statusID == 3) && (
+                    <h3> status: <span className="bold">Waiting for photographer's approval</span></h3>
                 )}
-                  {(order.statusID == 1 ||order.statusID == 3 ) &&(
-                    <h3> status: <span className="bold">waiting admin approval</span></h3>
+                 {(order.statusID == 2 ) && (
+                    <h3> status: <span className="bold">Update according to the photographer's requirements sent to you by email</span></h3>
+                )}
+                  {(order.statusID == 6 ) && (
+                    <h3> status: <span className="bold">Complete order</span></h3>
                 )}
             </div>
 

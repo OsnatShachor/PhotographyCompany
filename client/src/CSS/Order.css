@@ -19,15 +19,11 @@ body {
 /* Modal */
 .modal {
     position: fixed;
-    /* חלון קופץ עליון קבוע */
     z-index: 1;
-    /* הכי מעל לכולם */
     left: 0;
     top: 0;
     width: 100%;
-    /* רוחב העמוד */
     height: 100%;
-    /* גובה העמוד */
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;

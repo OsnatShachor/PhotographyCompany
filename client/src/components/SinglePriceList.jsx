@@ -55,10 +55,10 @@ function SinglePriceList(props) {
                 <h3><span className='bold'>Pay Per Hour: </span>{category.payPerHour}</h3>
                 <h3><span className='bold'>Number Of Edit Img: </span>{category.numOfEditPictures}</h3>
                 {(user.userID == category.photographerID) && (
-                    <>
-                        <button onClick={handleUpdateClick}>Update</button>
-                        <button onClick={handleDeleteClick}>Delete</button>
-                    </>
+                    <div className="changeStateBtn">
+                        <button className="btnInBox" onClick={handleUpdateClick}>Update</button>
+                        <button className="btnInBox" onClick={handleDeleteClick}>Delete</button>
+                    </div>
                 )}
             </div>
             <ConfirmationPopUp

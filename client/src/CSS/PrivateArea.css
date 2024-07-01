@@ -14,7 +14,7 @@ body, html {
 }
 .box {
     margin-left:0% ;
-    
+    min-width: 280px !important;
 }
 
 .orderShow {

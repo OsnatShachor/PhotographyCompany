@@ -22,7 +22,7 @@ function UpdateCategoryPopUp({ show, handleClose, handleSave, category }) {
     return (
         <div className="modal">
             <div className="modal-content">
-                <h4>Update Category</h4>
+                <h2>Update Category</h2>
                 <label>Category Name:</label>
                 <input type="text" value={categoryName} onChange={(e) => setCategoryName(e.target.value)} />
                 <label>Pay Per Hour:</label>

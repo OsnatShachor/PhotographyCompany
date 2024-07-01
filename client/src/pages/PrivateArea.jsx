@@ -44,24 +44,24 @@ function PrivateArea() {
         setOrders((prevOrders) =>
             prevOrders.map((order) => (order.orderID === updatedOrder.orderID ? updatedOrder : order))
         );
-};
+    };
 
-return (
-    <div>
-        <div className="onTopBtn">
-            <button onClick={handleHomeClick}>Home page</button>
-            <button onClick={handleConnectionClick}>Connection</button>
-            <button onClick={handleDisConnectionClick}>Disconnection</button>
-            <button onClick={handleBackClick}>Back</button>
+    return (
+        <div>
+            <div className="onTopBtn">
+                <button onClick={handleHomeClick}>Home page</button>
+                {!(user && user.userID) && (<button onClick={handleConnectionClick}>Connection</button>)}
+                {(user && user.userID) &&(<button onClick={handleDisConnectionClick}>Disconnection</button>)}
+                <button onClick={handleBackClick}>Back</button>
+            </div>
+            <h1>My Orders</h1>
+            <div className="orderShow">
+                {orders.map(order => (
+                    <ClientOrderOnScreen key={order.orderID} order={order} onUpdate={handleUpdateOrder} />
+                ))}
+            </div>
         </div>
-        <h1>My Orders</h1>
-        <div className="orderShow">
-            {orders.map(order => (
-                <ClientOrderOnScreen key={order.orderID} order={order} onUpdate={handleUpdateOrder} />
-            ))}
-        </div>
-    </div>
-);
+    );
 }
 
 export default PrivateArea;

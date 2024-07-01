@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import ConfirmManegerWindow from "./ConfirmManegerWindow";
 import RefuseManagerWindow from "./RefuseManagerWindow";
 import emailjs from 'emailjs-com';
-
+import '../CSS/Request.css'
 function RequestOnScreen(props) {
   const [photographer, setPhotographer] = useState(null);
   const [showOkModal, setShowOkModal] = useState(false);
@@ -110,9 +110,9 @@ function RequestOnScreen(props) {
       <div className="box">
         {photographer && (
           <>
-            <h5>Photographer Name: {photographer.userName}</h5>
-            <h5>Photographer Email: {photographer.email}</h5>
-            <h3>{request.request}</h3>
+            <h4>Photographer Name: {photographer.userName}</h4>
+            <h4>Email: {photographer.email}</h4>
+            <h3 id="requesth3">{request.request}</h3>
             {request.statusID != 4 &&(request.statusID !=5)&&
               (<button onClick={handleConfirmClick}>Confirm</button>)}
              {(request.statusID != 4) &&(request.statusID !=5)&&

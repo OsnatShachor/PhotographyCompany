@@ -19,17 +19,20 @@ async function getAllActivePhotographers() {
 async function getInformation(photographerId) {
   try {
     const sql = `
-   SELECT aboutMe
-   FROM photographers
-   WHERE photographerId = ?
+      SELECT aboutMe
+      FROM photographers
+      WHERE photographerId = ?
     `;
     const [rows] = await pool.query(sql, [photographerId]);
-    console.log("model get information !!!!! " + JSON.stringify(rows[0]));
+    if (rows.length === 0) {
+      return { aboutMe: '' };
+    }
     return rows[0];
   } catch (err) {
     return (err);
   }
 }
+
 
 
 module.exports = { getAllActivePhotographers, getInformation }  

@@ -2,56 +2,57 @@ const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/OrderController");
 
-// מביא את כל ההזמנות של הצלם
+// Fetch all orders of a photographer
 router.get("/:userID/:photographerId", async (req, res) => {
     try {
-        const userID = req.params.userID;
-        const photographerId = req.params.photographerId;
+        const { userID, photographerId } = req.params;
         const orders = await controller.getAllMyOrders(userID, photographerId);
-        console.log("Fetched orders: "+ JSON.stringify (orders));
-        res.status(200).send(orders);
+        console.log("Fetched orders: ", orders);
+        res.status(200).json(orders);
     } catch (error) {
         console.error('Error fetching orders:', error);
-        res.status(500).send({ error: "Failed to fetch orders" });
+        res.status(500).json({ error: "Failed to fetch orders" });
     }
 });
 
-// מביא את התאריכים הפנויים של הצלם
-router.get('/unavailable-dates/:photographerId', async (req, res) => {
+// Fetch unavailable dates of a photographer
+router.get('/unavailable-dates/:id', async (req, res) => {
     try {
-        const photographerId = req.params.photographerId;
+        const { id: photographerId } = req.params;
         const unavailableDates = await controller.getUnavailableDates(photographerId);
-        res.json(unavailableDates);
+        console.log("Unavailable dates: ", unavailableDates);
+        res.status(200).json(unavailableDates);
     } catch (err) {
         console.error('Error fetching unavailable dates:', err);
         res.status(500).send('Internal Server Error');
     }
 });
 
+// Create a new order
 router.post("/", async (req, res) => {
     try {
         const returnedOrder = await controller.createOrder(req.body);
         console.log("Order created successfully:", returnedOrder);
-        res.json(returnedOrder);
+        res.status(201).json(returnedOrder);
     } catch (err) {
-        console.error('Error during create request:', err);
+        console.error('Error creating order:', err);
         if (err.message === "Photographer is not available on this date") {
-            res.status(400).send({ error: err.message });
+            res.status(400).json({ error: err.message });
         } else {
             res.status(500).send('Internal Server Error');
         }
     }
 });
 
-//  update an existing order
+// Update an existing order
 router.put("/:orderId", async (req, res) => {
     try {
-        const orderId = req.params.orderId;
+        const { orderId } = req.params;
         const updatedOrder = await controller.updateOrder(orderId, req.body);
-        res.status(200).send(updatedOrder);
+        res.status(200).json(updatedOrder);
     } catch (error) {
         console.error('Error updating order:', error);
-        res.status(500).send({ error: "Failed to update order" });
+        res.status(500).json({ error: "Failed to update order" });
     }
 });
 

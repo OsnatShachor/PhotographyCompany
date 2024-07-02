@@ -1,17 +1,15 @@
 const model = require('../models/OrderModel');
 
-
 async function createOrder(body) {
     try {
-        // בדיקה אם הצלם זמין בתאריך המבוקש
         const availabilityResult = await model.checkPhotographerAvailability(body.photographerID, body.photoDate);
 
         if (availabilityResult.length > 0) {
             throw new Error("Photographer is not available on this date");
         }
-        // אם הצלם זמין, ניצור את ההזמנה
+
         const resultOrderRequest = await model.createOrder(body);
-        console.log("create order Controller:", resultOrderRequest);
+        console.log("Created order:", resultOrderRequest);
         return resultOrderRequest;
     } catch (err) {
         throw err;
@@ -21,17 +19,18 @@ async function createOrder(body) {
 async function getUnavailableDates(photographerID) {
     try {
         const unavailableDates = await model.getUnavailableDates(photographerID);
+        console.log("Unavailable dates:", unavailableDates);
         return unavailableDates;
     } catch (err) {
         throw err;
     }
 }
 
-async function getAllMyOrders(userID,photographerId) {
+async function getAllMyOrders(userID, photographerId) {
     try {
-        const resultOrderRequest = await model.getAllMyOrders(userID,photographerId);
-        console.log("getAllMY order Controller "+resultOrderRequest);
-        return resultOrderRequest;
+        const orders = await model.getAllMyOrders(userID, photographerId);
+        console.log("Fetched orders:", orders);
+        return orders;
     } catch (err) {
         throw err;
     }
@@ -46,4 +45,4 @@ async function updateOrder(orderId, updatedOrderData) {
     }
 }
 
-module.exports = { createOrder,getAllMyOrders ,getUnavailableDates,updateOrder}
+module.exports = { createOrder, getAllMyOrders, getUnavailableDates, updateOrder };

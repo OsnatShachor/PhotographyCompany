@@ -1,47 +1,43 @@
 const model = require('../models/ManagerModel');
 
-const getALLRequests = async (req, res) => {
-    try {
-        console.log("Hi there:)");
-        const waitingRequests = await model.getALLRequests();
-        res.status(200).send(waitingRequests);
-    } catch (error) {
-        res.status(500).send({ error: 'Failed to fetch requests' });
-        throw error;
-    }
-};
 
-const createRequest = async (req, res) => {
+async function createRequest(photographerID, request,statusID) {
     try {
-        const { photographerID, request, statusID } = req.body;
-        const returnedRequest = await model.createRequest(photographerID, request, statusID);
-        console.log("Request created successfully:", returnedRequest);
-        res.json(returnedRequest);
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const requestResult = await model.createRequest(photographerID, request,statusID);
+        console.log("create request Controller "+requestResult);
+        return requestResult;
     } catch (err) {
-        console.error('Error during create request:', err);
-        res.status(500).send('Internal Server Error');
+        throw err;
     }
-};
+}
 
-const updateStatus = async (req, res) => {
+async function getALLRequests() {
     try {
-        console.log("I am in approval req");
-        const { requestID, statusID, photographerID } = req.body;
-        const updatedStatus = await model.updateStatus(requestID, statusID);
-        console.log("controller-manager");
-
-        if (updatedStatus && statusID == 4) {
-            try {
+        const requestResult = await model.getALLRequests();
+        console.log("getALLRequests" +requestResult);
+        return requestResult;
+    } catch (err) {
+        throw err;
+    }
+}
+async function updateStatus(requestID, statusID, photographerID) {
+  
+       try {
+        const result = await model.updateStatus(requestID, statusID);
+        console.log("controller-maneger")
+        if (result&& statusID==4){
+            try{
                 await model.updateActivePhotographer(photographerID);
-            } catch (err) {
+            }catch (err) {
                 throw err;
             }
         }
-        res.status(200).send(updatedStatus);
-    } catch (error) {
-        console.error('Error updating order:', error);
-        res.status(500).send({ error: 'Failed to update order' });
+        return result;
+    } catch (err) {
+        throw err;
     }
-};
+  
+}
 
-module.exports = { getALLRequests, createRequest, updateStatus };
+module.exports = { createRequest ,getALLRequests,updateStatus}

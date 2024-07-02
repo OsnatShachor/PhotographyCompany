@@ -1,11 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const ManagerController = require('../controllers/ManagerController');
+const controller = require("../controllers/ManagerController");
+router.get("/", async (req, res) => {
+    try {
+        console.log("Hi there:)")
+        const waitingRequests = await controller.getALLRequests();
+        res.status(200).send(waitingRequests);
+        // res.json(waitingRequests);
+    } catch (error) {
+        res.status(500).send({ error: "Failed to fetch requests" });
+        throw error;
+    }
+},);
 
-router.get('/', ManagerController.getALLRequests);
+//בקשה מהצלם למנהל
+router.post("/", async (req, res) => {
+    try {
+        const body = req.body;
+        const returnedRequest = await controller.createRequest(body.photographerID, body.request, body.statusID);
+        console.log("Request created successfully:", returnedRequest);
+        res.json(returnedRequest);
 
-router.post('/', ManagerController.createRequest);
-
-router.put('/:orderId', ManagerController.updateStatus);
-
+    } catch (err) {
+        console.error('Error during create request:', err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+//עדכון סטטוס
+router.put("/:orderId", async (req, res) => {
+    try {
+        console.log("I am in aprovel req")
+        const body = req.body;
+        const updatedStatus = await controller.updateStatus(body.requestID, body.statusID, body.photographerID);
+        res.status(200).send(updatedStatus);
+    } catch (error) {
+        console.error('Error updating order:', error);
+        res.status(500).send({ error: "Failed to update order" });
+    }
+});
 module.exports = router;

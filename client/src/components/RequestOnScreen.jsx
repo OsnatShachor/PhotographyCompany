@@ -79,7 +79,7 @@ function RequestOnScreen(props) {
         console.log('Email sent successfully!', response.status, response.text);
         setShowRefuseModal(false);
 
-        await updateRequestStatus(request.requestID, 5, request.photographerID);
+       updateRequestStatus(request.requestID, 5, request.photographerID);
         setRequest({ ...request, statusID: 5 });
         props.onRequestUpdate();
 

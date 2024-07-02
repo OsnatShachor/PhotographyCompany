@@ -15,8 +15,8 @@ function PhotographerClientPage() {
 
   useEffect(() => {
     if (location.state && location.state.photographer) {
-      setPhotographer(location.state.photographer);
-      getInformation(location.state.photographer.userID);
+      setPhotographer(location.state?.photographer);
+      getInformation(id);
       console.log(JSON.stringify(user));
     } else {
       getPhotographer(id);
@@ -89,12 +89,12 @@ function PhotographerClientPage() {
       {user.userName && <h3>Hello {user.userName}</h3>}
 
       <h1>{photographer.userName}</h1>
-      <div id="photographers">
+      <div id="photographersBtn">
         <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
         <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
       </div>
       <div id="aboutMe">
-        <p>{aboutMe}</p>
+        <h4>{aboutMe}</h4>
       </div>
       <Outlet />
     </div>

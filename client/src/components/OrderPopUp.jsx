@@ -30,7 +30,13 @@ const OrderPopUp = ({ photographerID, date, photographer, categories, onClose })
 
     const handleConfirmOrder = (e) => {
         e.preventDefault();
-        const formattedDate = date.toISOString().slice(0, 19).replace('T', ' ');
+        const localDate = new Date(date);
+        localDate.setHours(startTime.split(':')[0]);
+        localDate.setMinutes(startTime.split(':')[1]);
+        const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
+        const formattedDate = utcDate.toISOString().slice(0, 19).replace('T', ' ');
+        console.log(formattedDate);
+       
         const request = {
             method: "POST",
             headers: {

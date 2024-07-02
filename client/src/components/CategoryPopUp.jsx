@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function CategoryPopUp({ showModal, handleClose, handleSave }) {
+function CategoryPopUp({ showModal, handleClose, handleSave, initialCategoryData }) {
     const [categoryName, setCategoryName] = useState('');
     const [payPerHour, setPayPerHour] = useState('');
     const [numOfEditPictures, setNumOfEditPictures] = useState('');
+
+    useEffect(() => {
+        if (showModal) {
+            setCategoryName(initialCategoryData.categoryName);
+            setPayPerHour(initialCategoryData.payPerHour);
+            setNumOfEditPictures(initialCategoryData.numOfEditPictures);
+        }
+    }, [showModal, initialCategoryData]);
 
     const handleSubmit = () => {
         handleSave({ categoryName, payPerHour, numOfEditPictures });

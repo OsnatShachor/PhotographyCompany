@@ -13,7 +13,7 @@ function ManagerPage() {
     const { user, setUser } = context;
 
     useEffect(() => {
-        if(!user.userID){
+        if (!user.userID) {
             navigate('/');
         }
         getAllRequest();
@@ -36,8 +36,8 @@ function ManagerPage() {
     const filterRequests = () => {
         if (filter === "all") {
             setFilteredRequests(allRequests);
-        } else if (filter === "pending") {
-            setFilteredRequests(allRequests=>allRequests.filter(request => request.statusID!==4));
+        } else if (filter === "Waiting") {
+            setFilteredRequests(allRequests => allRequests.filter(request => ((request.statusID != 4) && (request.statusID != 5))));
         }
     };
 
@@ -49,6 +49,10 @@ function ManagerPage() {
         navigate(-1);
     };
 
+    const handleHomeClick = () => {
+        navigate('/');
+    };
+    
     const handleDisConnectionClick = () => {
         setUser({});
         navigate('/');
@@ -58,14 +62,15 @@ function ManagerPage() {
         setFilter("all");
     };
 
-    const handleShowPendingClick = () => {
-        setFilter("pending");
+    const handleShowWaitingClick = () => {
+        setFilter("Waiting");
     };
 
     return (
         <>
             <div className="onTopBtn">
-                <button onClick={handleDisConnectionClick}>DisConnection</button>
+            <button onClick={handleHomeClick}>Home page</button>
+            <button onClick={handleDisConnectionClick}>DisConnection</button>
                 <button onClick={handleBackClick}>Back</button>
             </div>
             <div id="space">
@@ -73,7 +78,7 @@ function ManagerPage() {
             </div>
             <div className="filterButtons">
                 <button onClick={handleShowAllClick}>Show All Requests</button>
-                <button onClick={handleShowPendingClick}>Show Pending Requests</button>
+                <button onClick={handleShowWaitingClick}>Show Waiting Requests</button>
             </div>
             <div id="waitingRequests">
                 {filteredRequests.map((request, index) => (

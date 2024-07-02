@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from '../App';
-
+import '../CSS/PhotographerManagement.css'
 function PhotographerPage() {
     const navigate = useNavigate();
     const [aboutMe, setAboutMe] = useState('');
@@ -18,9 +18,16 @@ function PhotographerPage() {
     }, []);
 
     const getAbout = async () => {
-        const data = await fetch(`http://localhost:3000/aboutMe/${id}`);
-        const aboutMeData = await data.json();
-        setAboutMe(aboutMeData.aboutMe);
+        try {
+            const response = await fetch(`http://localhost:3000/aboutMe/${id}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const aboutMeData = await response.json();
+            setAboutMe(aboutMeData.aboutMe || '');
+        } catch (error) {
+            console.error('Error fetching about me:', error);
+        }
     };
 
     const handleUpdateAboutClick = async () => {
@@ -46,7 +53,6 @@ function PhotographerPage() {
         navigate(`/photographer/${user.userID}`, { state: { user } });
     };
 
-    const handleSitePolicyClick = async () => { };
     const handlePriceListClick = () => {
         navigate(`/photographer/${id}/PriceList`, { state: { user } });    }
 
@@ -55,7 +61,7 @@ function PhotographerPage() {
 
     const handleAddingPhotosClick = async () => { };
 
-    const handleSaveCategory = async (category) => {
+    const handleUpdateCategory = async (category) => {
         try {
             const response = await fetch(`http://localhost:3000/category`, {
                 method: 'POST',
@@ -75,19 +81,18 @@ function PhotographerPage() {
     return (
         <>
             <div className="onTopBtn">
-                <button onClick={handleSitePolicyClick}>Your site policy</button>
                 <button onClick={handleDisconnectionClick}>Disconnection</button>
                 <button onClick={handleOrderClick}>Order management</button>
             </div>
             <h1>{user.userName}</h1>
             <div id="photographers">
-                <button className="btnPhotographer" onClick={handleAddingPhotosClick}>Adding photos to the gallery</button>
+                <button className="btnPhotographer" onClick={handleAddingPhotosClick}>Add photos to the gallery</button>
                 <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
-                <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
             </div>
-            <input
+            <textarea
                 type="text"
                 value={aboutMe}
+                id="inputAbout"
                 className="input"
                 placeholder="About Me"
                 onChange={(e) => {

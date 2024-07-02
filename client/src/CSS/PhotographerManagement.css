@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+body, html {
+    min-width: 100%;
+    background-color: #f8e3db;
+    height: 100%;
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+  }
+  
+
+#inputAbout {
+    border: 5px solid #83C5BE;
+    border-radius: 4px;
+    padding: 10px;
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+    margin-bottom: 20px;
+    display: inline-block; /* Allow input to resize */
+    width: 700px; 
+    height: auto;
+    min-width: 50px; /* Ensure a minimum width */
+    position: fixed;
+    bottom: 0;
+    left: auto;
+    right: auto;
+    margin: 0px;
+  }

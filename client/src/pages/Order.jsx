@@ -20,7 +20,7 @@ function Order() {
 
     useEffect(() => {
         fetchCategories();
-        fetchDisabledDates();
+        getDisabledDates();
     }, [id]);
 
     const fetchCategories = async () => {
@@ -29,11 +29,19 @@ function Order() {
         setCategories(data);
     };
 
-    const fetchDisabledDates = async () => {
-        const response = await fetch(`http://localhost:3000/order/unavailable-dates/${id}`);
-        const data = await response.json();
-        setDisabledDates(data.map(d => new Date(d)));
+    const getDisabledDates = async (id) => {
+        console.log("getDisabledDates client ");
+        try {
+            const response = await fetch(`http://localhost:3000/order/unavailable-dates/${id}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            console.log(data);
+            setDisabledDates(data.map(d => new Date(d)));
+        } catch (error) {
+            console.error('Error fetching disabled dates:', error);
+        }
     };
+    
 
     const handleBackClick = () => {
         navigate(-1);
@@ -67,7 +75,7 @@ function Order() {
             if (date.getDay() === 6) {
                 return true;
             }
-            // Disable dates where the photographer is unavailable
+            console.log(disabledDates);
             return disabledDates.some(disabledDate =>
                 date.getFullYear() === disabledDate.getFullYear() &&
                 date.getMonth() === disabledDate.getMonth() &&
@@ -87,8 +95,8 @@ function Order() {
         <div id="welcomePage">
             <div className="onTopBtn">
                 <button onClick={handleHomeClick}>Home page</button>
-                <button onClick={handleConnectionClick}>Connection</button>
-                <button onClick={handleDisConnectionClick}>Disconnection</button>
+                {!(user && user.userID) && (<button onClick={handleConnectionClick}>Connection</button>)}
+                {(user && user.userID) &&(<button onClick={handleDisConnectionClick}>Disconnection</button>)}
                 <button onClick={handlePrivateAreaClick}>Private Area</button>
                 <button onClick={handleBackClick}>Back</button>
             </div>

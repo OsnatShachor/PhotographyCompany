@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import UpdateOrderPopUp from '../components/UpdateOrderPopUp';
-
+import '../CSS/PrivateArea.css'
 function ClientOrderOnScreen(props) {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [enableUpdate, setEnableUpdate] = useState(false);
+    const [enableCancele, setEnableCancele] = useState(false);
     const [orderCategory, setOrderCategory] = useState({});
     const navigate = useNavigate();
-    const {id} = useParams();
+    const { id } = useParams();
     const order = props.order;
 
     useEffect(() => {
         getOrderCategory();
         if (order.statusID !== 5 && order.statusID !== 6) {
             setEnableUpdate(true);
+        } if (order.statusID !== 6) {
+            setEnableCancele(true);
         }
     }, [order.statusID, id, order.categoryID]);
 
@@ -21,7 +24,7 @@ function ClientOrderOnScreen(props) {
         try {
             const data = await fetch(`http://localhost:3000/category/${id}/${order.categoryID}`);
             const categories = await data.json();
-            setOrderCategory(categories[0]); 
+            setOrderCategory(categories[0]);
         } catch (error) {
             console.error('Error fetching categories:', error);
         }
@@ -53,12 +56,12 @@ function ClientOrderOnScreen(props) {
                 throw new Error(error.error);
             }
             alert("The deletion of the order has been sent to the administrator for approval - you can see in the private email when it will be approved")
-
+            setEnableCancele(false)
         } catch (error) {
             alert(error.message);
         }
     };
-    
+
 
     const handleCloseModal = (updatedOrder) => {
         setShowUpdateModal(false);
@@ -70,6 +73,18 @@ function ClientOrderOnScreen(props) {
     return (
         <>
             <div className="box">
+                {(order.statusID == 1 || order.statusID == 3) && (
+                    <h3>STATUS: <span className="bold">Waiting for photographer's approval</span></h3>
+                )}
+                {(order.statusID == 2) && (
+                    <h3>STATUS: <span className="bold">Update according to the photographer's requirements sent to you by email</span></h3>
+                )}
+                {(order.statusID == 5) && (
+                    <h3>STATUS: <span className="bold">Confirm order</span></h3>
+                )}
+                {(order.statusID == 6) && (
+                    <h3>STATUS: <span className="bold">Complete order</span></h3>
+                )}
                 <h3 className='bold'>Photo Date: </h3>
                 <h3>{new Date(order.photoDate).toLocaleDateString()}</h3>
                 <h3><span className='bold'>Category: </span>{orderCategory.categoryName}</h3>
@@ -77,13 +92,12 @@ function ClientOrderOnScreen(props) {
                 <h3><span className='bold'>Duration Time: </span>{order.durationTimePhotography}</h3>
                 <h3><span className='bold'>Location: </span>{order.location}</h3>
                 <h3><span className='bold'>Payment: </span>{order.payment}</h3>
-                {enableUpdate && <button onClick={handleUpdateClick}>Update</button>}
-                {order.statusID !== 5 && order.statusID !== 6 && (
-                    <button onClick={handleDeleteRequestClick}>Request Deletion</button>
-                )}
-                  {order.statusID == 5 (
-                    <h3>Awaiting admin approval</h3>
-                )}
+
+                <div className="changeStateBtn">
+                    {enableUpdate && <button className="btnInOrder" onClick={handleUpdateClick}>Update</button>}
+                    {enableCancele && <button className="btnInOrder" onClick={handleDeleteRequestClick}>Cancele</button>}
+                </div>
+
             </div>
 
             {showUpdateModal && (

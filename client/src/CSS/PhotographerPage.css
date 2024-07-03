@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
 
-body, html {
+body,
+html {
     min-width: 100%;
     background-color: #f8e3db;
     background-position: center;
@@ -16,7 +17,8 @@ body, html {
 #photographersBtn .btnPhotographer {
     display: inline-block;
     vertical-align: middle;
-    margin-right: 10px; /* רווח בין הכפתורים */
+    margin-right: 10px;
+    /* רווח בין הכפתורים */
 }
 
 h1 {
@@ -38,7 +40,8 @@ h4 {
 
 #photographers {
     display: flex;
-    flex-wrap: wrap; /* מאפשר לרכיבים לעטוף בשורה חדשה אם צריך */
+    flex-wrap: wrap;
+    /* מאפשר לרכיבים לעטוף בשורה חדשה אם צריך */
     padding: 0 4px;
     margin: 1% 10% 5% 10%;
     justify-content: center;
@@ -101,6 +104,11 @@ button:focus-visible {
         font-size: 2em;
     }
 
+    h4 {
+        margin-top: 10px!important;
+        font-size: 1em;
+    }
+
     h3 {
         font-size: 1.2em;
     }
@@ -124,9 +132,12 @@ button:focus-visible {
     h3 {
         font-size: 1em;
     }
-
+    h4 {
+        margin-top: 9px !important;
+        font-size: 0.8em;
+    }
     .btnPhotographer {
-        width: 100%;
-        margin: 5px 0;
+        width: 90%;
+        margin: 5px 0 5px 10px;
     }
 }

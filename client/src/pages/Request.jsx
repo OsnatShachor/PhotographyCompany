@@ -8,13 +8,13 @@ function Request() {
   const context = useContext(UserContext);
   const { user, setUser } = context;
   const [fillRequest, setFillRequest] = useState('');
-  const { id } = useParams();
-  // const location = useLocation();
   const navigate = useNavigate();
-  // const photographer = location.state.photographer;
+  const { id } = useParams();
+  const location = useLocation();
+  const photographer = location.state?.user;
   const handleRequestButton = (e) => {
     e.preventDefault();
-     if (!fillRequest) {
+    if (!fillRequest) {
       alert('Please fill in all fields');
       return;
     }
@@ -25,7 +25,7 @@ function Request() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        photographerID:user.userID,
+        photographerID: user.userID,
         request: fillRequest,
         statusID: 1
       })
@@ -37,7 +37,11 @@ function Request() {
       })
       .then(() => {
         alert("Your request has been successfully sent")
-        navigate('/');
+        if (photographer) {
+          navigate(`/photographerManagement/${photographer.userID}`);
+        } else {
+          navigate('/');
+        }
       })
       .catch(error => {
         alert('Error making POST request:', error);

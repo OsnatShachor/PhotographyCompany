@@ -1,135 +1,145 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
 
-body, html {
-  min-width: 100%;
-  background-color: #f8e3db;
-  background-position: center;
-  background-size: cover;
-  height: 100%;
-  font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+body,
+html {
+    min-width: 100%;
+    background-color: #f8e3db;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #mainTitle {
-  color: #00AFB9;
-  text-align: center;
-  margin: 40px 0;
-  padding-top: 50px;
-  font-size: 3em;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+    color: #00AFB9;
+    text-align: center;
+    margin: 40px 0;
+    padding-top: 50px;
+    font-size: 3em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 #photographers {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 4px;
-  margin: 1% 10% 5%;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    margin: 1% 10% 5%;
+    justify-content: center;
+    align-items: center;
 }
 
 button {
-  margin: 10px;
-  font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  border: 1px solid transparent;
-  font-size: 1em;
-  height: 20px;
-  font-weight: 500;
-  background-color: #006D77;
-  color: #EDF6F9;
-  cursor: pointer;
+    margin: 10px;
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid transparent;
+    font-size: 1em;
+    height: 20px;
+    font-weight: 500;
+    background-color: #006D77;
+    color: #EDF6F9;
+    cursor: pointer;
 }
 
 .photographerInList:hover {
-  border-style: double;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-style: double;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    outline: 4px auto -webkit-focus-ring-color;
 }
 
 .photographerInList {
-  background-color: #83C5BE;
-  width: 250px;
-  height: 120px;
-  border-radius: 8px;
-  color: #EDF6F9;
-  font-size: 200%;
-  transition: border-color 0.25s, box-shadow 0.25s;
+    background-color: #83C5BE;
+    width: 250px;
+    height: 120px;
+    border-radius: 8px;
+    color: #EDF6F9;
+    font-size: 200%;
+    transition: border-color 0.25s, box-shadow 0.25s;
 }
-#inputAbout{
+
+#inputAbout {
     width: 100%;
 }
+
 .onTopBtn {
-  margin-bottom: 80px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content:flex-start;
-  background-color: #006D77;
-  padding: 10px;
-  gap: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  margin:0px ;
+    margin-bottom: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    background-color: #006D77;
+    padding: 10px;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    margin: 0px;
 }
 
 #join {
-  width: 100%;
-  height: 90px;
-  font-size: 1.5em;
-  background-color: #E29578;
-  border: none;
-  border-radius: 0;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0px;
+    width: 100%;
+    height: 90px;
+    font-size: 1.5em;
+    background-color: #E29578;
+    border: none;
+    border-radius: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0px;
 }
 
 #welcomePage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 80px 20px 100px; /* הוספת padding כדי לקחת בחשבון את הכפתורים המקובעים */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 80px 20px 100px;
+    /* הוספת padding כדי לקחת בחשבון את הכפתורים המקובעים */
 }
 
 #space {
-  margin-top: 50px;
-  margin-bottom: 70px;
+    margin-top: 50px;
+    margin-bottom: 70px;
 }
 
 #waitingRequests {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: stretch;
-  gap: 20px;
-  padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: stretch;
+    gap: 20px;
+    padding: 20px;
 }
 
 @media (max-width: 768px) {
-  #photographers {
-    margin: 1% 5%;
-  }
+    #photographers {
+        margin: 1% 5%;
+    }
 
-  h1 {
-    font-size: 2em;
-  }
-
-  .Sign-up-buttons {
-    flex-direction: column;
-    gap: 5px;
-  }
+    h1 {
+        font-size: 2em;
+    }
+    .onTopBtn {
+        margin-left: 0px;
+        margin-top: 0px !important;
+        margin-bottom: 15px !important;
+        flex-wrap: nowrap; /* שמירה על שורה אחת */
+        overflow-x: auto; /* אפשרות לגלילה אופקית במקרה של צורך */
+      }
+    .Sign-up-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
 }

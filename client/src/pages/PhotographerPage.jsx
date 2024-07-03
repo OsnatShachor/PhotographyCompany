@@ -54,14 +54,15 @@ function PhotographerPage() {
     };
 
     const handlePriceListClick = () => {
-        navigate(`/photographer/${id}/PriceList`, { state: { user } });    }
+        navigate(`/photographer/${id}/PriceList`, { state: { user } });
+    }
 
 
     const handleOrderClick = async () => { };
 
-    const handleAddingPhotosClick = async () => { 
-        navigate(`/photographer/${id}/PhotoManagement`)    
-        };
+    const handleAddingPhotosClick = async () => {
+        navigate(`/photographer/${id}/PhotoManagement`)
+    };
 
     const handleUpdateCategory = async (category) => {
         try {
@@ -80,8 +81,8 @@ function PhotographerPage() {
         }
     };
 
-    const handleRequestClick= ()=>{
-        navigate('/Request');
+    const handleRequestClick = () => {
+        navigate('/Request', { state: { user } });
     }
     return (
         <>
@@ -96,18 +97,23 @@ function PhotographerPage() {
                 <button className="btnPhotographer" onClick={handleAddingPhotosClick}>Add photos to the gallery</button>
                 <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
             </div>
-            <textarea
-                type="text"
-                value={aboutMe}
-                id="inputAbout"
-                className="input"
-                placeholder="About Me"
-                onChange={(e) => {
-                    setAboutMe(e.target.value);
-                    setEnableUpdateAbout(true);
-                }}
-            />
-            {enableUpdateAbout && (<button onClick={handleUpdateAboutClick}>Update</button>)}
+            <div className="input-container">
+                <textarea
+                    type="text"
+                    value={aboutMe}
+                    id="inputAbout"
+                    className="input"
+                    placeholder="About Me"
+                    onChange={(e) => {
+                        setAboutMe(e.target.value);
+                        setEnableUpdateAbout(true);
+                    }}
+                />
+                {enableUpdateAbout && (
+                    <button id="btnUpAbout" onClick={handleUpdateAboutClick}>Update</button>
+                )}
+            </div>
+
 
 
         </>

@@ -61,19 +61,19 @@ function LogIn() {
       })
       .then(data => {
         setUser(data);
-        if (data.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
+        if (data.user.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
           alert("You entered successfully")
           navigate(`/photographer/${photographer.userID}`, { state: { photographer: photographer } });
         } 
-        else if (data.roleID === 1) {// מנהל
+        else if (data.user.roleID === 1) {// מנהל
           alert("You entered successfully")
           navigate('/manager');
         } 
-        else if (data.roleID === 2) {// צלם - בודק אם הוא פעיל
-          checkIfPhotographerActive(data.userID).then(isActive => {
+        else if (data.user.roleID === 2) {// צלם - בודק אם הוא פעיל
+          checkIfPhotographerActive(data.user.userID).then(isActive => {
             if (isActive) {
               alert("You entered successfully")
-              navigate(`/photographerManagement/${data.userID}`);
+              navigate(`/photographerManagement/${data.user.userID}`);
             }else{
               alert("You entered successfully")
               navigate(`/`);

@@ -5,7 +5,7 @@ async function CheckIfExist(email) {
         // const cryptedPassword = await bcrypt.hash(password, saltRounds)
         const user = await model.getUserByEmail(email);
         console.log("controller user " + JSON.stringify(user));
-        return user;
+        return user[0];
     } catch (err) {
         throw err;
     }

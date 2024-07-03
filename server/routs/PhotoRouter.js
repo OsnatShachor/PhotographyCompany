@@ -3,100 +3,72 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
-const pool = require('../DB.js');
+const controller = require('../controllers/PhotoController');
 
-// הגדרת אחסון הקבצים
+// Configure storage for Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, '..', 'uploads', req.body.email);
+     const photographerID = req.body.id;
+    const uploadPath = path.join(__dirname, '..', 'uploads', photographerID.toString());
+cb(null,`./upload/${photographerID}`)
+    // יצירת תיקייה עבור הצלם אם היא לא קיימת
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
     cb(null, uploadPath);
   },
+  // filename: (req, file, cb) => {
+  //   cb(null, `${Date.now()}-${file.originalname}`);
+  // }
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  }
+    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+}
 });
 
 const upload = multer({ storage: storage });
 
-// נתיב להעלאת תמונה
-router.post("/", upload.single('image'), (req, res) => {
-  const { name, email } = req.body;
-  const imagePath = path.join('uploads', email, req.file.filename);
+// Route for uploading a photo
+router.post("/", upload.single('photo'), async (req, res) => {
+  const photographerID = req.body.id;
+  const photoPath = path.join('uploads', photographerID.toString(), req.file.filename);
+  const date = new Date();  // נוסיף את התאריך כאן
 
   const data = {
-    name: name,
-    email: email,
-    image: imagePath
+    photographerID: photographerID,
+    photo: photoPath,
+    date: date
   };
 
-  let sql = "INSERT INTO `img_upload` SET ?";
-  pool.query(sql, data, (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send(err);
-    }
-    console.log("inserted");
+  try {
+    const result = await controller.createPhoto(data);
     res.json(result);
-  });
+  } catch (err) {
+    console.error("Error creating photo:", err); // הוספת לוג שגיאות
+    res.status(500).send({ error: "Internal Server Error" });
+  }
 });
+
+// Route for fetching photos
 router.get("/", async (req, res) => {
-        try {
-            const gallery = await controller.getPhotos();
-            res.status(200).send(gallery); // Use 200 OK for GET requests
-        } catch (err) {
-            res.status(500).send(err);
-        }
-    });
+  try {
+    const gallery = await controller.getPhotos();
+    res.status(200).send(gallery);
+  } catch (err) {
+    console.error("Error fetching photos:", err); // הוספת לוג שגיאות
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
+// Route for deleting a photo
+router.delete("/:id", async (req, res) => {
+  const photoId = req.params.id;
+  try {
+    const result = await controller.deletePhoto(photoId);
+    res.status(200).send(result);
+  } catch (err) {
+    console.error("Error deleting photo:", err); // הוספת לוג שגיאות
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
-// const express = require("express");
-// const router = express.Router();
-// const controller = require('../controllers/galleryController');
-// const { verifyJWT, authAdmin } = require('../middleware/authorization');
-// const cors = require('cors'); 
-// const multer = require('multer'); 
-// const path = require('path');
-// router.use(express.json());
-// router.use(express.urlencoded({ extended: true }));
-// router.use(cors({
-//     origin: 'http://localhost:5173'
-// }));
-
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, './public/images');
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
-//     }
-// });
-
-// const upload = multer({
-//     storage: storage
-// });
-
-// router.get("/", async (req, res) => {
-//     try {
-//         const gallery = await controller.getGallery();
-//         res.status(200).send(gallery); // Use 200 OK for GET requests
-//     } catch (err) {
-//         res.status(500).send(err);
-//     }
-// });
-// router.use(verifyJWT);
-
-// router.post('/', authAdmin, upload.single('image'), async (req, res) => {
-//     const image = req.file.filename;
-//     const response = await controller.createPhoto(image);
-//     res.status(201).send(await controller.getGallery());
-// });
-
-// router.delete("/:id", authAdmin, async (req, res) => {
-//     const photoId = req.params.id;
-//     const response = await controller.deletePhoto(photoId);
-//     res.status(200).send(await controller.getGallery()); // Use 200 OK for DELETE requests
-// });
-
-// module.exports = router;

@@ -102,7 +102,7 @@ function PhotographerPage() {
                     setEnableUpdateAbout(true);
                 }}
             />
-            {enableUpdateAbout && (<button onClick={handleUpdateCategory}>Update</button>)}
+            {enableUpdateAbout && (<button onClick={handleUpdateAboutClick}>Update</button>)}
 
 
         </>

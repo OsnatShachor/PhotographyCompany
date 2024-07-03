@@ -14,7 +14,7 @@ router.post("/signUp", async (req, res) => {
                 const user2 = await controller.CheckIfExist(body.email);
                 console.log("User existence check result:", user2);
 
-                if (!user2[0]) {
+                if (!user2) {
                     const returnedUser = await controller.createUser(body.userName, body.email, body.phone, body.roleID, body.password);
                     console.log("User created successfully:", returnedUser);
                     res.json(returnedUser);
@@ -28,19 +28,19 @@ router.post("/signUp", async (req, res) => {
                 const user3 = await controller.CheckIfExist(body.email);
                 console.log(`client ${body.photographerId}`)
                 console.log("User existence check result:", user3);
-                if (!user3[0]) {// אם לא קיים כזה משתמש יוצר
+                if (!user3) {// אם לא קיים כזה משתמש יוצר
                     returnedUser = await controller.createClient(body.photographerId, body.userName, body.email, body.phone, body.roleID, body.password);
                     console.log("User created successfully:", returnedUser);
                     res.json(returnedUser);
                 } else {//אם קיים כזה משתמש - בודק האם הוא רשום לצלם אליו הוא מנסה להירשם
-                    const photographerUser = await controller.checkRelation(user3[0].userID, body.photographerId)
+                    const photographerUser = await controller.checkRelation(user3.userID, body.photographerId)
                     console.log("checkRelation " + JSON.stringify(photographerUser));
                     if (photographerUser && photographerUser.length > 0) {//אם מצא קשר בין הלקוח לצלם
                         console.log("User already exists");
                         res.status(400).send({ error: "The user already exists" });
                     }
                     else {//יוצר קשר חדש - הלקוח לא היה רשום לצלם הזה
-                        const photographerUser = await controller.createRelation(user3[0].userID, body.photographerId)
+                        const photographerUser = await controller.createRelation(user3.userID, body.photographerId)
                         res.json(returnedUser);
                     }
                 }
@@ -59,18 +59,20 @@ router.post("/logIn", async (req, res) => {
         console.log("body " + JSON.stringify(body));
         const user = await controller.CheckIfExist(body.email);
         if (user && user.length > 0) {
-            const userID = user[0].userID;
+            const userID = user.userID;
             const passwordRecord = await controller.getPasswordByUserID(userID);
             if (passwordRecord && passwordRecord.length > 0 && body.password === passwordRecord[0].password) {
                console.log("Password matches");
-              
-                if (user[0].roleID == 1 || user[0].roleID == 2) {// אם הוא צלם או מנהל - אין צורך לבדוק בטבלת הקשרים
-                  res.status(200).send(user[0]);
+               
+                 const accessToken=jwt.sign(user,process.env.ACCESS_TOKEN_SECRET)    
+
+                if (user.roleID == 1 || user.roleID == 2) {// אם הוא צלם או מנהל - אין צורך לבדוק בטבלת הקשרים
+                  res.status(200).send({user, accessToken});
                 } else {
                     const photographerUser = await controller.checkRelation(userID, body.photographerId)
                     console.log("checkRelation " + JSON.stringify(photographerUser));
                     if (photographerUser && photographerUser.length > 0) {//אם חזר שרשום כזה קשר בין הלקוח לצלם
-                        res.status(200).send(user[0]);
+                        res.status(200).send({user, accessToken});
                     } // מחזיר את כל פרטי המשתמש
                     else {// ם הזהמראה שלא נרשם לצל
                         res.status(400).json({ error: "User does not exist" });

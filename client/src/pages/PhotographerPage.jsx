@@ -80,11 +80,16 @@ function PhotographerPage() {
         }
     };
 
+    const handleRequestClick= ()=>{
+        navigate('/Request');
+    }
     return (
         <>
             <div className="onTopBtn">
                 <button onClick={handleDisconnectionClick}>Disconnection</button>
                 <button onClick={handleOrderClick}>Order management</button>
+                <button onClick={handleRequestClick}>Sent Request to YO-Photography</button>
+
             </div>
             <h1>{user.userName}</h1>
             <div id="photographers">

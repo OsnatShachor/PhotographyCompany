@@ -25,10 +25,11 @@ function ManagerPage() {
 
     const getAllRequest = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/requests/requests`);
-            const allRequest = await response.json();
-            setAllRequests(allRequest);
+            const response = await fetch(`http://localhost:3000/requests/requests`, { method: 'GET', credentials: 'include' });
+            const allRequests = await response.json();
+            setAllRequests(allRequests);
         } catch (error) {
+            setAllRequests([]);
             console.error('Error fetching waiting requests:', error);
         }
     };
@@ -52,7 +53,7 @@ function ManagerPage() {
     const handleHomeClick = () => {
         navigate('/');
     };
-    
+
     const handleDisConnectionClick = () => {
         setUser({});
         navigate('/');

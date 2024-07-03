@@ -3,18 +3,12 @@
 body {
     font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     max-width: 100%;
-    /* הגבלת הרוחב למקסימום */
     padding: 20px;
-    /* ריווחים סביב התוכן */
     display: flex;
-    /* תצוגה כמערך גמיש */
     flex-wrap: wrap;
-    /* אפשר פיצול על המסך */
     justify-content: center;
-    /* כדי למקד את הריבועים באמצע */
     margin: 0;
 }
-
 
 /* Modal */
 .modal {
@@ -93,7 +87,6 @@ h2 {
     color: #006D77;
     text-decoration: none;
     cursor: pointer;
-    /* לחיצה */
 }
 
 .colorfull {
@@ -104,28 +97,82 @@ h2 {
 @media screen and (max-width: 600px) {
     .modal-content {
         width: 90%;
-        /* רוחב */
     }
 }
 
-/*
-כאן העיצוב של הלוח שנה
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*/
-/* CSS/Calendar.css */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        flex-direction: column;
+    }
+
+    .input {
+        font-size: 0.9em;
+    }
+
+    .modal-content {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    #hour {
+        font-size: 18px;
+    }
+
+    #finalPrice {
+        font-size: medium;
+    }
+
+    .close {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    .input {
+        font-size: 0.8em;
+    }
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
+    #hour {
+        font-size: 16px;
+    }
+
+    #finalPrice {
+        font-size: small;
+    }
+
+    .close {
+        font-size: 24px;
+    }
+}
+
+/* Calendar styles */
 #Calendar {
     justify-content: center;
 }
 
 .react-calendar {
-    width: 600px;
-    height: 387px;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
     background: #f0f0f0;
-    /* רקע אפור בהיר */
     border: 1px solid #006D77;
-    /* מסגרת אפורה בהירה */
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-    /* צל אפור קל */
 }
 
 .react-calendar__month-view__weekdays__weekday abbr {
@@ -134,46 +181,31 @@ h2 {
     color: #333;
 }
 
-
-/* Override calendar tile styles */
 .react-calendar__tile {
     font-size: 24px;
-    /* גודל פונט קטן */
     min-height: 48px;
     padding: 10px;
-    /* ריווחים פנימיים */
     color: #555;
-    /* צבע טקסט כהה יותר */
 }
 
-/* Override disabled calendar tile styles */
 .react-calendar__tile--disabled {
     background: #f0f0f0;
-    /* רקע אפור בהיר לא מאופשר */
     color: #ccc;
-    /* צבע טקסט אפור כהה */
     border-color: #343131;
     border-radius: 2px;
 }
 
-/* Override active calendar tile styles */
 .react-calendar__tile--active {
     background: #e0e0e0;
-    /* רקע אפור בהיר */
     color: #333;
-    /* צבע טקסט כהה יותר */
 }
 
-/* Override calendar navigation button styles */
 .react-calendar__navigation__label,
 .react-calendar__navigation__arrow {
     font-size: 20px;
-    /* גודל פונט גדול יותר ללחצנים */
     color: #006D77;
-    /* צבע טקסט כהה יותר */
 }
 
-/* Override calendar navigation button hover styles */
 .react-calendar__navigation__arrow:hover {
     background: #ddd;
     height: 18px;

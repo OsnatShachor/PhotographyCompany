@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/UsersController");
+const jwt = require('jsonwebtoken')
 
 router.post("/signUp", async (req, res) => {
     try {
@@ -58,31 +59,46 @@ router.post("/logIn", async (req, res) => {
         const body = req.body;
         console.log("body " + JSON.stringify(body));
         const user = await controller.CheckIfExist(body.email);
-        if (user && user.length > 0) {
+        console.log("log in router" + JSON.stringify(user));
+
+        if (user) {
             const userID = user.userID;
             const passwordRecord = await controller.getPasswordByUserID(userID);
             if (passwordRecord && passwordRecord.length > 0 && body.password === passwordRecord[0].password) {
-               console.log("Password matches");
-               
-                 const accessToken=jwt.sign(user,process.env.ACCESS_TOKEN_SECRET)    
+                console.log("Password matches");
+                console.log(process.env.ACCESS_TOKEN_SECRET);
+                const accessToken = jwt.sign(
+                    {
+                        userID: user.userID,
+                        roleID: user.roleID
+                    },
+                    process.env.ACCESS_TOKEN_SECRET,
+                    { expiresIn: "5m" }
+                );
+                console.log("AccessToken:", accessToken);
 
-                if (user.roleID == 1 || user.roleID == 2) {// אם הוא צלם או מנהל - אין צורך לבדוק בטבלת הקשרים
-                  res.status(200).send({user, accessToken});
+                res.cookie('accessToken', accessToken, {
+                    httpOnly: true,
+                    sameSite: "None",
+                    secure: true,
+                });
+                console.log("accessToken:", accessToken);
+
+                if (user.roleID == 1 || user.roleID == 2) {
+                    res.status(200).send(user);
                 } else {
-                    const photographerUser = await controller.checkRelation(userID, body.photographerId)
+                    const photographerUser = await controller.checkRelation(userID, body.photographerId);
                     console.log("checkRelation " + JSON.stringify(photographerUser));
-                    if (photographerUser && photographerUser.length > 0) {//אם חזר שרשום כזה קשר בין הלקוח לצלם
-                        res.status(200).send({user, accessToken});
-                    } // מחזיר את כל פרטי המשתמש
-                    else {// ם הזהמראה שלא נרשם לצל
+                    if (photographerUser && photographerUser.length > 0) {
+                        res.status(200).send(user);
+                    } else {
                         res.status(400).json({ error: "User does not exist" });
                     }
                 }
-            }
-            else {
+            } else {
                 res.status(400).json({ error: "Incorrect password" });
             }
-        } else {// לא מצא כזה משתמש
+        } else {
             res.status(400).json({ error: "User does not exist" });
         }
     } catch (err) {
@@ -90,6 +106,8 @@ router.post("/logIn", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+
 router.get("/:userID", async (req, res) => {
     try {
         const userID = req.params.userID;

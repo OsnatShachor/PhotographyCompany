@@ -10,7 +10,7 @@ function LogIn() {
   const { user, setUser } = context;
   const roleID = location.state?.roleID;
   const photographer = location.state?.photographer;
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
   let body = {};
 
   function handleChange(event) {
@@ -46,6 +46,7 @@ function LogIn() {
     }
     const request = {
       method: "POST",
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -55,25 +56,30 @@ function LogIn() {
     fetch(`http://localhost:3000/users/logIn`, request)
       .then(res => {
         if (!res.ok) {
-          return res.json().then(error => { throw new Error(error.error); });
+          if (res.status === 401) {
+            throw new Error("Unauthorized");
+          } else {
+            return res.json().then(error => { throw new Error(error.error); });
+          }
         }
         return res.json();
       })
       .then(data => {
         setUser(data);
-        if (data.user.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
+        if (data.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
           alert("You entered successfully")
           navigate(`/photographer/${photographer.userID}`, { state: { photographer: photographer } });
         } 
-        else if (data.user.roleID === 1) {// מנהל
+        else if (data.roleID === 1) {// מנהל
+          console.log(JSON.stringify(data));
           alert("You entered successfully")
           navigate('/manager');
         } 
-        else if (data.user.roleID === 2) {// צלם - בודק אם הוא פעיל
-          checkIfPhotographerActive(data.user.userID).then(isActive => {
+        else if (data.roleID === 2) {// צלם - בודק אם הוא פעיל
+          checkIfPhotographerActive(data.userID).then(isActive => {
             if (isActive) {
               alert("You entered successfully")
-              navigate(`/photographerManagement/${data.user.userID}`);
+              navigate(`/photographerManagement/${data.userID}`);
             }else{
               alert("You entered successfully")
               navigate(`/`);
@@ -82,7 +88,11 @@ function LogIn() {
         }
       })
       .catch(error => {
-        alert(error.message);
+        if (error.message === "Unauthorized") {
+          alert("Unauthorized: Incorrect email or password");
+        } else {
+          alert(error.message);
+        }
       });
   };
 

@@ -59,7 +59,9 @@ function PhotographerPage() {
 
     const handleOrderClick = async () => { };
 
-    const handleAddingPhotosClick = async () => { };
+    const handleAddingPhotosClick = async () => { 
+        navigate(`/photographer/${id}/PhotoManagement`)    
+        };
 
     const handleUpdateCategory = async (category) => {
         try {
@@ -100,7 +102,7 @@ function PhotographerPage() {
                     setEnableUpdateAbout(true);
                 }}
             />
-            {enableUpdateAbout && (<button onClick={handleUpdateAboutClick}>Update</button>)}
+            {enableUpdateAbout && (<button onClick={handleUpdateCategory}>Update</button>)}
 
 
         </>

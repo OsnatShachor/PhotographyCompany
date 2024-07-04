@@ -66,7 +66,8 @@ function SignUp() {
                     throw new Error(errorText);
                 }
                 const data = await response.json();
-                setUser(data);
+                sessionStorage.setItem("accessToken",data.accessToken)
+                setUser(data.returnedUser);
                 if (body.photographerId === 0) {
                     navigate('/Request');
                 } else {

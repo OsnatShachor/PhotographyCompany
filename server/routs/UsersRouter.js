@@ -17,8 +17,16 @@ router.post("/signUp", async (req, res) => {
 
                 if (!user2) {
                     const returnedUser = await controller.createUser(body.userName, body.email, body.phone, body.roleID, body.password);
-                    console.log("User created successfully:", returnedUser);
-                    res.json(returnedUser);
+                    const accessToken = jwt.sign(
+                        {
+                            userID: user2.userID,
+                            roleID: user2.roleID
+                        },
+                        process.env.ACCESS_TOKEN_SECRET,
+                        { expiresIn: "5m" }
+                    );
+
+                    res.status(200).send({ returnedUser, accessToken });
                 } else {
                     console.log("User already exists");
                     res.status(400).send({ error: "The user already exists" });
@@ -32,7 +40,16 @@ router.post("/signUp", async (req, res) => {
                 if (!user3) {// אם לא קיים כזה משתמש יוצר
                     returnedUser = await controller.createClient(body.photographerId, body.userName, body.email, body.phone, body.roleID, body.password);
                     console.log("User created successfully:", returnedUser);
-                    res.json(returnedUser);
+                    const accessToken = jwt.sign(
+                        {
+                            userID: returnedUser.userID,
+                            roleID: returnedUser.roleID
+                        },
+                        process.env.ACCESS_TOKEN_SECRET,
+                        { expiresIn: "5m" }
+                    );
+
+                    res.status(200).send({ returnedUser, accessToken });
                 } else {//אם קיים כזה משתמש - בודק האם הוא רשום לצלם אליו הוא מנסה להירשם
                     const photographerUser = await controller.checkRelation(user3.userID, body.photographerId)
                     console.log("checkRelation " + JSON.stringify(photographerUser));
@@ -83,12 +100,12 @@ router.post("/logIn", async (req, res) => {
                 // });
 
                 if (user.roleID == 1 || user.roleID == 2) {
-                    res.status(200).send({user,accessToken});
+                    res.status(200).send({ user, accessToken });
                 } else {
                     const photographerUser = await controller.checkRelation(userID, body.photographerId);
                     console.log("checkRelation " + JSON.stringify(photographerUser));
                     if (photographerUser && photographerUser.length > 0) {
-                        res.status(200).send({user,accessToken});
+                        res.status(200).send({ user, accessToken });
                     } else {
                         res.status(400).json({ error: "User does not exist" });
                     }

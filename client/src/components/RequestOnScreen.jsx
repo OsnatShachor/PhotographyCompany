@@ -90,7 +90,7 @@ function RequestOnScreen(props) {
 
   const updateRequestStatus = async (requestID, statusID, photographerID) => {
     try {
-      const response = await fetch(`http://localhost:3000/requests/requests/${requestID}`, {
+      const response = await fetch(`http://localhost:3000/manager/${requestID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

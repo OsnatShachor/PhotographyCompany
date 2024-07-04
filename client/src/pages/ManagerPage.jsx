@@ -26,7 +26,7 @@ function ManagerPage() {
     const getAllRequest = async () => {
         try {
             const accessToken=sessionStorage.getItem("accessToken")
-            const response = await fetch(`http://localhost:3000/requests/requests`,
+            const response = await fetch(`http://localhost:3000/manager`,
                 {
                     method: 'GET',
                     headers: {'Authorization': 'Bearer ' +accessToken}

@@ -5,4 +5,5 @@ const PhotographerManagementController = require('../controllers/PhotographerMan
 router.post('/:id/update-about', PhotographerManagementController.updateAbout); 
 
 router.get('/:id', PhotographerManagementController.checkIfPhotographerActive);
+
 module.exports = router;

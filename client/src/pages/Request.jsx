@@ -31,7 +31,7 @@ function Request() {
       })
     };
 
-    fetch('http://localhost:3000/requests/requests', request)
+    fetch('http://localhost:3000/request-to-manager', request)
       .then(response => {
         return response.json();
       })

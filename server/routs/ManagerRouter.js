@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/ManagerController");
-const authrizeManager =require( '../middleware/authrizeManager')
-router.get("/",authrizeManager, async (req, res) => {
+
+router.get("/", async (req, res) => {
     try {
         console.log("Hi there:)")
         const waitingRequests = await controller.getALLRequests();
@@ -15,20 +15,9 @@ router.get("/",authrizeManager, async (req, res) => {
 },);
 
 //בקשה מהצלם למנהל
-router.post("/", async (req, res) => {
-    try {
-        const body = req.body;
-        const returnedRequest = await controller.createRequest(body.photographerID, body.request, body.statusID);
-        console.log("Request created successfully:", returnedRequest);
-        res.json(returnedRequest);
 
-    } catch (err) {
-        console.error('Error during create request:', err);
-        res.status(500).send('Internal Server Error');
-    }
-});
 //עדכון סטטוס
-router.put("/:orderId",authrizeManager, async (req, res) => {
+router.put("/:orderId", async (req, res) => {
     try {
         console.log("I am in aprovel req")
         const body = req.body;

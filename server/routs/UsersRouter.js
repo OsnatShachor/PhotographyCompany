@@ -77,10 +77,10 @@ router.post("/logIn", async (req, res) => {
                 );
                 console.log("AccessToken:", accessToken);
 
-                res.cookie('accessToken', accessToken, {
-        
-                    maxAge:99999
-                });
+                // res.cookie('accessToken', accessToken, {
+
+                //     maxAge:99999
+                // });
                 console.log("accessToken:", accessToken);
 
                 if (user.roleID == 1 || user.roleID == 2) {

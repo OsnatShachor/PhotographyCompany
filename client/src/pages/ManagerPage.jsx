@@ -25,7 +25,12 @@ function ManagerPage() {
 
     const getAllRequest = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/requests/requests`, { method: 'GET', credentials: 'include' });
+            const accessToken=sessionStorage.getItem("accessToken")
+            const response = await fetch(`http://localhost:3000/requests/requests`,
+                {
+                    method: 'GET',
+                    headers: {'Authorization': 'Bearer ' +accessToken}
+                });
             const allRequests = await response.json();
             setAllRequests(allRequests);
         } catch (error) {
@@ -70,8 +75,8 @@ function ManagerPage() {
     return (
         <>
             <div className="onTopBtn">
-            <button onClick={handleHomeClick}>Home page</button>
-            <button onClick={handleDisConnectionClick}>DisConnection</button>
+                <button onClick={handleHomeClick}>Home page</button>
+                <button onClick={handleDisConnectionClick}>DisConnection</button>
                 <button onClick={handleBackClick}>Back</button>
             </div>
             <div id="space">

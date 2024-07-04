@@ -5,16 +5,18 @@ const fs = require('fs');
 const router = express.Router();
 const controller = require('../controllers/PhotoController');
 
+
 // Configure storage for Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
      const photographerID = req.body.id;
-    const uploadPath = path.join(__dirname, '..', 'uploads', photographerID.toString());
-cb(null,`./upload/${photographerID}`)
+    const uploadPath = path.join(__dirname, 'uploads', photographerID);
+    console.log(uploadPath);
+// cb(null,`./upload/${photographerID}`)
     // יצירת תיקייה עבור הצלם אם היא לא קיימת
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
+    // if (!fs.existsSync(uploadPath)) {
+    //   fs.mkdirSync(uploadPath, { recursive: true });
+    // }
     cb(null, uploadPath);
   },
   // filename: (req, file, cb) => {
@@ -25,8 +27,8 @@ cb(null,`./upload/${photographerID}`)
 }
 });
 
-const upload = multer({ storage: storage });
-
+// const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' })
 // Route for uploading a photo
 router.post("/", upload.single('photo'), async (req, res) => {
   const photographerID = req.body.id;
@@ -38,7 +40,7 @@ router.post("/", upload.single('photo'), async (req, res) => {
     photo: photoPath,
     date: date
   };
-
+console.log( data);
   try {
     const result = await controller.createPhoto(data);
     res.json(result);

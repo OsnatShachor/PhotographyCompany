@@ -3,7 +3,7 @@ const express = require('express');
 
 require('dotenv').config();
 const path = require('path');
-const fileUpload = require('express-fileupload');
+// const fileUpload = require('express-fileupload');
 const cors = require('cors'); 
 const jwt= require('jsonwebtoken');
 const app = express();
@@ -13,13 +13,13 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 const port = 3000;
 app.use(cors());
-app.use(fileUpload());
+// app.use(fileUpload());
 
 
-app.use(cors({
-    origin: 'http://localhost:5173', // שנה את זה לכתובת הלקוח שלך
-    credentials: true
-  }));
+// app.use(cors({
+//     origin: 'http://localhost:5173', // שנה את זה לכתובת הלקוח שלך
+//     credentials: true
+//   }));
 
 
 app.use('/uploads', express.static('uploads')); // תיקייה סטטית לאחסון תמונות

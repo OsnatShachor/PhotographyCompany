@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 function authenticateToken(req, res, next) {
-    const token = req.cookies.accessToken;
+    console.log(req.headers);
+    const token = req.headers.authorization.replace('Bearer ',"");
     console.log("token: " + token);
     if (!token) return res.sendStatus(401);
 
@@ -10,8 +11,8 @@ function authenticateToken(req, res, next) {
         if (err) {
             return res.status(403).send({message: "Invalid token"});
         }
-        req.userId = decoded.userId;
-        req.roleId = decoded.roleId;
+        req.user = decoded;
+       
         next();
     });
 }

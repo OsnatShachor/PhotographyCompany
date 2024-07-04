@@ -1,10 +1,11 @@
 const authenticateToken = require('./authenticateToken'); 
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const authrizeManager = (req, res, next) => {
     console.log('Admin aothruzation  ');
-    console.log("coco"+ req.cookies.accessToken);
+    console.log("header"+JSON.stringify(req.headers));
+    console.log("Admin"+ req.cookies.accessToken);
     authenticateToken.authenticateToken(req, res, () => {
         const user = req.user; 
         console.log('admin user', user)

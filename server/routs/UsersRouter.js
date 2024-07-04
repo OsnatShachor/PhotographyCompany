@@ -78,19 +78,18 @@ router.post("/logIn", async (req, res) => {
                 console.log("AccessToken:", accessToken);
 
                 res.cookie('accessToken', accessToken, {
-                    httpOnly: true,
-                    sameSite: "None",
-                    secure: true,
+        
+                    maxAge:99999
                 });
                 console.log("accessToken:", accessToken);
 
                 if (user.roleID == 1 || user.roleID == 2) {
-                    res.status(200).send(user);
+                    res.status(200).send({user,accessToken});
                 } else {
                     const photographerUser = await controller.checkRelation(userID, body.photographerId);
                     console.log("checkRelation " + JSON.stringify(photographerUser));
                     if (photographerUser && photographerUser.length > 0) {
-                        res.status(200).send(user);
+                        res.status(200).send({user,accessToken});
                     } else {
                         res.status(400).json({ error: "User does not exist" });
                     }

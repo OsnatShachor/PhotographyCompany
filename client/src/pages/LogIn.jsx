@@ -46,7 +46,6 @@ function LogIn() {
     }
     const request = {
       method: "POST",
-      withCredentials: true,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -65,21 +64,23 @@ function LogIn() {
         return res.json();
       })
       .then(data => {
-        setUser(data);
-        if (data.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
+        const {user,accessToken}=data
+        sessionStorage.setItem("accessToken",accessToken)
+        setUser(user);
+        if (user.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
           alert("You entered successfully")
           navigate(`/photographer/${photographer.userID}`, { state: { photographer: photographer } });
         } 
-        else if (data.roleID === 1) {// מנהל
-          console.log(JSON.stringify(data));
+        else if (user.roleID === 1) {// מנהל
+          console.log(JSON.stringify(user));
           alert("You entered successfully")
           navigate('/manager');
         } 
-        else if (data.roleID === 2) {// צלם - בודק אם הוא פעיל
-          checkIfPhotographerActive(data.userID).then(isActive => {
+        else if (user.roleID === 2) {// צלם - בודק אם הוא פעיל
+          checkIfPhotographerActive(user.userID).then(isActive => {
             if (isActive) {
               alert("You entered successfully")
-              navigate(`/photographerManagement/${data.userID}`);
+              navigate(`/photographerManagement/${user.userID}`);
             }else{
               alert("You entered successfully")
               navigate(`/`);

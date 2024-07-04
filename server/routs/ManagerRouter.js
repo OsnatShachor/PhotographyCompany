@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/ManagerController");
-
-router.get("/", async (req, res) => {
+ const authrizeManager = require('../middleware/authrizeManager')
+router.get("/", authrizeManager,async (req, res) => {
     try {
         console.log("Hi there:)")
         const waitingRequests = await controller.getALLRequests();
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 //בקשה מהצלם למנהל
 
 //עדכון סטטוס
-router.put("/:orderId", async (req, res) => {
+router.put("/:orderId",authrizeManager, async (req, res) => {
     try {
         console.log("I am in aprovel req")
         const body = req.body;

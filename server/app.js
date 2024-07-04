@@ -3,7 +3,6 @@ const express = require('express');
 require('dotenv').config();
 const path = require('path');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,7 +20,7 @@ app.use(cors());
 
 app.use('/uploads', express.static('uploads')); // תיקייה סטטית לאחסון תמונות
 
-const jwtManager = require('./middleware/authrizeManager')
+// const authrizeManager =require( './middleware/authrizeManager')
 const CategoriesRouter = require("./routs/CategoriesRouter")
 const PhotographersRouter = require("./routs/PhotographersRouter")
 const UsersRouter = require("./routs/UsersRouter")
@@ -29,7 +28,7 @@ const ManagerRouter = require("./routs/ManagerRouter")
 const OrderRouter = require("./routs/OrderRouter")
 const PhotographerManagementRouter = require('./routs/PhotographerManagementRouter')
 const PhotoRouter = require('./routs/PhotoRouter')
-const requestToManager = require('./routs/RequestToManager')
+ const requestToManager = require('./routs/RequestToManager')
 console.log("enjoy!!")
 app.use("/aboutMe", PhotographersRouter);
 app.use("/", PhotographersRouter);
@@ -38,8 +37,8 @@ app.use("/category", CategoriesRouter)
 app.use("/order", OrderRouter)
 app.use('/photographer', PhotographerManagementRouter);
 app.use('/photos', PhotoRouter)
-app.use("/request-to-manager", requestToManager)
-app.use(jwtManager);
+ app.use("/request-to-manager", requestToManager);
+//  app.use(authrizeManager);
 app.use("/manager", ManagerRouter);
 
 app.listen(port, () => {

@@ -18,7 +18,7 @@ function PriceList() {
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [],categories);
 
   const getCategories = async () => {
     const data = await fetch(`http://localhost:3000/category/${id}`);
@@ -60,19 +60,22 @@ function PriceList() {
     navigate(-1);
   };
 
-  const handleSaveCategory = async (category) => {
+  const handleAddCategory = async (category) => {
     try {
+      const accessToken=sessionStorage.getItem("accessToken")
       const response = await fetch(`http://localhost:3000/category`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+           'Authorization': 'Bearer ' +accessToken,
         },
         body: JSON.stringify({ ...category, photographerID: id }),
       });
       if (!response.ok) {
         throw new Error('Failed to add category');
       }
-      // Refresh the category list after adding a new category
+      const newCategory =response.json();  
+      setCategories(prevCategories => [...prevCategories, newCategory]);
       getCategories();
     } catch (error) {
       console.error('Error adding category:', error);
@@ -82,7 +85,7 @@ function PriceList() {
   return (
     <div>
       <div className="onTopBtn">
-        <button onClick={handleHomeClick}>Home page</button>
+        <button onClick={handleHomeClick}>Home Page</button>
         {!(user && user.userID) && (<button onClick={handleConnectionClick}>Connection</button>)}
         {(user && user.userID) && (<button onClick={handleDisConnectionClick}>DisConnection</button>)}
         {(id != user.userID) && (<button onClick={handlePrivateAreaClick}>Private Area</button>)}
@@ -103,7 +106,7 @@ function PriceList() {
       <CategoryPopUp
         showModal={showModal}
         handleClose={() => setShowModal(false)}
-        handleSave={handleSaveCategory}
+        handleSave={handleAddCategory}
         initialCategoryData={initialCategoryData} // Pass initial data to modal
       />
     </div>

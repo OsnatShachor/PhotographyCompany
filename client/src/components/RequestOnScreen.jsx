@@ -26,7 +26,7 @@ function RequestOnScreen(props) {
   const handleConfirmClick = () => {
     setShowOkModal(true);
   };
-  const handleRefuseClick =()=>{
+  const handleRefuseClick = () => {
     setShowRefuseModal(true);
   };
 
@@ -50,7 +50,7 @@ function RequestOnScreen(props) {
         console.log('Email sent successfully!', response.status, response.text);
         setShowOkModal(false);
 
-        await updateRequestStatus(request.requestID, 4, request.photographerID);
+        updateRequestStatus(request.requestID, 4, request.photographerID);
         setRequest({ ...request, statusID: 4 });
         props.onRequestUpdate();
 
@@ -79,7 +79,7 @@ function RequestOnScreen(props) {
         console.log('Email sent successfully!', response.status, response.text);
         setShowRefuseModal(false);
 
-       updateRequestStatus(request.requestID, 5, request.photographerID);
+        updateRequestStatus(request.requestID, 5, request.photographerID);
         setRequest({ ...request, statusID: 5 });
         props.onRequestUpdate();
 
@@ -90,33 +90,40 @@ function RequestOnScreen(props) {
 
   const updateRequestStatus = async (requestID, statusID, photographerID) => {
     try {
-      const response = await fetch(`http://localhost:3000/manager/${requestID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ statusID, photographerID, requestID }),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to update request status');
-      }
+        const accessToken = sessionStorage.getItem("accessToken");
+        const response = await fetch(`http://localhost:3000/manager/manager/${requestID}`, {
+            method: 'PUT',
+            headers: { 
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ statusID, photographerID, requestID })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update request status');
+        }
     } catch (error) {
-      console.error('Error updating request status:', error);
+        console.error('Error updating request status:', error);
+        alert('Error updating request status:', error);
     }
-  };
+};
+
 
   return (
     <>
-      <div className="box">
+      <div className="boxRequest">
         {photographer && (
           <>
             <h4>Photographer Name: {photographer.userName}</h4>
             <h4>Email: {photographer.email}</h4>
             <h3 id="requesth3">{request.request}</h3>
-            {request.statusID != 4 &&(request.statusID !=5)&&
-              (<button onClick={handleConfirmClick}>Confirm</button>)}
-             {(request.statusID != 4) &&(request.statusID !=5)&&
-              (<button onClick={handleRefuseClick}>Refuse</button>)}
+            <div className="changeStateBtn">
+              {request.statusID != 4 && (request.statusID != 5) &&
+                (<button className="requestBtn" onClick={handleConfirmClick}>Confirm</button>)}
+              {(request.statusID != 4) && (request.statusID != 5) &&
+                (<button className="requestBtn" onClick={handleRefuseClick}>Refuse</button>)}
+            </div>
           </>
         )}
       </div>
@@ -126,11 +133,11 @@ function RequestOnScreen(props) {
           onConfirm={handleSendOkEmail}
         />
       )}
-      {showRefuseModal&&
-      (<RefuseManagerWindow
-        onClose={() => setShowRefuseModal(false)}
-        onRefuse={handleSendRefuseEmail}
-      />)}
+      {showRefuseModal &&
+        (<RefuseManagerWindow
+          onClose={() => setShowRefuseModal(false)}
+          onRefuse={handleSendRefuseEmail}
+        />)}
     </>
   );
 }

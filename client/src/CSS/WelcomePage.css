@@ -123,6 +123,26 @@ button:focus-visible {
     padding: 20px;
 }
 
+.filterButtons {
+    margin-top: 40px;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-left: 36.5%;
+}
+.managerBtn{
+    height: 50px;
+    width: 140px;
+    background-color:#83C5BE;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+.managerBtn:hover {
+  background-color: #006D77;
+}
+
 @media (max-width: 768px) {
     #photographers {
         margin: 1% 5%;
@@ -131,13 +151,17 @@ button:focus-visible {
     h1 {
         font-size: 2em;
     }
+
     .onTopBtn {
         margin-left: 0px;
         margin-top: 0px !important;
         margin-bottom: 15px !important;
-        flex-wrap: nowrap; /* שמירה על שורה אחת */
-        overflow-x: auto; /* אפשרות לגלילה אופקית במקרה של צורך */
-      }
+        flex-wrap: nowrap;
+        /* שמירה על שורה אחת */
+        overflow-x: auto;
+        /* אפשרות לגלילה אופקית במקרה של צורך */
+    }
+
     .Sign-up-buttons {
         flex-direction: column;
         gap: 5px;

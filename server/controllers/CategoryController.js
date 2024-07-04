@@ -16,10 +16,18 @@ async function getOrderCategory(categoryID) {
         throw err;
     }
 }
+async function updateCategory(body) {
+    try {
+        const result = await model.updateCategory(body.categoryID, body.categoryName, body.payPerHour, body.numOfEditPictures);
+        console.log("controller-upDate")
+        return result[0];
+    } catch (err) {
+        throw err;
+    }
+}
 
-const addCategory = async (req, res) => {
-    const { photographerID, categoryName, payPerHour, numOfEditPictures } = req.body;
-
+async function addCategory(body) {
+    const { photographerID, categoryName, payPerHour, numOfEditPictures } = body;
     try {
         const newCategory = await model.createCategory({
             photographerID,
@@ -27,39 +35,20 @@ const addCategory = async (req, res) => {
             payPerHour,
             numOfEditPictures
         });
-        res.status(200).json(newCategory);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to add category' });
+        return newCategory;
+    } catch (err) {
+        throw err;
     }
 };
 
-const deleteCategory = async (req, res) => {
+async function deleteCategory(categoryId) {
     try {
-        const categoryId = req.params.id;
-        console.log("delete Category controller");
         const result = await model.deleteCategory(categoryId);
-        if (result) {
-            res.json({ message: 'Category deleted successfully' });
-        } else {
-            res.status(404).json({ error: 'Category not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to delete category' });
+        return result;
+    } catch (err) {
+        throw err;
     }
 };
 
-const updateCategory = async (req, res) => {
-    try {
-      const body= req.body;
-      const result = await model.updateCategory(body.categoryID,body.categoryName,body.payPerHour,body.numOfEditPictures);
-      console.log("controller-upDate")
-      if (result[0]) {
-        res.status(200).json({ message: 'Category updated successfully' });
-      } else {
-        res.status(404).json({ error: 'Category not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to update category' });
-    }
-  };
-module.exports = {  getAllCategories, getOrderCategory, addCategory, deleteCategory,updateCategory }
+
+module.exports = { getAllCategories, getOrderCategory, addCategory, deleteCategory, updateCategory }

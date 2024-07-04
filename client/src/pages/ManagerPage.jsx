@@ -26,12 +26,16 @@ function ManagerPage() {
     const getAllRequest = async () => {
         try {
             const accessToken=sessionStorage.getItem("accessToken")
-            const response = await fetch(`http://localhost:3000/manager`,
+            const response = await fetch('http://localhost:3000/manager/manager',
                 {
                     method: 'GET',
-                    headers: {'Authorization': 'Bearer ' +accessToken}
+                    headers: {
+                        'Authorization': 'Bearer ' +accessToken,
+                        'Content-Type': 'application/json'
+                    }
                 });
             const allRequests = await response.json();
+            console.log(allRequests);
             setAllRequests(allRequests);
         } catch (error) {
             setAllRequests([]);
@@ -83,8 +87,8 @@ function ManagerPage() {
                 <br></br>
             </div>
             <div className="filterButtons">
-                <button onClick={handleShowAllClick}>Show All Requests</button>
-                <button onClick={handleShowWaitingClick}>Show Waiting Requests</button>
+                <button className="managerBtn" onClick={handleShowAllClick}>Show All Requests</button>
+                <button className="managerBtn" onClick={handleShowWaitingClick}>Show Waiting Requests</button>
             </div>
             <div id="waitingRequests">
                 {filteredRequests.map((request, index) => (

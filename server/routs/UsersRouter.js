@@ -81,7 +81,6 @@ router.post("/logIn", async (req, res) => {
 
                 //     maxAge:99999
                 // });
-                console.log("accessToken:", accessToken);
 
                 if (user.roleID == 1 || user.roleID == 2) {
                     res.status(200).send({user,accessToken});

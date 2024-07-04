@@ -21,21 +21,27 @@ body, html {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.box {
+.boxRequest {
+  border-color: #006D77;
+  border-radius: 2px;
+  border-style: solid;
+  margin: 10px;
+  width: 360px;
+  box-shadow: 0 1px 13px 0 rgba(0, 0, 0, 0.4);
   min-height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background-color: #ffffff;
-  border: 1px solid #83C5BE;
+  background-color: #ffe3d8;
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
-.box h4, .box h3 {
-  margin: 5px 0;
+h4{
+  color: #006D77 !important;
+  margin-top: 0% !important;
+  margin-bottom: 4px !important;
 }
 
 .box button {
@@ -101,8 +107,18 @@ textarea {
   transition: background-color 0.3s ease;
 }
 
-.submitBtn:hover {
+.requestBtn:hover {
   background-color: #006D77;
+}
+.requestBtn{
+  height: 30px;
+  width: 100px;
+  background-color:#83C5BE;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
 }
 
 h1 {
@@ -119,12 +135,6 @@ h3 {
 p {
   color: #83C5BE;
   text-align: center;
-}
-
-h4 {
-  color: #006D77;
-  margin-top: 5px;
-  margin-bottom: 5px;
 }
 
 #requesth3 {

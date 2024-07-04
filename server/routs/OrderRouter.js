@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/OrderController");
+// const authorizePhotographer = require('../middleware/authorizePhotographer');
+const authorizeClient = require('../middleware/authorizeClient');
 
-// Fetch all orders of a photographer
-router.get("/:userID/:photographerId", async (req, res) => {
+router.get("/:userID/:photographerId",authorizeClient, async (req, res) => {
     try {
         const { userID, photographerId } = req.params;
         const orders = await controller.getAllMyOrders(userID, photographerId);
@@ -29,7 +30,7 @@ router.get('/unavailable-dates/:id', async (req, res) => {
 });
 
 // Create a new order
-router.post("/", async (req, res) => {
+router.post("/",authorizeClient, async (req, res) => {
     try {
         const returnedOrder = await controller.createOrder(req.body);
         console.log("Order created successfully:", returnedOrder);

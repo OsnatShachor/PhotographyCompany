@@ -21,8 +21,13 @@ function SinglePriceList(props) {
 
     const handleConfirmDelete = async () => {
         try {
+          const accessToken=sessionStorage.getItem("accessToken")
             await fetch(`http://localhost:3000/category/${category.categoryID}`, {
                 method: 'DELETE',
+                headers: {
+                  'Authorization': 'Bearer ' +accessToken,
+                  'Content-Type': 'application/json'
+              }
             });
             setShowConfirmModal(false);
             props.refreshCategories();
@@ -34,11 +39,13 @@ function SinglePriceList(props) {
     const handleSaveUpdate = async (updatedCategory) => {
         try {
           console.log(updatedCategory.categoryID);
+          const accessToken=sessionStorage.getItem("accessToken")
              await fetch(`http://localhost:3000/category/${updatedCategory.categoryID}`, {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json',
-                },
+                  'Authorization': 'Bearer ' +accessToken,
+                  'Content-Type': 'application/json'
+              },
                 body: JSON.stringify(updatedCategory),
             });
             setShowUpdateModal(false); 
@@ -50,7 +57,7 @@ function SinglePriceList(props) {
 
     return (
         <>
-            <div className="box">
+            <div className="boxPrice">
                 <h2><span className='bold'> {category.categoryName}</span></h2>
                 <h3><span className='bold'>Pay Per Hour: </span>{category.payPerHour}</h3>
                 <h3><span className='bold'>Number Of Edit Img: </span>{category.numOfEditPictures}</h3>

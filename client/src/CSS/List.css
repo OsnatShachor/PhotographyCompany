@@ -19,7 +19,21 @@ body {
   height: 40px;
   width: 110px;
 }
-
+.boxPrice{
+  border-color: #006D77;
+  border-radius: 3px;
+  border-style: solid;
+  margin: 10px;
+  width: 360px;
+  max-width: 100%;
+  box-shadow: 0 1px 13px 0 rgba(0, 0, 0, 0.4);
+  text-align: center;
+  padding: 20px;
+  background-color: #ffe3d8;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
 .btnInBox {
   height: 40px;
   width: 100px;

@@ -161,7 +161,7 @@ INSERT INTO users (userName, email, phone, roleID) VALUES
 ('Yael Korenfeld', 'yaelr5754@gmail.com', '050-456-7890',  2),
 ('Chaya Smith', 'chayaosn@g.jct.ac.il', '987-654-3210', 3),
 ('Ariel Kramer', 'torasolider@gmail.com', '555-123-4567', 2),
-('Bob Brown', 'bob.brown@example.com', '444-555-6666', 3),
+('Ayala Herz', 'ayala369h@gmail.com', '444-555-6666', 3),
 ('Mosh Davis', 'osnaty999@gmail.com', '052-444-5555', 2);
 
 INSERT INTO passwords (userID, password) VALUES
@@ -174,7 +174,7 @@ INSERT INTO passwords (userID, password) VALUES
 
 INSERT INTO photographers (photographerID, aboutMe, isActive) VALUES 
 (2, 'Nature and landscape photographer with 10 years of experience.', TRUE),
-(3, 'Fashion photographer based in New York.', TRUE),
+(3, 'Fashion photographer based in New York.', FALSE),
 (4, 'Freelance photographer working on travel and adventure photography.', TRUE),
 (5, 'Experienced in food photography for restaurants and cookbooks.', FALSE),
 (6, 'I am a professional photographer specializing in weddings and portraits.', TRUE);
@@ -186,19 +186,19 @@ INSERT INTO photographer_photos (photographerID, photoID) VALUES
 (2, 1);
 
 INSERT INTO category (photographerID, categoryName, payPerHour, numOfEditPictures) VALUES
-(4, 'New-Born', 300.00, 8),
-(4, 'חלאקה', 250.00, 8),
-(4, 'משפחה', 300.00, 12),
+(2, 'New-Born', 300.00, 8),
+(2, 'חלאקה', 250.00, 8),
+(2, 'משפחה', 300.00, 12),
 (6, 'בת מצווה', 200.00, 8),
 (6, 'אירוע', 200.00, 0),
-(3, 'חתונה', 1000.00, 15),
-(3, 'פרוטריט', 180.00, 10);
+(4, 'חתונה', 1000.00, 15),
+(4, 'פרוטריט', 180.00, 10);
 
 INSERT INTO orders (userID, photographerID, confirmed, statusID, categoryID, photoDate, beginningTime, durationTimePhotography, location, payment) VALUES
 (1, 2, TRUE, 1, 1, '2024-06-02', '12:00:00', 2.5, 'גן הוורדים', 650.00),
 (3, 3, TRUE, 2, 2, '2024-06-03', '14:00:00', 3.0, 'מתחם התחנה', 540.00);
 
 INSERT INTO requests (photographerID, request, statusID) VALUES
-(2, 'I need a photographer for my engagement party on July 15th, 2024.', 1),
-(3, 'I want to open a website for myself. I have been shooting for 3 years', 1),
+(2, 'I need a photographer for my engagement party on July 15th, 2024.', 4),
+(5, 'I want to open a website for myself. I have been shooting for 3 years', 1),
 (3, 'Looking for a portrait photographer for family photoshoot next weekend.', 5);

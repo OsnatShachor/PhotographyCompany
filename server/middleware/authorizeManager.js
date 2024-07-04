@@ -2,8 +2,8 @@ const authenticateToken = require('./authenticateToken');
 // const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const authrizeManager = (req, res, next) => {
-    console.log('Admin aothruzation  ');
+const authorizeManager = (req, res, next) => {
+    console.log('Admin authruzation  ');
     console.log("header"+JSON.stringify(req.headers));
     console.log("Admin"+ req.cookies.accessToken);
     authenticateToken.authenticateToken(req, res, () => {
@@ -12,10 +12,9 @@ const authrizeManager = (req, res, next) => {
         if (user && user.roleID === 1) {
             next(); 
         } else {
-            console.log('user try to delete')
-            res.status(403).send({ ok: false , massage: 'A trainee tried to delete a new trainer'}); 
+            res.status(403).send({ ok: false , massage: 'Illegal user action'}); 
         }
     });
 };
 
-module.exports = authrizeManager;
+module.exports = authorizeManager;

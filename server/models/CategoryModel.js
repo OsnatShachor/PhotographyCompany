@@ -44,16 +44,16 @@ async function deleteCategory(deleteCategoryID) {
   try {
     const sql = `
       DELETE from category where categoryID=? `;
-      console.log("delete Category model");
+    console.log("delete Category model");
     await pool.query(sql, [deleteCategoryID]);
   } catch (err) {
     return (err);
   }
 }
 
-async function updateCategory(categoryID,categoryName,payPerHour,numOfEditPictures){
+async function updateCategory(categoryID, categoryName, payPerHour, numOfEditPictures) {
   try {
-   
+
     const sql = `
     UPDATE category
     SET  categoryName = ?, payPerHour = ?, numOfEditPictures = ?
@@ -61,14 +61,14 @@ async function updateCategory(categoryID,categoryName,payPerHour,numOfEditPictur
     `;
     console.log("updateCategory model");
     // const {categoryName,payPerHour,numOfEditPictures } = updatedOrderData;
-    const [result] = await pool.query(sql, [categoryID,categoryName,payPerHour,numOfEditPictures]);
+    const [result] = await pool.query(sql, [categoryID, categoryName, payPerHour, numOfEditPictures]);
     console.log(result);
-   return result;
+    return result;
 
-   // return result.affectedRows > 0 ? { orderID: orderId, ...updatedOrderData } : null;
-} catch (err) {
+    // return result.affectedRows > 0 ? { orderID: orderId, ...updatedOrderData } : null;
+  } catch (err) {
     throw err;
-}
+  }
 }
 
-module.exports = { getAllCategories, getOrderCategory, createCategory, deleteCategory,updateCategory }  
+module.exports = { getAllCategories, getOrderCategory, createCategory, deleteCategory, updateCategory }  

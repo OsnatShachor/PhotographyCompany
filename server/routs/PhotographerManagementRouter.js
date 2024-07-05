@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/PhotographerManagementController');
+ const authorizePhotographer = require('../middleware/authorizePhotographer');
 
-router.post('/:id/update-about', async (req, res) => {
+router.post('/:id/update-about',authorizePhotographer, async (req, res) => {
     try {
         await controller.updateAbout(req, res);
     } catch (error) {

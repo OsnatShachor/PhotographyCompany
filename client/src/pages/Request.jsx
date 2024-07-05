@@ -18,11 +18,13 @@ function Request() {
       alert('Please fill in all fields');
       return;
     }
-
+    const accessToken=sessionStorage.getItem("accessToken")
     const request = {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' +accessToken,
+
       },
       body: JSON.stringify({
         photographerID: user.userID,

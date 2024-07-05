@@ -32,9 +32,12 @@ function PhotographerPage() {
 
     const handleUpdateAboutClick = async () => {
         try {
+            const accessToken=sessionStorage.getItem("accessToken")
+
             const response = await fetch(`http://localhost:3000/photographer/${id}/update-about`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': 'Bearer ' +accessToken,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ id, aboutMe }),

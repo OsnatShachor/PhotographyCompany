@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/ManagerController");
+const authorizePhotographer = require('../middleware/authorizePhotographer');
 
-router.post("/", async (req, res) => {
+router.post("/",authorizePhotographer, async (req, res) => {
     try {
         const body = req.body;
         const returnedRequest = await controller.createRequest(body.photographerID, body.request, body.statusID);

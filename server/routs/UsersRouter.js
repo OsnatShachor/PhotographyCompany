@@ -6,64 +6,19 @@ const jwt = require('jsonwebtoken')
 router.post("/signUp", async (req, res) => {
     try {
         const body = req.body;
-        const photographerId = body.photographerId
-        console.log(photographerId);
-
         console.log("Request body:", body);
-        switch (body.roleID) {
-            case 2:
-                const user2 = await controller.CheckIfExist(body.email);
-                console.log("User existence check result:", user2);
 
-                if (!user2) {
-                    const returnedUser = await controller.createUser(body.userName, body.email, body.phone, body.roleID, body.password);
-                    const accessToken = jwt.sign(
-                        {
-                            userID: user2.userID,
-                            roleID: user2.roleID
-                        },
-                        process.env.ACCESS_TOKEN_SECRET,
-                        { expiresIn: "5m" }
-                    );
+        const returnedUser = await controller.createUser(body);
+        const accessToken = jwt.sign(
+            {
+                userID: returnedUser.userID,
+                roleID: returnedUser.roleID
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: "5m" }
+        );
 
-                    res.status(200).send({ returnedUser, accessToken });
-                } else {
-                    console.log("User already exists");
-                    res.status(400).send({ error: "The user already exists" });
-                }
-                break;
-            case 3:
-                let returnedUser = {};
-                const user3 = await controller.CheckIfExist(body.email);
-                console.log(`client ${body.photographerId}`)
-                console.log("User existence check result:", user3);
-                if (!user3) {// אם לא קיים כזה משתמש יוצר
-                    returnedUser = await controller.createClient(body.photographerId, body.userName, body.email, body.phone, body.roleID, body.password);
-                    console.log("User created successfully:", returnedUser);
-                    const accessToken = jwt.sign(
-                        {
-                            userID: returnedUser.userID,
-                            roleID: returnedUser.roleID
-                        },
-                        process.env.ACCESS_TOKEN_SECRET,
-                        { expiresIn: "5m" }
-                    );
-
-                    res.status(200).send({ returnedUser, accessToken });
-                } else {//אם קיים כזה משתמש - בודק האם הוא רשום לצלם אליו הוא מנסה להירשם
-                    const photographerUser = await controller.checkRelation(user3.userID, body.photographerId)
-                    console.log("checkRelation " + JSON.stringify(photographerUser));
-                    if (photographerUser && photographerUser.length > 0) {//אם מצא קשר בין הלקוח לצלם
-                        console.log("User already exists");
-                        res.status(400).send({ error: "The user already exists" });
-                    }
-                    else {//יוצר קשר חדש - הלקוח לא היה רשום לצלם הזה
-                        const photographerUser = await controller.createRelation(user3.userID, body.photographerId)
-                        res.json(returnedUser);
-                    }
-                }
-                break;
-        }
+        res.status(200).send({ returnedUser, accessToken });
     } catch (err) {
         console.error('Error during signUp:', err);
         res.status(500).send('Internal Server Error');
@@ -75,50 +30,29 @@ router.post("/logIn", async (req, res) => {
     try {
         const body = req.body;
         console.log("body " + JSON.stringify(body));
-        const user = await controller.CheckIfExist(body.email);
+        const user = await controller.logIn(body);
         console.log("log in router" + JSON.stringify(user));
-
         if (user) {
-            const userID = user.userID;
-            const passwordRecord = await controller.getPasswordByUserID(userID);
-            if (passwordRecord && passwordRecord.length > 0 && body.password === passwordRecord[0].password) {
-                console.log("Password matches");
-                console.log(process.env.ACCESS_TOKEN_SECRET);
-                const accessToken = jwt.sign(
-                    {
-                        userID: user.userID,
-                        roleID: user.roleID
-                    },
-                    process.env.ACCESS_TOKEN_SECRET,
-                    { expiresIn: "5m" }
-                );
-                console.log("AccessToken:", accessToken);
+            console.log(process.env.ACCESS_TOKEN_SECRET);
+            const accessToken = jwt.sign(
+                {
+                    userID: user.userID,
+                    roleID: user.roleID
+                },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: "5m" }
+            );
+            console.log("AccessToken:", accessToken);
+            res.status(200).send({ user, accessToken });
 
-                // res.cookie('accessToken', accessToken, {
-
-                //     maxAge:99999
-                // });
-
-                if (user.roleID == 1 || user.roleID == 2) {
-                    res.status(200).send({ user, accessToken });
-                } else {
-                    const photographerUser = await controller.checkRelation(userID, body.photographerId);
-                    console.log("checkRelation " + JSON.stringify(photographerUser));
-                    if (photographerUser && photographerUser.length > 0) {
-                        res.status(200).send({ user, accessToken });
-                    } else {
-                        res.status(400).json({ error: "User does not exist" });
-                    }
-                }
-            } else {
-                res.status(400).json({ error: "Incorrect password" });
-            }
         } else {
             res.status(400).json({ error: "User does not exist" });
+
         }
+
     } catch (err) {
         console.error("Error during login: ", err);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ err: "Internal Server Error" });
     }
 });
 

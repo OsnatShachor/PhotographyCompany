@@ -23,19 +23,19 @@ function WelcomePage() {
   }, []);
 
   const handleSidnUpClick = () => {
-    navigate('/SignUp', { state: { roleID } });
+    navigate('/YO/SignUp', { state: { roleID } });
   };
 
   const handlrequestsClick = () => {
-    navigate('/manager');
+    navigate('/YO/manager');
   };
 
   const handleJoinClick = () => {
     if (user.userID) {//אם מחובר משתמש
-      navigate('/Request');
+      navigate('/YO/Request');
     }
     else {
-      navigate('/SignUp', { state: { roleID } });
+      navigate('/YO/SignUp', { state: { roleID } });
     }
   };
   const handleDisConnectionClick = () => {

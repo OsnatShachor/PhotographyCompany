@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import UpdateOrderPopUp from '../components/UpdateOrderPopUp';
 import '../CSS/PrivateArea.css'
 function ClientOrderOnScreen(props) {
@@ -7,7 +7,6 @@ function ClientOrderOnScreen(props) {
     const [enableUpdate, setEnableUpdate] = useState(false);
     const [enableCancele, setEnableCancele] = useState(false);
     const [orderCategory, setOrderCategory] = useState({});
-    const navigate = useNavigate();
     const { id } = useParams();
     const order = props.order;
 

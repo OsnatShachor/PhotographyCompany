@@ -56,15 +56,15 @@ function Order() {
 
     const handleDisConnectionClick = () => {
         setUser({});
-        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+        navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
     };
 
     const handleConnectionClick = () => {
-        navigate('/SignUp', { state: { roleID, photographer } });
+        navigate('/YO/SignUp', { state: { roleID, photographer } });
     };
 
     const handlePrivateAreaClick = () => {
-        navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+        navigate(`/YO/photographer/${id}/PrivateArea/${user.userID}`, { state: { photographer } });
     };
 
     const handleDateClick = (value) => {
@@ -90,7 +90,7 @@ function Order() {
     };
 
     const handleHomeClick = () => {
-        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+        navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
     };
 
     const handleCloseModal = () => {

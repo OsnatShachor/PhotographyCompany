@@ -23,15 +23,15 @@ function PrivateArea() {
 
     const handleDisConnectionClick = () => {
         setUser({});
-        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+        navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
     };
 
     const handleConnectionClick = () => {
-        navigate('/SignUp', { state: { roleID, photographer } });
+        navigate('/YO/SignUp', { state: { roleID, photographer } });
     };
 
     const handleHomeClick = () => {
-        navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+        navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
     };
 
     const handleViewingMyOrders = async () => {

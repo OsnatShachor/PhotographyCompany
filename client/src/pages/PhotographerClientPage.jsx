@@ -28,26 +28,26 @@ function PhotographerClientPage() {
   };
 
   const handleConnectionClick = () => {
-    navigate('/SignUp', { state: { roleID, photographer } });
+    navigate('/YO/SignUp', { state: { roleID, photographer } });
   };
 
   const handlePriceListClick = () => {
-    navigate(`/photographer/${id}/PriceList`, { state: { photographer } });
+    navigate(`/YO/photographer/${id}/PriceList`, { state: { photographer } });
   };
 
   const handlePrivateAreaClick = () => {
     if (user &&(user.userID)) {
-      navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+      navigate(`/YO/photographer/${id}/PrivateArea/${user.userID}`, { state: { photographer } });
     }else {
-      navigate('/SignUp', { state: { roleID, photographer } });
+      navigate('/YO/SignUp', { state: { roleID, photographer } });
     }
   };
 
   const handleOrderClick = () => {
     if (user &&(user.userID)) {
-      navigate(`/photographer/${id}/order`, { state: { photographer } });
+      navigate(`/YO/photographer/${id}/order`, { state: { photographer } });
     } else {
-      navigate('/SignUp', { state: { roleID, photographer } });
+      navigate('/YO/SignUp', { state: { roleID, photographer } });
     }
   };
 

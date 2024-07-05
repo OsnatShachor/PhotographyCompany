@@ -23,16 +23,16 @@ function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
-          <Route path="/logIn" element={<LogIn />} />
-          <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/manager" element={<ManagerPage/>}/>
-          <Route path="/Request" element={<Request />} />
-          <Route path="/photographer/:id" element={<PhotographerClientPage />} />
-          <Route path="/photographerManagement/:id" element={<PhotographerPage />} />
-          <Route path="/photographer/:id/order" element={<Order />} />
-          <Route path="/photographer/:id/PriceList" element={<PriceList />} />
-          <Route path="/photographer/:id/PrivateArea" element={<PrivateArea />} />
-          <Route path="/photographer/:id/PhotoManagement" element={<UploadPhoto />} />
+          <Route path="/YO/logIn" element={<LogIn />} />
+          <Route path="/YO/SignUp" element={<SignUp />} />
+          <Route path="/YO/manager" element={<ManagerPage/>}/>
+          <Route path="/YO/Request" element={<Request />} />
+          <Route path="/YO/photographer/:id" element={<PhotographerClientPage />} />
+          <Route path="/YO/photographerManagement/:id" element={<PhotographerPage />} />
+          <Route path="/YO/photographer/:id/order" element={<Order />} />
+          <Route path="/YO/photographer/:id/PriceList" element={<PriceList />} />
+          <Route path="/YO/photographer/:id/PrivateArea/:id" element={<PrivateArea />} />
+          <Route path="/YO/photographer/:id/PhotoManagement" element={<UploadPhoto />} />
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

@@ -69,10 +69,10 @@ function SignUp() {
                 sessionStorage.setItem("accessToken",data.accessToken)
                 setUser(data.returnedUser);
                 if (body.photographerId === 0) {
-                    navigate('/Request');
+                    navigate('/YO/Request');
                 } else {
                     alert("You have successfully registered");
-                    navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+                    navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
                 }
             })
             .catch(error => {
@@ -93,10 +93,10 @@ function SignUp() {
             <form id="form">
                 <ul id="tabs" className="register-buttons active">
                     <li className="tab active">
-                        <Link to="/SignUp" className="link-btn">Sign Up</Link>
+                        <Link to="/YO/SignUp" className="link-btn">Sign Up</Link>
                     </li>
                     <li className="tab">
-                        <Link to="/logIn" state={{ photographer, roleID }} className="link-btn">Log In</Link>
+                        <Link to="/YO/logIn" state={{ photographer, roleID }} className="link-btn">Log In</Link>
                     </li>
                 </ul>
                 <div className="content" id="signUpForm">

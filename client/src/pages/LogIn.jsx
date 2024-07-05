@@ -69,18 +69,18 @@ function LogIn() {
         setUser(user);
         if (user.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
           alert("You entered successfully")
-          navigate(`/photographer/${photographer.userID}`, { state: { photographer: photographer } });
+          navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer: photographer } });
         } 
         else if (user.roleID === 1) {// מנהל
           console.log(JSON.stringify(user));
           alert("You entered successfully")
-          navigate('/manager');
+          navigate('/YO/manager');
         } 
         else if (user.roleID === 2) {// צלם - בודק אם הוא פעיל
           checkIfPhotographerActive(user.userID).then(isActive => {
             if (isActive) {
               alert("You entered successfully")
-              navigate(`/photographerManagement/${user.userID}`);
+              navigate(`/YO/photographerManagement/${user.userID}`);
             }else{
               alert("You entered successfully")
               navigate(`/`);
@@ -120,10 +120,10 @@ function LogIn() {
       <form id="form">
         <ul id="tabs" className="register-buttons active">
           <li className="tab">
-            <Link to="/SignUp" state={{ roleID, photographer }} className="link-btn">Sign Up</Link>
+            <Link to="/YO/SignUp" state={{ roleID, photographer }} className="link-btn">Sign Up</Link>
           </li>
           <li className="tab active">
-            <Link to="/logIn" className="link-btn">Log In</Link>
+            <Link to="/YO/logIn" className="link-btn">Log In</Link>
           </li>
         </ul>
         <div>

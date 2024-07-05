@@ -53,18 +53,18 @@ function PhotographerPage() {
 
     const handleDisconnectionClick = () => {
         setUser({});
-        navigate(`/photographer/${user.userID}`, { state: { user } });
+        navigate(`/YO/photographer/${user.userID}`, { state: { user } });
     };
 
     const handlePriceListClick = () => {
-        navigate(`/photographer/${id}/PriceList`, { state: { user } });
+        navigate(`/YO/photographer/${id}/PriceList`, { state: { user } });
     }
 
 
     const handleOrderClick = async () => { };
 
     const handleAddingPhotosClick = async () => {
-        navigate(`/photographer/${id}/PhotoManagement`)
+        navigate(`/YO/photographer/${id}/PhotoManagement`)
     };
 
     const handleUpdateCategory = async (category) => {
@@ -85,7 +85,7 @@ function PhotographerPage() {
     };
 
     const handleRequestClick = () => {
-        navigate('/Request', { state: { user } });
+        navigate('/YO/Request', { state: { user } });
     }
     return (
         <>

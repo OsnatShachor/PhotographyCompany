@@ -40,7 +40,7 @@ function Request() {
       .then(() => {
         alert("Your request has been successfully sent")
         if (photographer) {
-          navigate(`/photographerManagement/${photographer.userID}`);
+          navigate(`/YO/photographerManagement/${photographer.userID}`);
         } else {
           navigate('/');
         }

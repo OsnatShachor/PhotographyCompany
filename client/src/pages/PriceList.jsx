@@ -28,18 +28,18 @@ function PriceList() {
 
   const handleDisConnectionClick = () => {
     setUser({});
-    navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+    navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
   };
 
   const handleConnectionClick = () => {
-    navigate('/SignUp', { state: { roleID, photographer } });
+    navigate('/YO/SignUp', { state: { roleID, photographer } });
   };
 
   const handlePrivateAreaClick = () => {
     if (user && user.userID) {
-      navigate(`/photographer/${id}/PrivateArea`, { state: { photographer } });
+      navigate(`/YO/photographer/${id}/PrivateArea/${user.userID}`, { state: { photographer } });
     } else {
-      navigate('/SignUp', { state: { roleID, photographer } });
+      navigate('/YO/SignUp', { state: { roleID, photographer } });
     }
   };
 
@@ -50,9 +50,9 @@ function PriceList() {
 
   const handleHomeClick = () => {
     if (id == user.userID) {
-      navigate(`/photographerManagement/${user.userID}`)
+      navigate(`/YO/photographerManagement/${user.userID}`)
     } else {
-      navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+      navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
     }
   };
 

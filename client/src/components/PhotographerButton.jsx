@@ -10,7 +10,7 @@ function PhotographerButton(props) {
 
   const handlePhotographerClick = () => {
     setUser({})
-    navigate(`/photographer/${photographer.userID}`, { state: { photographer } });
+    navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
   }
 
   return (

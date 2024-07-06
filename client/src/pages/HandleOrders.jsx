@@ -10,9 +10,9 @@ function HandleOrders() {
     const { user, setUser } = useContext(UserContext);
     const [allOrders, setAllOrders] = useState([]);
     const photographer = location.state?.photographer;
-    
+
     useEffect(() => {
-      getAllOrders();
+        getAllOrders();
     }, []);
     const handleDisConnectionClick = () => {
         setUser({});
@@ -27,19 +27,21 @@ function HandleOrders() {
         navigate(`/YO/photographerManagement/${user.userID}`)
 
     };
-
+    const handleCloseModal = () => {
+        getAllOrders();
+    }
     const handleBackClick = () => {
         navigate(-1);
     };
 
     const getAllOrders = async () => {
         try {
-            const accessToken=sessionStorage.getItem("accessToken")
+            const accessToken = sessionStorage.getItem("accessToken")
             const response = await fetch(`http://localhost:3000/photographer/${id}/orders`,
                 {
                     method: 'GET',
                     headers: {
-                        'Authorization': 'Bearer ' +accessToken,
+                        'Authorization': 'Bearer ' + accessToken,
                         'Content-Type': 'application/json'
                     }
                 });
@@ -62,7 +64,7 @@ function HandleOrders() {
             </div>
             <div className="orderShow">
                 {allOrders.map(order => (
-                    <PhotographerOrderOnScreen key={order.orderID} order={order} />
+                    <PhotographerOrderOnScreen key={order.orderID} order={order} handleCloseModal={handleCloseModal} />
                 ))}
             </div>
         </div>

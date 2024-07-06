@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from 'react-router-dom';
 import ConfirmationPopUp from './ConfirmationPopUp';
 import UpdateCategoryPopUp from './UpdateCategoryPopUp';
 import '../CSS/List.css';
+import { UserContext } from '../App';
 
 function SinglePriceList(props) {
+    const context = useContext(UserContext);
+    const { user, setUser } = context;
     const category = props.category;
-    const user = props.user;
     const { id } = useParams();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const [showUpdateModal, setShowUpdateModal] = useState(false); 
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
 
     const handleUpdateClick = () => {
-        setShowUpdateModal(true); 
+        setShowUpdateModal(true);
     };
 
     const handleDeleteClick = () => {
@@ -21,13 +23,13 @@ function SinglePriceList(props) {
 
     const handleConfirmDelete = async () => {
         try {
-          const accessToken=sessionStorage.getItem("accessToken")
+            const accessToken = sessionStorage.getItem("accessToken")
             await fetch(`http://localhost:3000/category/${category.categoryID}`, {
                 method: 'DELETE',
                 headers: {
-                  'Authorization': 'Bearer ' +accessToken,
-                  'Content-Type': 'application/json'
-              }
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                }
             });
             setShowConfirmModal(false);
             props.refreshCategories();
@@ -36,19 +38,19 @@ function SinglePriceList(props) {
         }
     };
 
-    const handleSaveUpdate = async (updatedCategory) => {
+    const handleUpdateCategory = async (updatedCategory) => {
         try {
-          console.log(updatedCategory.categoryID);
-          const accessToken=sessionStorage.getItem("accessToken")
-             await fetch(`http://localhost:3000/category/${updatedCategory.categoryID}`, {
+            const accessToken = sessionStorage.getItem("accessToken");
+            updatedCategory.categoryID = category.categoryID; // Add this line
+            await fetch(`http://localhost:3000/category/${category.categoryID}`, {
                 method: 'PUT',
                 headers: {
-                  'Authorization': 'Bearer ' +accessToken,
-                  'Content-Type': 'application/json'
-              },
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(updatedCategory),
             });
-            setShowUpdateModal(false); 
+            setShowUpdateModal(false);
             props.refreshCategories();
         } catch (error) {
             console.error('Error updating category:', error);
@@ -74,10 +76,10 @@ function SinglePriceList(props) {
                 handleConfirm={handleConfirmDelete}
             />
             <UpdateCategoryPopUp
-                show={showUpdateModal} 
-                handleClose={() => setShowUpdateModal(false)} 
-                handleSave={handleSaveUpdate} 
-                category={category} 
+                show={showUpdateModal}
+                handleClose={() => setShowUpdateModal(false)}
+                handleSave={handleUpdateCategory}
+                category={category}
             />
         </>
     );

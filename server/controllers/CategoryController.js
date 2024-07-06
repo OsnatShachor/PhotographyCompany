@@ -16,15 +16,16 @@ async function getOrderCategory(categoryID) {
         throw err;
     }
 }
+
 async function updateCategory(body) {
     try {
         const result = await model.updateCategory(body.categoryID, body.categoryName, body.payPerHour, body.numOfEditPictures);
-        console.log("controller-upDate")
         return result[0];
     } catch (err) {
         throw err;
     }
 }
+
 
 async function addCategory(body) {
     const { photographerID, categoryName, payPerHour, numOfEditPictures } = body;

@@ -28,7 +28,8 @@ router.get("/:photographerId/:categoryID", async (req, res) => {
 
 router.put('/:id', authorizePhotographer, async (req, res) => {
     try {
-        const updateCategory = await controller.updateCategory(req.body);
+        const body = req.body;
+        const updateCategory = await controller.updateCategory(body);
         if (updateCategory) {
             res.status(200).json({ message: 'Category updated successfully' });
         } else {
@@ -38,6 +39,7 @@ router.put('/:id', authorizePhotographer, async (req, res) => {
         res.status(500).json({ error: 'Failed to update category' });
     }
 });
+
 
 
 router.post('/', authorizePhotographer, async (req, res) => {

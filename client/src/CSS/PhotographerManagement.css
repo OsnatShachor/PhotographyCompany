@@ -34,7 +34,8 @@ body, html {
     background-color: #ffe3d8;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-container {

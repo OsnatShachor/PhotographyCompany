@@ -31,14 +31,15 @@ router.get('/:photographerID/orders', authorizePhotographer, async (req, res) =>
 });
 
 // Update an existing order
-router.put("/:orderId",authorizePhotographer, async (req, res) => {
+router.put("/:orderId", authorizePhotographer, async (req, res) => {
     try {
         const { orderId } = req.params;
-        const updatedOrder = await controller.updateOrder(orderId, req.body);
+        const updatedOrder = await controller.updateOrder(orderId, req.body.statusID);
         res.status(200).json(updatedOrder);
     } catch (error) {
         console.error('Error updating order:', error);
         res.status(500).json({ error: "Failed to update order" });
     }
 });
+
 module.exports = router;

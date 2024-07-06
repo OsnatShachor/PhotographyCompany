@@ -29,13 +29,14 @@ const getPhotographerOrders = async (photographerID) => {
     }
 };
 
-async function updateOrder(orderId, updatedStatusOrder) {
+async function updateOrder(orderId, statusID) {
     try {
-        const updatedOrder = await model.updateOrder(orderId, updatedStatusOrder);
+        const updatedOrder = await model.updateOrder(orderId, statusID);
         return updatedOrder;
     } catch (err) {
         throw err;
     }
 }
+
 
 module.exports = { updateAbout, checkIfPhotographerActive,updateOrder,getPhotographerOrders };

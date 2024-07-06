@@ -96,7 +96,7 @@ function PriceList() {
         {categories.map((category, index) => (
           <SinglePriceList
             key={index}
-            user={user}
+            // user={user}
             category={category}
             refreshCategories={getCategories}
           />

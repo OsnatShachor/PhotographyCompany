@@ -46,7 +46,7 @@ router.post("/",authorizeClient, async (req, res) => {
 });
 
 // Update an existing order
-router.put("/:orderId", async (req, res) => {
+router.put("/:orderId",authorizeClient, async (req, res) => {
     try {
         const { orderId } = req.params;
         const updatedOrder = await controller.updateOrder(orderId, req.body);

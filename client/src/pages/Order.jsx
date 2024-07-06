@@ -74,7 +74,7 @@ function Order() {
 
     const tileDisabled = ({ date, view }) => {
         if (view === 'month') {
-            if (date < new Date().setHours(0, 0, 0, 0)) {
+            if (date <= new Date().setHours(0, 0, 0, 0)) {
                 return true;
             }
             if (date.getDay() === 6) {

@@ -58,10 +58,11 @@ const UpdateOrderPopUp = (props) => {
             location: location,
             payment: totalPrice,
         };
-
+        const accessToken = sessionStorage.getItem("accessToken");
         const request = {
             method: "PUT",
             headers: {
+                'Authorization': 'Bearer ' +accessToken,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(updatedOrder)

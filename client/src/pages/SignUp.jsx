@@ -66,7 +66,7 @@ function SignUp() {
                     throw new Error(errorText);
                 }
                 const data = await response.json();
-                sessionStorage.setItem("accessToken",data.accessToken)
+                sessionStorage.setItem("accessToken", data.accessToken);
                 setUser(data.returnedUser);
                 if (body.photographerId === 0) {
                     navigate('/YO/Request');
@@ -76,7 +76,7 @@ function SignUp() {
                 }
             })
             .catch(error => {
-                alert('Error making POST request: ' + error.message);
+                alert(error.message);
             });
     };
 

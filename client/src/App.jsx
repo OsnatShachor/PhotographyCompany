@@ -12,6 +12,7 @@ import ManagerPage from "./pages/ManagerPage";
 import PhotographerPage from "./pages/PhotographerPage"
 import './App.css';
 import UploadPhoto from "./pages/UploadPhoto";
+import HandleOrders from "./pages/HandleOrders";
 export const UserContext = createContext();
 export const PhotographerContext = createContext();
 
@@ -33,6 +34,8 @@ function App() {
           <Route path="/YO/photographer/:id/PriceList" element={<PriceList />} />
           <Route path="/YO/photographer/:id/PrivateArea/:id" element={<PrivateArea />} />
           <Route path="/YO/photographer/:id/PhotoManagement" element={<UploadPhoto />} />
+          <Route path="/YO/photographer/:id/PhotoManagement/orders" element={<HandleOrders />} />
+
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

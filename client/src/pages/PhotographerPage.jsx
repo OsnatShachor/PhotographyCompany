@@ -61,7 +61,9 @@ function PhotographerPage() {
     }
 
 
-    const handleOrderClick = async () => { };
+    const handleOrderClick = async () => {
+       navigate(`/YO/photographer/${id}/PhotoManagement/orders`) 
+     };
 
     const handleAddingPhotosClick = async () => {
         navigate(`/YO/photographer/${id}/PhotoManagement`)
@@ -91,7 +93,7 @@ function PhotographerPage() {
         <>
             <div className="onTopBtn">
                 <button onClick={handleDisconnectionClick}>Disconnection</button>
-                <button onClick={handleOrderClick}>Order management</button>
+                <button onClick={handleOrderClick}>Handle Orders</button>
                 <button onClick={handleRequestClick}>Sent Request to YO-Photography</button>
 
             </div>

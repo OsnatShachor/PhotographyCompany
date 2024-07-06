@@ -53,48 +53,46 @@ function LogIn() {
     };
 
     fetch(`http://localhost:3000/users/logIn`, request)
-      .then(res => {
+    .then(res => {
         if (!res.ok) {
-          if (res.status === 401) {
-            throw new Error("Unauthorized");
-          } else {
-            return res.json().then(error => { throw new Error(error.error); });
-          }
+            if (res.status === 401) {
+                throw new Error("Unauthorized");
+            } else {
+                return res.json().then(error => { throw new Error(error.error); });
+            }
         }
         return res.json();
-      })
-      .then(data => {
-        const {user,accessToken}=data
-        sessionStorage.setItem("accessToken",accessToken)
+    })
+    .then(data => {
+        const { user, accessToken } = data;
+        sessionStorage.setItem("accessToken", accessToken);
         setUser(user);
-        if (user.roleID === 3) {//לקוח מעביר לעמוד של הצלם אליו נכנס
-          alert("You entered successfully")
-          navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer: photographer } });
-        } 
-        else if (user.roleID === 1) {// מנהל
-          console.log(JSON.stringify(user));
-          alert("You entered successfully")
-          navigate('/YO/manager');
-        } 
-        else if (user.roleID === 2) {// צלם - בודק אם הוא פעיל
-          checkIfPhotographerActive(user.userID).then(isActive => {
-            if (isActive) {
-              alert("You entered successfully")
-              navigate(`/YO/photographerManagement/${user.userID}`);
-            }else{
-              alert("You entered successfully")
-              navigate(`/`);
-            }
-          });
+        if (user.roleID === 3) {
+            alert("You entered successfully");
+            navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer: photographer } });
+        } else if (user.roleID === 1) {
+            console.log(JSON.stringify(user));
+            alert("You entered successfully");
+            navigate('/YO/manager');
+        } else if (user.roleID === 2) {
+            checkIfPhotographerActive(user.userID).then(isActive => {
+                if (isActive) {
+                    alert("You entered successfully");
+                    navigate(`/YO/photographerManagement/${user.userID}`);
+                } else {
+                    alert("You entered successfully");
+                    navigate(`/`);
+                }
+            });
         }
-      })
-      .catch(error => {
+    })
+    .catch(error => {
         if (error.message === "Unauthorized") {
-          alert("Unauthorized: Incorrect email or password");
+            alert("Unauthorized: Incorrect email or password");
         } else {
-          alert(error.message);
+            alert(error.message);
         }
-      });
+    });
   };
 
   const checkIfPhotographerActive = async (userID) => {

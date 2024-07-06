@@ -12,6 +12,7 @@ function Request() {
   const { id } = useParams();
   const location = useLocation();
   const photographer = location.state?.user;
+  
   const handleRequestButton = (e) => {
     e.preventDefault();
     if (!fillRequest) {

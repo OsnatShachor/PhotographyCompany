@@ -21,11 +21,10 @@ router.post("/signUp", async (req, res) => {
         res.status(200).send({ returnedUser, accessToken });
     } catch (err) {
         console.error('Error during signUp:', err);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send({ error: err.message });
     }
 });
 
-// const passwordMatch = await bcrypt.compare(body.password, user[0].password);
 router.post("/logIn", async (req, res) => {
     try {
         const body = req.body;
@@ -44,15 +43,12 @@ router.post("/logIn", async (req, res) => {
             );
             console.log("AccessToken:", accessToken);
             res.status(200).send({ user, accessToken });
-
         } else {
             res.status(400).json({ error: "User does not exist" });
-
         }
-
     } catch (err) {
         console.error("Error during login: ", err);
-        res.status(500).json({ err: "Internal Server Error" });
+        res.status(500).json({ error: err.message });
     }
 });
 

@@ -21,4 +21,32 @@ async function checkIfPhotographerActive(photographerID) {
     throw new Error('Failed to check photographer');
   }
 }
-module.exports={updateAbout, checkIfPhotographerActive}
+
+async function updateOrder(orderId, updatedStatusOrder) {
+  try {
+      const sql = `
+      UPDATE orders
+      SET statusID = ?
+      WHERE orderID = ?`;
+      const  statusID  = updatedStatusOrder;
+      const [result] = await pool.query(sql, [statusID]);
+      return result;
+  } catch (err) {
+      throw err;
+  }
+}
+
+async function getPhotographerOrders (photographerID)  {
+  try {
+      const sql = `
+          SELECT * FROM orders 
+          WHERE photographerID = ?;
+      `;
+      const [orders] = await pool.query(sql, [photographerID]);
+      return orders;
+  } catch (error) {
+      throw error;
+  }
+}
+
+module.exports={updateAbout, checkIfPhotographerActive,updateOrder,getPhotographerOrders}

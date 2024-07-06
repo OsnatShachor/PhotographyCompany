@@ -29,7 +29,7 @@ async function updateOrder(orderId, updatedStatusOrder) {
       SET statusID = ?
       WHERE orderID = ?`;
       const  statusID  = updatedStatusOrder;
-      const [result] = await pool.query(sql, [statusID]);
+      const [result] = await pool.query(sql, [statusID,orderId]);
       return result;
   } catch (err) {
       throw err;

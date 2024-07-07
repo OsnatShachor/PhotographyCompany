@@ -91,7 +91,7 @@ function PriceList() {
         {(id != user.userID) && (<button onClick={handlePrivateAreaClick}>Private Area</button>)}
         <button onClick={handleBackClick}>Back</button>
       </div>
-      <h1>My Price List</h1>
+      <h1>Price List</h1>
       <div className="boxShow">
         {categories.map((category, index) => (
           <SinglePriceList

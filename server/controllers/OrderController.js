@@ -29,7 +29,7 @@ async function getUnavailableDates(photographerID) {
 async function getAllMyOrders(userID, photographerId) {
     try {
         const orders = await model.getAllMyOrders(userID, photographerId);
-        console.log("Fetched orders:", orders);
+        console.log("Fetched orders:", JSON.stringify(orders));
         return orders;
     } catch (err) {
         throw err;

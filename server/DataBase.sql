@@ -154,7 +154,8 @@ INSERT INTO statuses (statusName) VALUES
 ('Updated'),
 ('Confirmed'),
 ('Cancelled'),
-('Completed');
+('Completed'),
+('ClientCancelled');
 
 INSERT INTO users (userName, email, phone, roleID) VALUES 
 ('Osnat Shachor', 'osnaty16@gmail.com', '0556777410',  1),
@@ -199,6 +200,6 @@ INSERT INTO orders (userID, photographerID, confirmed, statusID, categoryID, pho
 (3, 3, TRUE, 2, 2, '2024-06-03', '14:00:00', 3.0, 'מתחם התחנה', 540.00);
 
 INSERT INTO requests (photographerID, request, statusID) VALUES
-(2, 'I need a photographer for my engagement party on July 15th, 2024.', 4),
+(1, 'I need a photographer for my engagement party on July 15th, 2024.', 4),
 (5, 'I want to open a website for myself. I have been shooting for 3 years', 1),
-(3, 'Looking for a portrait photographer for family photoshoot next weekend.', 5);
+(3, 'Looking for a portrait photographer for family photoshoot next weekend.', 3);

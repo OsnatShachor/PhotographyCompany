@@ -6,7 +6,6 @@ const authorizePhotographer = require('../middleware/authorizePhotographer');
 router.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        console.log("router get")
         const category = await controller.getAllCategories(id);
         res.status(200).send(category);
     } catch (error) {

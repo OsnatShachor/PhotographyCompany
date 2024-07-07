@@ -12,9 +12,9 @@ function ClientOrderOnScreen(props) {
 
     useEffect(() => {
         getOrderCategory();
-        if (order.statusID !== 5 && order.statusID !== 6) {
+        if (order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 7) {
             setEnableUpdate(true);
-        } if (order.statusID !== 6) {
+        } if (order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 7) {
             setEnableCancele(true);
         }
     }, [order.statusID, id, order.categoryID]);
@@ -36,13 +36,13 @@ function ClientOrderOnScreen(props) {
         e.preventDefault();
         const updatedOrder = {
             ...order,
-            statusID: 5,
-
+            statusID: 7,
         };
-
+        const accessToken = sessionStorage.getItem("accessToken");
         const request = {
             method: "PUT",
             headers: {
+                'Authorization': 'Bearer ' + accessToken,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(updatedOrder)

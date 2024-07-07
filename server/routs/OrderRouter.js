@@ -6,9 +6,12 @@ const authorizeClient = require('../middleware/authorizeClient');
 
 router.get("/:userID/:photographerId",authorizeClient, async (req, res) => {
     try {
-        const { userID, photographerId } = req.params;
+        const  userID = req.params.userID;
+        const photographerId= req.params.photographerId;
         const orders = await controller.getAllMyOrders(userID, photographerId);
-        console.log("Fetched orders: ", orders);
+        console.log("photographerId "+photographerId);
+        console.log("userID "+userID);
+        console.log("Fetched orders Router: ", orders);
         res.status(200).json(orders);
     } catch (error) {
         console.error('Error fetching orders:', error);
@@ -19,7 +22,7 @@ router.get("/:userID/:photographerId",authorizeClient, async (req, res) => {
 // Fetch unavailable dates of a photographer
 router.get('/unavailable-dates/:id', async (req, res) => {
     try {
-        const { id: photographerId } = req.params;
+        const { id, photographerId } = req.params;
         const unavailableDates = await controller.getUnavailableDates(photographerId);
         console.log("Unavailable dates: ", unavailableDates);
         res.status(200).json(unavailableDates);

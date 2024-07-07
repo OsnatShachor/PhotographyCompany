@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import '../CSS/PrivateArea.css';
+import '../CSS/PhotographerManagement.css';
 import SendEmailToUpdate from "./SendEmailToUpdate";
 import SendEmailToCancele from "./SendEmailToCancele";
 import SendEmailToConfirm from "./SendEmailToConfirm";
@@ -9,6 +9,7 @@ import emailjs from 'emailjs-com';
 function PhotographerOrderOnScreen(props) {
     const [user, setUser] = useState({});
     const [orderCategory, setOrderCategory] = useState({});
+    const [status, setStatus] = useState({});
     const [enableShow, setEnableShow] = useState(false);
     const [enableUpdate, setEnableUpdate] = useState(false);
     const [enableCancele, setEnableCancele] = useState(false);
@@ -22,7 +23,9 @@ function PhotographerOrderOnScreen(props) {
 
     useEffect(() => {
         getUser();
-        if (order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 4) {
+        getStatus();
+        console.log(status);
+        if (order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 4&& order.statusID !== 7) {
             setEnableUpdate(true);
         }
         if (order.statusID !== 5 && order.statusID !== 6) {
@@ -33,11 +36,37 @@ function PhotographerOrderOnScreen(props) {
 
     const getUser = async () => {
         try {
-            const data = await fetch(`http://localhost:3000/users/${order.userID}`);
-            const userData = await data.json();
+            const response = await fetch(`http://localhost:3000/users/${order.userID}`);
+            if (!response.ok) throw new Error('Failed to fetch user data');
+            const userData = await response.json();
             setUser(userData[0]);
         } catch (error) {
             console.error("Error fetching user:", error);
+            alert("Error fetching user data. Please try again later.");
+        }
+    };
+
+    const getStatus = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/statuses/${order.statusID}`);
+            if (!response.ok) throw new Error('Failed to fetch status data');
+            const statusData = await response.json();
+            setStatus(statusData[0]);
+        } catch (error) {
+            console.error("Error fetching status:", error);
+            alert("Error fetching status data. Please try again later.");
+        }
+    };
+
+    const getOrderCategory = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/category/${id}/${order.categoryID}`);
+            if (!response.ok) throw new Error('Failed to fetch category data');
+            const categories = await response.json();
+            setOrderCategory(categories[0]);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+            alert("Error fetching category data. Please try again later.");
         }
     };
 
@@ -83,10 +112,8 @@ function PhotographerOrderOnScreen(props) {
 
             await handleSendEmail(emailDetails);
 
-            // Update the order status locally
             const updatedOrder = { ...order, statusID };
             const updatedOrders = allOrders.map(o => o.orderID === order.orderID ? updatedOrder : o);
-
             props.setAllOrders(updatedOrders);
 
             props.handleCloseModal();
@@ -99,24 +126,14 @@ function PhotographerOrderOnScreen(props) {
     const handleSendEmail = async (emailDetails) => {
         try {
             await emailjs.send(
-                'service_u2ebeds', // Your service ID
-                'template_0x4k60t', // Your template ID
+                'service_u2ebeds',
+                'template_0x4k60t',
                 emailDetails,
-                'sVdp577QDfBGZC2gO' // Your user ID
+                'sVdp577QDfBGZC2gO'
             );
             console.log('Email sent successfully!');
         } catch (error) {
             console.error('Failed to send email:', error);
-        }
-    };
-
-    const getOrderCategory = async () => {
-        try {
-            const data = await fetch(`http://localhost:3000/category/${id}/${order.categoryID}`);
-            const categories = await data.json();
-            setOrderCategory(categories[0]);
-        } catch (error) {
-            console.error('Error fetching categories:', error);
         }
     };
 
@@ -131,17 +148,19 @@ function PhotographerOrderOnScreen(props) {
 
     return (
         <>
-            <div className="orderPhotoBox">
-                <h3 className='bold'>Client: </h3>
-                <h3>{user.userName}</h3>
-                <br />
-                <h3 className='bold'>Photo Date: </h3>
-                <h3>{new Date(order.photoDate).toLocaleDateString()}</h3>
-                <button onClick={handleShowDetailsClick}>Show Details</button>
+            <div className="orderPhotographBox">
+                <h3 className='h3Order'><span className='bold'>Client: </span></h3>
+                <h3 className='h3Order'>{user.userName}</h3>
+                <h3 className='h3Order'><span className='bold'>Photo Date:</span> </h3>
+                <h3 className='h3Order'>{new Date(order.photoDate).toLocaleDateString()}</h3>
+                <h3 className='h3Order'><span className='bold'>Status: </span>{status.statusName} </h3>
+
+                <button className="showDetailBtn" onClick={handleShowDetailsClick}>Show Details</button>
+
                 {enableShow && (
                     <div className="modal">
                         <div className="modal-content">
-                            <span className="close" onClick={onClose}>&times;</span>
+                            <span className="close" onClick={()=>setEnableShow(false)}>&times;</span>
                             <h3 className='bold'>Client: </h3>
                             <h3>{user.userName}</h3>
                             <h3 className='bold'>Client Email </h3>

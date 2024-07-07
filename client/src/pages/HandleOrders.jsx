@@ -9,11 +9,16 @@ function HandleOrders() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
     const [allOrders, setAllOrders] = useState([]);
+    const [filteredOrders, setFilteredOrders] = useState([]);
     const photographer = user;
 
     useEffect(() => {
+        if (!user.userID) {
+            navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
+        }
         getAllOrders();
     }, []);
+
     const handleDisConnectionClick = () => {
         navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
         setUser({});
@@ -24,34 +29,47 @@ function HandleOrders() {
     };
 
     const handleHomeClick = () => {
-        navigate(`/YO/photographerManagement/${user.userID}`)
+        navigate(`/YO/photographerManagement/${user.userID}`);
     };
 
     const handleCloseModal = () => {
-        getAllOrders(); // הוספתי את הקריאה לפונקציה
+        getAllOrders();
     };
 
     const handleBackClick = () => {
         navigate(-1);
     };
 
+    const handleRequestClick = () => {
+        navigate('/YO/Request', { state: { user } });
+    };
+
     const getAllOrders = async () => {
         try {
-            const accessToken = sessionStorage.getItem("accessToken")
-            const response = await fetch(`http://localhost:3000/photographer/${id}/orders`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + accessToken,
-                        'Content-Type': 'application/json'
-                    }
-                });
+            const accessToken = sessionStorage.getItem("accessToken");
+            const response = await fetch(`http://localhost:3000/photographer/${id}/orders`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                }
+            });
             const allFetchOrders = await response.json();
-            console.log(allFetchOrders);
             setAllOrders(allFetchOrders);
+            setFilteredOrders(allFetchOrders); // Initialize with all orders
         } catch (error) {
             setAllOrders([]);
-            console.error('Error fetching waiting requests:', error);
+            setFilteredOrders([]);
+            console.error('Error fetching waiting Orders:', error);
+        }
+    };
+
+    const filterOrdersByStatus = (statusID) => {
+        if (statusID === null) {
+            setFilteredOrders(allOrders);
+        } else {
+            const filtered = allOrders.filter(order => order.statusID === statusID);
+            setFilteredOrders(filtered);
         }
     };
 
@@ -59,17 +77,32 @@ function HandleOrders() {
         <div>
             <div className="onTopBtn">
                 <button onClick={handleHomeClick}>Home Page</button>
+                <button onClick={handleRequestClick}>Sent Request to YO-Photography</button>
                 {!(user && user.userID) && (<button onClick={handleConnectionClick}>Connection</button>)}
                 {(user && user.userID) && (<button onClick={handleDisConnectionClick}>DisConnection</button>)}
                 <button onClick={handleBackClick}>Back</button>
             </div>
-            {/* <div className="filterButtons">
-                <button className="managerBtn" onClick={handleShowAllClick}>Show All Requests</button>
-                <button className="managerBtn" onClick={handleShowWaitingClick}>Show Waiting Requests</button>
-            </div> */}
+            <h1>All My Orders</h1>
+            <div className="filterButtons">
+                <button className="managerBtn" onClick={() => filterOrdersByStatus(null)}>Show All Orders</button>
+                <button className="managerBtn" onClick={() => filterOrdersByStatus(1)}>Sent Orders</button>
+                <button className="managerBtn" onClick={() => filterOrdersByStatus(2)}>Sent For Change Orders</button>
+                <button className="managerBtn" onClick={() => filterOrdersByStatus(3)}>Updated Orders</button>
+                <button className="managerBtn" onClick={() => filterOrdersByStatus(4)}>Confirmed Orders</button>
+                <button className="managerBtn" onClick={() => filterOrdersByStatus(7)}>Waiting For Cancele</button>
+                <button className="managerBtn" onClick={() => filterOrdersByStatus(5)}>Cancelled Orders</button>
+                <button className="managerBtn" onClick={() => filterOrdersByStatus(6)}>Completed Orders</button>
+            </div>
             <div className="orderShow">
-                {allOrders.map(order => (
-                    <PhotographerOrderOnScreen key={order.orderID} order={order} handleCloseModal={handleCloseModal} setAllOrders={setAllOrders} allOrders={allOrders} photographer={photographer} />
+                {filteredOrders.map(order => (
+                    <PhotographerOrderOnScreen
+                        key={order.orderID}
+                        order={order}
+                        handleCloseModal={handleCloseModal}
+                        setAllOrders={setAllOrders}
+                        allOrders={allOrders}
+                        photographer={photographer}
+                    />
                 ))}
             </div>
         </div>

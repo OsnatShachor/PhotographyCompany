@@ -3,12 +3,16 @@ import React, { useState } from 'react';
 
 function SendEmailToConfirm({ onClose, onSend }) {
   const[reason, setReason]=useState("");
-  const statusID=4;
+
+  const handleSend = () => {
+    onSend(4, reason);
+    onClose();
+};
   return (
     <div className="modal">
       <div className="modal-content">
         <h2>Are You Sure You Want To Confirm This Order?</h2>
-        <button onClick={()=>onSend(statusID,reason)}>Send</button>
+        <button onClick={handleSend}>Send</button>
         <button onClick={onClose}>Cancel</button>
       </div>
     </div>

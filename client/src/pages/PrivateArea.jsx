@@ -36,7 +36,7 @@ function PrivateArea() {
 
     const handleViewingMyOrders = async () => {
         const accessToken=sessionStorage.getItem("accessToken")
-        const data = await fetch(`http://localhost:3000/order/${user.userID}/${id}`, {
+        const data = await fetch(`http://localhost:3000/order/${user.userID}/${photographer.userID}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' +accessToken,

@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import PhotoOnScreen from '../components/PhotoOnScreen';
+import { UserContext } from '../App';
 
 const UploadPhoto = () => {
   const [photo, setPhoto] = useState(null);
   const [gallery, setGallery] = useState([]);
   const [showFile, setShowFile] = useState(false);
   const { id } = useParams();
-
+  const { user, setUser } = useContext(UserContext);
+  const photographer = user;
+  
   // Fetch photos from the server when component mounts
   useEffect(() => {
     getAllPhotos()
@@ -15,12 +18,12 @@ const UploadPhoto = () => {
   const getAllPhotos = async () => {
     const accessToken = sessionStorage.getItem("accessToken");
 
-    fetch(`http://localhost:3000/photos/photos/${id}`,{
+    fetch(`http://localhost:3000/photos/photos/${id}`, {
 
       method: 'GET',
       headers: {
-          'Authorization': 'Bearer ' + accessToken,
-          'Content-Type': 'application/json'
+        'Authorization': 'Bearer ' + accessToken,
+        'Content-Type': 'application/json'
       },
 
     })
@@ -41,7 +44,7 @@ const UploadPhoto = () => {
     setShowFile(false);
     let formData = new FormData();
     formData.append("photo", photo);
-   
+
     try {
       const response = await fetch(`http://localhost:3000/photos/photos/${id}`, {
         method: "POST",
@@ -64,9 +67,35 @@ const UploadPhoto = () => {
       console.error("Error uploading the photo:", err.message);
     }
   }
+  const handleDisConnectionClick = () => {
+    navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
+    setUser({});
+  };
 
+  const handleConnectionClick = () => {
+    navigate('/YO/SignUp', { state: { roleID, photographer } });
+  };
+
+  const handleHomeClick = () => {
+    navigate(`/YO/photographerManagement/${user.userID}`);
+  };
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  const handleRequestClick = () => {
+    navigate('/YO/Request', { state: { user } });
+  };
   return (
     <>
+      <div className="onTopBtn">
+        <button onClick={handleHomeClick}>Home Page</button>
+        <button onClick={handleRequestClick}>Sent Request to YO-Photography</button>
+        {!(user && user.userID) && (<button onClick={handleConnectionClick}>Connection</button>)}
+        {(user && user.userID) && (<button onClick={handleDisConnectionClick}>DisConnection</button>)}
+        <button onClick={handleBackClick}>Back</button>
+      </div>
       <button onClick={() => setShowFile(true)}>Add a photo</button>
       {showFile && (
         <div className="form-group">

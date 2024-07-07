@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import PhotoOnScreen from '../components/PhotoOnScreen';
 
 const UploadPhoto = () => {
   const [photo, setPhoto] = useState(null);
@@ -7,26 +8,25 @@ const UploadPhoto = () => {
   const [showFile, setShowFile] = useState(false);
   const { id } = useParams();
 
-  // שליפת תמונות מהשרת כאשר הקומפוננט נטען
-  useEffect(() => {
-    fetch(`http://localhost:3000/photos`)
-      .then((res) => res.json())
-      .then((data) => {
-        setGallery(data);
-      })
-      .catch((error) => console.error('Error fetching photos:', error));
-  }, []);
+  // Fetch photos from the server when component mounts
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/photos`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setGallery(data);
+  //     })
+  //     .catch((error) => console.error('Error fetching photos:', error));
+  // }, []);
 
-  // פונקציה לטיפול בהוספת תמונה
+  // Function to handle photo upload
   const handleAddClick = async (e) => {
     e.preventDefault();
     setShowFile(false);
     let formData = new FormData();
     formData.append("photo", photo);
-    formData.append('id', id);
 
     try {
-      const response = await fetch("http://localhost:3000/photos", {
+      const response = await fetch(`http://localhost:3000/photos/${id}`, {
         method: "POST",
         body: formData
       });
@@ -37,8 +37,10 @@ const UploadPhoto = () => {
       }
 
       const resData = await response.json();
-      console.log(resData);
-      setGallery([...gallery, resData]); // עדכון הגלריה לאחר הוספת תמונה
+      // Update gallery with the newly uploaded photo
+      // const photo = { ...order, statusID };
+      // const photos = gallery.map(g => g.orderID === order.orderID ? updatedOrder : g);
+      setGallery([...gallery, resData]);
     } catch (err) {
       console.error("Error uploading the photo:", err.message);
     }
@@ -46,7 +48,7 @@ const UploadPhoto = () => {
 
   return (
     <>
-      <button onClick={() => setShowFile(true)}>add a photo</button>
+      <button onClick={() => setShowFile(true)}>Add a photo</button>
       {showFile && (
         <div className="form-group">
           <input
@@ -56,14 +58,20 @@ const UploadPhoto = () => {
             onChange={(e) => setPhoto(e.target.files[0])}
             required
           />
-          <button onClick={handleAddClick}>add</button>
+          <button onClick={handleAddClick}>Add</button>
         </div>
       )}
-      {/* <div className="gallery">
-        {gallery.map((photo) => (
-          <img key={photo.photoID} src={`http://localhost:3000/${photo.photo}`} alt="gallery photo" />
-        ))}
-      </div> */}
+
+      {/* Gallery section */}
+      <div className="gallery">
+        {gallery.length > 0 ? (
+          gallery.map((photo) => (
+            <PhotoOnScreen key={photo.photoID} src={photo.url_photo} alt={`Photo ${photo.photoID}`} />
+          ))
+        ) : (
+          <p>No photos available</p>
+        )}
+      </div>
     </>
   );
 }

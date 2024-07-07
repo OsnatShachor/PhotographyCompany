@@ -18,7 +18,7 @@ function PriceList() {
 
   useEffect(() => {
     getCategories();
-  }, [],categories);
+}, [categories]);
 
   const getCategories = async () => {
     const data = await fetch(`http://localhost:3000/category/${id}`);

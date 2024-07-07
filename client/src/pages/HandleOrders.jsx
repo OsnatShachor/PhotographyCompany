@@ -9,14 +9,14 @@ function HandleOrders() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
     const [allOrders, setAllOrders] = useState([]);
-    const photographer = location.state?.photographer;
+    const photographer = user;
 
     useEffect(() => {
         getAllOrders();
     }, []);
     const handleDisConnectionClick = () => {
+        navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
         setUser({});
-        navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
     };
 
     const handleConnectionClick = () => {
@@ -25,11 +25,12 @@ function HandleOrders() {
 
     const handleHomeClick = () => {
         navigate(`/YO/photographerManagement/${user.userID}`)
-
     };
+
     const handleCloseModal = () => {
-        getAllOrders();
-    }
+        getAllOrders(); // הוספתי את הקריאה לפונקציה
+    };
+
     const handleBackClick = () => {
         navigate(-1);
     };
@@ -62,9 +63,13 @@ function HandleOrders() {
                 {(user && user.userID) && (<button onClick={handleDisConnectionClick}>DisConnection</button>)}
                 <button onClick={handleBackClick}>Back</button>
             </div>
+            {/* <div className="filterButtons">
+                <button className="managerBtn" onClick={handleShowAllClick}>Show All Requests</button>
+                <button className="managerBtn" onClick={handleShowWaitingClick}>Show Waiting Requests</button>
+            </div> */}
             <div className="orderShow">
                 {allOrders.map(order => (
-                    <PhotographerOrderOnScreen key={order.orderID} order={order} handleCloseModal={handleCloseModal} />
+                    <PhotographerOrderOnScreen key={order.orderID} order={order} handleCloseModal={handleCloseModal} setAllOrders={setAllOrders} allOrders={allOrders} photographer={photographer} />
                 ))}
             </div>
         </div>

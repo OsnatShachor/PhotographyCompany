@@ -4,7 +4,9 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 const controller = require('../controllers/PhotoController');
-const { log } = require('console');
+ const authorizePhotographer = require('../middleware/authorizePhotographer');
+
+
 
 // Configure storage for Multer
 const storage = multer.diskStorage({
@@ -32,8 +34,8 @@ console.log(photographerID);
 const upload = multer({ storage: storage });
 // Route for uploading a photo
 router.post("/:id", upload.single('photo'), async (req, res) => {
-  console.log(req.file);
   const photographerID = req.params.id;
+  console.log(photographerID);
   const photoPath = path.join('uploads', photographerID.toString(), req.file.filename);
   const date = new Date();
 
@@ -54,9 +56,11 @@ router.post("/:id", upload.single('photo'), async (req, res) => {
 });
 
 // Route for fetching photos
-router.get("/", async (req, res) => {
+router.get("/:id",async (req, res) => {
   try {
-    const gallery = await controller.getPhotos();
+
+    console.log(("GET PHOTOS"));
+    const gallery = await controller.getPhotos(req.params.id);
     res.status(200).send(gallery);
   } catch (err) {
     console.error("Error fetching photos:", err);

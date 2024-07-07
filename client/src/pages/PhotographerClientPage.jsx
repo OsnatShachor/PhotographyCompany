@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate, useParams, Outlet } from 'react-router-dom';
 import { UserContext } from '../App';
 import "../CSS/PhotographerPage.css";
+import PhotoOnScreen from '../components/PhotoOnScreen';
 
 function PhotographerClientPage() {
   const context = useContext(UserContext);
@@ -10,9 +11,35 @@ function PhotographerClientPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [aboutMe, setAboutMe] = useState("");
+  const [gallery, setGallery] = useState([]);
   const roleID = 3;
   const [photographer, setPhotographer] = useState(null); // Adding state variable for photographer
+  useEffect(() => {
+    getAllPhotos()
+  }, []);
+  const getAllPhotos = async () => {
+    const accessToken = sessionStorage.getItem("accessToken");
 
+    fetch(`http://localhost:3000/photos/photos/${id}`,{
+
+      method: 'GET',
+      headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+      },
+
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // Ensure the URLs are correctly formatted for the client
+        const formattedData = data.map(photo => ({
+          ...photo,
+          url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
+        }));
+        setGallery(formattedData);
+      })
+      .catch((error) => console.error('Error fetching photos:', error));
+  }
   useEffect(() => {
     if (location.state && location.state.photographer) {
       setPhotographer(location.state?.photographer);
@@ -89,6 +116,15 @@ function PhotographerClientPage() {
       {user.userName && <h3>Hello {user.userName}</h3>}
 
       <h1>{photographer.userName}</h1>
+      <div className="gallery">
+        {gallery.length > 0 ? (
+          gallery.map((photo) => (
+            <PhotoOnScreen key={photo.photoID} src={photo.url_photo} alt={`Photo ${photo.photoID}`} />
+          ))
+        ) : (
+          <p>No photos available</p>
+        )}
+      </div>
       <div id="photographersBtn">
         <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
         <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
@@ -96,7 +132,9 @@ function PhotographerClientPage() {
       <div id="aboutMe">
         <h4 id="abouth4">{aboutMe}</h4>
       </div>
+      
       <Outlet />
+
     </div>
   );
 }

@@ -1,11 +1,10 @@
 // PhotoOnScreen.js
 import React from "react";
-
+import '../CSS/photos.css'
 function PhotoOnScreen(props) {
     return (
-        <div className="photo">
-            <img
-                key={props.photoKey}
+        <div className="photos">
+            <img id="photo"
                 src={props.src}
                 alt={props.alt}
             />

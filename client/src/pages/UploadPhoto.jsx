@@ -9,24 +9,41 @@ const UploadPhoto = () => {
   const { id } = useParams();
 
   // Fetch photos from the server when component mounts
-  // useEffect(() => {
-  //   fetch(`http://localhost:3000/photos`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setGallery(data);
-  //     })
-  //     .catch((error) => console.error('Error fetching photos:', error));
-  // }, []);
+  useEffect(() => {
+    getAllPhotos()
+  }, []);
+  const getAllPhotos = async () => {
+    const accessToken = sessionStorage.getItem("accessToken");
 
+    fetch(`http://localhost:3000/photos/photos/${id}`,{
+
+      method: 'GET',
+      headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+      },
+
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // Ensure the URLs are correctly formatted for the client
+        const formattedData = data.map(photo => ({
+          ...photo,
+          url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
+        }));
+        setGallery(formattedData);
+      })
+      .catch((error) => console.error('Error fetching photos:', error));
+  }
   // Function to handle photo upload
   const handleAddClick = async (e) => {
     e.preventDefault();
     setShowFile(false);
     let formData = new FormData();
     formData.append("photo", photo);
-
+   
     try {
-      const response = await fetch(`http://localhost:3000/photos/${id}`, {
+      const response = await fetch(`http://localhost:3000/photos/photos/${id}`, {
         method: "POST",
         body: formData
       });
@@ -38,9 +55,11 @@ const UploadPhoto = () => {
 
       const resData = await response.json();
       // Update gallery with the newly uploaded photo
-      // const photo = { ...order, statusID };
-      // const photos = gallery.map(g => g.orderID === order.orderID ? updatedOrder : g);
-      setGallery([...gallery, resData]);
+      const formattedPhoto = {
+        ...resData,
+        url_photo: `http://localhost:3000/${resData.url_photo.replace(/\\/g, '/')}`
+      };
+      setGallery([...gallery, formattedPhoto]);
     } catch (err) {
       console.error("Error uploading the photo:", err.message);
     }

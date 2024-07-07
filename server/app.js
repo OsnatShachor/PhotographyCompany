@@ -24,6 +24,7 @@ const PhotographerManagementRouter = require('./routs/PhotographerManagementRout
 const PhotoRouter = require('./routs/PhotoRouter')
 const RequestToManager = require('./routs/RequestToManager')
 const StatusRouter = require('./routs/StatusRouter')
+const authorizePhotographer = require('./middleware/authorizePhotographer');
 
 console.log("enjoy!!")
 
@@ -46,7 +47,8 @@ app.use("/users", UsersRouter);
 app.use("/category", CategoriesRouter)
 app.use("/order", OrderRouter)
 app.use('/photographer', PhotographerManagementRouter);
-app.use('/photos', PhotoRouter)
+// app.use(authorizePhotographer)
+app.use('/photos/photos', PhotoRouter)
 app.use("/request-to-manager", RequestToManager);
 app.use('/statuses', StatusRouter);
 app.use(authorizeManager)

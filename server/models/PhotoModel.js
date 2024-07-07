@@ -1,9 +1,9 @@
 const pool = require('../DB.js');
 
-async function getPhotos() {
+async function getPhotos(photographerID) {
     try {
-        const sql = 'SELECT * FROM photo_upload';
-        const result = await pool.query(sql);
+        const sql = 'SELECT * FROM photo_upload WHERE photographerID=?';
+        const result = await pool.query(sql,[photographerID]);
         console.log("GET pHOTOS"+JSON.stringify(result[0]));
         return result[0];
     } catch (err) {

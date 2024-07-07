@@ -1,8 +1,8 @@
 const model = require('../models/PhotoModel');
 
-async function getPhotos() {
+async function getPhotos(photographerID) {
   try {
-    return await model.getPhotos();
+    return await model.getPhotos(photographerID);
   } catch (err) {
     throw err;
   }

@@ -4,6 +4,20 @@ const controller = require("../controllers/OrderController");
 // const authorizePhotographer = require('../middleware/authorizePhotographer');
 const authorizeClient = require('../middleware/authorizeClient');
 
+// Fetch unavailable dates of a photographer
+router.get('/unavailableDates/:photographerId', async (req, res) => {
+    try {
+        const { photographerId } = req.params;
+        console.log("Router: Fetching unavailable dates for photographer:", photographerId);
+        const unavailableDates = await controller.getUnavailableDates(photographerId);
+        console.log("Router: Unavailable dates: ", unavailableDates);
+        res.status(200).json(unavailableDates);
+    } catch (err) {
+        console.error('Router: Error fetching unavailable dates:', err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 router.get("/:userID/:photographerId",authorizeClient, async (req, res) => {
     try {
         const  userID = req.params.userID;
@@ -16,19 +30,6 @@ router.get("/:userID/:photographerId",authorizeClient, async (req, res) => {
     } catch (error) {
         console.error('Error fetching orders:', error);
         res.status(500).json({ error: "Failed to fetch orders" });
-    }
-});
-
-// Fetch unavailable dates of a photographer
-router.get('/unavailable-dates/:id', async (req, res) => {
-    try {
-        const { id, photographerId } = req.params;
-        const unavailableDates = await controller.getUnavailableDates(photographerId);
-        console.log("Unavailable dates: ", unavailableDates);
-        res.status(200).json(unavailableDates);
-    } catch (err) {
-        console.error('Error fetching unavailable dates:', err);
-        res.status(500).send('Internal Server Error');
     }
 });
 

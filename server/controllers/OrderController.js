@@ -18,10 +18,12 @@ async function createOrder(body) {
 
 async function getUnavailableDates(photographerID) {
     try {
+        console.log("Controller: Getting unavailable dates for photographer:", photographerID);
         const unavailableDates = await model.getUnavailableDates(photographerID);
-        console.log("Unavailable dates:", unavailableDates);
+        console.log("Controller: Unavailable dates:", unavailableDates);
         return unavailableDates;
     } catch (err) {
+        console.error("Controller: Error getting unavailable dates:", err);
         throw err;
     }
 }

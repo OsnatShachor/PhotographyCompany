@@ -20,10 +20,11 @@ function Order() {
 
     useEffect(() => {
         fetchCategories();
-        if (id) {
+        if (user.userID) {
+            console.log("Calling getDisabledDates with id:", id);
             getDisabledDates(id);
         }
-    }, [id]);
+    },[], [id]);
 
     const fetchCategories = async () => {
         const response = await fetch(`http://localhost:3000/category/${id}`);
@@ -32,10 +33,10 @@ function Order() {
     };
 
     const getDisabledDates = async (photographerId) => {
-        console.log("getDisabledDates client ");
+        console.log("Getting disabled dates for photographer:", photographerId);
         try {
             const accessToken = sessionStorage.getItem("accessToken");
-            const response = await fetch(`http://localhost:3000/order/unavailable-dates/${photographerId}`, {
+            const response = await fetch(`http://localhost:3000/order/unavailableDates/${photographerId}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + accessToken,
@@ -44,10 +45,40 @@ function Order() {
             });
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
+            console.log("Received disabled dates:", data);
             setDisabledDates(data.map(d => new Date(d)));
         } catch (error) {
             console.error('Error fetching disabled dates:', error);
         }
+    };
+
+    const tileDisabled = ({ date, view }) => {
+        if (view === 'month') {
+            console.log("Checking date:", date);
+            console.log("Disabled dates:", disabledDates);
+    
+            // Disable past dates
+            if (date < new Date().setHours(0, 0, 0, 0)) {
+                console.log("Disabled: Past date");
+                return true;
+            }
+            // Disable Saturdays (day 6)
+            if (date.getDay() === 6) {
+                console.log("Disabled: Saturday");
+                return true;
+            }
+            // Disable dates that already have orders
+            const isDisabled = disabledDates.some(disabledDate => 
+                date.getFullYear() === disabledDate.getFullYear() &&
+                date.getMonth() === disabledDate.getMonth() &&
+                date.getDate() === disabledDate.getDate()
+            );
+            if (isDisabled) {
+                console.log("Disabled: Unavailable date");
+            }
+            return isDisabled;
+        }
+        return false;
     };
 
     const handleBackClick = () => {
@@ -70,23 +101,6 @@ function Order() {
     const handleDateClick = (value) => {
         setDate(value);
         setShowModal(true);
-    };
-
-    const tileDisabled = ({ date, view }) => {
-        if (view === 'month') {
-            if (date <= new Date().setHours(0, 0, 0, 0)) {
-                return true;
-            }
-            if (date.getDay() === 6) {
-                return true;
-            }
-            return disabledDates.some(disabledDate =>
-                date.getFullYear() === disabledDate.getFullYear() &&
-                date.getMonth() === disabledDate.getMonth() &&
-                date.getDate() === disabledDate.getDate()
-            );
-        }
-        return false;
     };
 
     const handleHomeClick = () => {

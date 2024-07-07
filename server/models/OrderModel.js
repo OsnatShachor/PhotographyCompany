@@ -37,11 +37,13 @@ async function createOrder(body) {
 
 async function getUnavailableDates(photographerID) {
     try {
+        console.log("Model: Fetching unavailable dates for photographer:", photographerID);
         const sql = `SELECT photoDate FROM orders WHERE photographerID = ?`;
         const [rows] = await pool.query(sql, [photographerID]);
-        console.log("Unavailable dates:", rows);
-        return rows.map(row => row.photoDate);
+        console.log("Model: Unavailable dates:", rows);
+        return rows.map(row => row.photoDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
     } catch (err) {
+        console.error("Model: Error fetching unavailable dates:", err);
         throw err;
     }
 }

@@ -15,7 +15,7 @@ router.post("/signUp", async (req, res) => {
                 roleID: returnedUser.roleID
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "5m" }
+            { expiresIn: "30m" }
         );
 
         res.status(200).send({ returnedUser, accessToken });
@@ -39,7 +39,7 @@ router.post("/logIn", async (req, res) => {
                     roleID: user.roleID
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: "5m" }
+                { expiresIn: "30m" }
             );
             console.log("AccessToken:", accessToken);
             res.status(200).send({ user, accessToken });

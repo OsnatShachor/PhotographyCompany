@@ -3,9 +3,7 @@ const authenticateToken = require('./authenticateToken');
 require('dotenv').config();
 
 const authorizeManager = (req, res, next) => {
-    console.log('Admin authruzation  ');
-    console.log("header"+JSON.stringify(req.headers));
-    console.log("Admin"+ req.cookies.accessToken);
+    console.log('manager authruzation  ');
     authenticateToken.authenticateToken(req, res, () => {
         const user = req.user; 
         console.log('admin user', user)

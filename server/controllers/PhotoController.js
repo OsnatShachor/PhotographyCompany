@@ -10,9 +10,11 @@ async function getPhotos() {
 
 async function createPhoto(data) {
   try {
-    const photoID=await model.insertPhoto(data);
-    if (photoID!=0)
-      return  await model.insertPhotographersPhoto(data,photoID)
+
+    const photoID = await model.insertPhoto(data);
+    // if (photoID!=0)
+    //   return  await model.insertPhotographersPhoto(data.photographerID,photoID)
+    return { photoID, photographerID: data.photographerID, url_photo: data.photo, date: data.date }
   } catch (err) {
     throw err;
   }

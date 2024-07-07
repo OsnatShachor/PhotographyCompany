@@ -119,8 +119,7 @@ CREATE TABLE orders (
 CREATE TABLE photo_upload (
     photoID INT AUTO_INCREMENT,
     photographerID INT NOT NULL,
-    photo TEXT NOT NULL,
-    newPhoto TEXT NOT NULL,
+    url_photo TEXT NOT NULL,
     date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (photoID),
     FOREIGN KEY (photographerID)
@@ -179,8 +178,8 @@ INSERT INTO photographers (photographerID, aboutMe, isActive) VALUES
 (5, 'Experienced in food photography for restaurants and cookbooks.', FALSE),
 (6, 'I am a professional photographer specializing in weddings and portraits.', TRUE);
 
-INSERT INTO photo_upload (photographerID,photo, newPhoto, date) VALUES
-( 2,'637475user-details-with-photo-upload-using-react-node.png', '637475photo.png', '2021-06-29 19:26:41');
+INSERT INTO photo_upload (photographerID,url_photo, date) VALUES
+( 2,'637475user-details-with-photo-upload-using-react-node.png', '2021-06-29 19:26:41');
 
 INSERT INTO photographer_photos (photographerID, photoID) VALUES
 (2, 1);

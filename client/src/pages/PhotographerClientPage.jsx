@@ -14,9 +14,21 @@ function PhotographerClientPage() {
   const [gallery, setGallery] = useState([]);
   const roleID = 3;
   const [photographer, setPhotographer] = useState(null); // Adding state variable for photographer
+  
   useEffect(() => {
     getAllPhotos()
   }, []);
+  
+  useEffect(() => {
+    if (location.state && location.state.photographer) {
+      setPhotographer(location.state?.photographer);
+      getInformation(id);
+      console.log(JSON.stringify(user));
+    } else {
+      getPhotographer(id);
+    }
+  }, [id, location.state]);
+
   const getAllPhotos = async () => {
     const accessToken = sessionStorage.getItem("accessToken");
 
@@ -40,15 +52,6 @@ function PhotographerClientPage() {
       })
       .catch((error) => console.error('Error fetching photos:', error));
   }
-  useEffect(() => {
-    if (location.state && location.state.photographer) {
-      setPhotographer(location.state?.photographer);
-      getInformation(id);
-      console.log(JSON.stringify(user));
-    } else {
-      getPhotographer(id);
-    }
-  }, [id, location.state]);
 
   const handleDisconnectionClick = () => {
     setUser({});
@@ -115,7 +118,11 @@ function PhotographerClientPage() {
       </div>
       {user.userName && <h3>Hello {user.userName}</h3>}
 
-      <h1>{photographer.userName}</h1>
+      <h1 className="h1Title">{photographer.userName}</h1>
+      <div id="photographersBtn">
+        <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
+        <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
+      </div>
       <div className="gallery">
         {gallery.length > 0 ? (
           gallery.map((photo) => (
@@ -125,10 +132,7 @@ function PhotographerClientPage() {
           <p>No photos available</p>
         )}
       </div>
-      <div id="photographersBtn">
-        <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
-        <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
-      </div>
+      
       <div id="aboutMe">
         <h4 id="abouth4">{aboutMe}</h4>
       </div>

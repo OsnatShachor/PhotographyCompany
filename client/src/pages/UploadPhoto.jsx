@@ -1,7 +1,8 @@
-import React, { useState, useEffect,useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import PhotoOnScreen from '../components/PhotoOnScreen';
 import { UserContext } from '../App';
+import '../CSS/UploadPhoto.css'; // Import CSS for styling
 
 const UploadPhoto = () => {
   const [photo, setPhoto] = useState(null);
@@ -9,27 +10,25 @@ const UploadPhoto = () => {
   const [showFile, setShowFile] = useState(false);
   const { id } = useParams();
   const { user, setUser } = useContext(UserContext);
-  const photographer = user;
-  
+  const navigate = useNavigate();
+
   // Fetch photos from the server when component mounts
   useEffect(() => {
-    getAllPhotos()
+    getAllPhotos();
   }, []);
+
   const getAllPhotos = async () => {
     const accessToken = sessionStorage.getItem("accessToken");
 
     fetch(`http://localhost:3000/photos/photos/${id}`, {
-
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + accessToken,
         'Content-Type': 'application/json'
       },
-
     })
       .then((res) => res.json())
       .then((data) => {
-        // Ensure the URLs are correctly formatted for the client
         const formattedData = data.map(photo => ({
           ...photo,
           url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
@@ -37,8 +36,8 @@ const UploadPhoto = () => {
         setGallery(formattedData);
       })
       .catch((error) => console.error('Error fetching photos:', error));
-  }
-  // Function to handle photo upload
+  };
+
   const handleAddClick = async (e) => {
     e.preventDefault();
     setShowFile(false);
@@ -57,7 +56,6 @@ const UploadPhoto = () => {
       }
 
       const resData = await response.json();
-      // Update gallery with the newly uploaded photo
       const formattedPhoto = {
         ...resData,
         url_photo: `http://localhost:3000/${resData.url_photo.replace(/\\/g, '/')}`
@@ -66,14 +64,15 @@ const UploadPhoto = () => {
     } catch (err) {
       console.error("Error uploading the photo:", err.message);
     }
-  }
+  };
+
   const handleDisConnectionClick = () => {
-    navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
+    navigate(`/YO/photographer/${user.userID}`, { state: { photographer: user } });
     setUser({});
   };
 
   const handleConnectionClick = () => {
-    navigate('/YO/SignUp', { state: { roleID, photographer } });
+    navigate('/YO/SignUp', { state: { roleID: 1, photographer: user } });
   };
 
   const handleHomeClick = () => {
@@ -87,6 +86,7 @@ const UploadPhoto = () => {
   const handleRequestClick = () => {
     navigate('/YO/Request', { state: { user } });
   };
+
   return (
     <>
       <div className="onTopBtn">
@@ -96,19 +96,22 @@ const UploadPhoto = () => {
         {(user && user.userID) && (<button onClick={handleDisConnectionClick}>DisConnection</button>)}
         <button onClick={handleBackClick}>Back</button>
       </div>
-      <button onClick={() => setShowFile(true)}>Add a photo</button>
-      {showFile && (
-        <div className="form-group">
-          <input
-            type="file"
-            name="photo"
-            className="form-control"
-            onChange={(e) => setPhoto(e.target.files[0])}
-            required
-          />
-          <button onClick={handleAddClick}>Add</button>
-        </div>
-      )}
+      <h1 className="h1Title">Add Photos</h1>
+      <div className="upload-section">
+        <button className="add-photo-btn" onClick={() => setShowFile(true)}>Add a photo</button>
+        {showFile && (
+          <div className="form-group">
+            <input
+              type="file"
+              name="photo"
+              className="form-control"
+              onChange={(e) => setPhoto(e.target.files[0])}
+              required
+            />
+            <button onClick={handleAddClick}>Add</button>
+          </div>
+        )}
+      </div>
 
       {/* Gallery section */}
       <div className="gallery">

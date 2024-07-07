@@ -24,8 +24,7 @@ function PhotographerOrderOnScreen(props) {
     useEffect(() => {
         getUser();
         getStatus();
-        console.log(status);
-        if (order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 4&& order.statusID !== 7) {
+        if (order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 4 && order.statusID !== 7) {
             setEnableUpdate(true);
         }
         if (order.statusID !== 5 && order.statusID !== 6) {
@@ -160,10 +159,10 @@ function PhotographerOrderOnScreen(props) {
                 {enableShow && (
                     <div className="modal">
                         <div className="modal-content">
-                            <span className="close" onClick={()=>setEnableShow(false)}>&times;</span>
+                            <span className="close" onClick={() => setEnableShow(false)}>&times;</span>
                             <h3 className='bold'>Client: </h3>
                             <h3>{user.userName}</h3>
-                            <h3 className='bold'>Client Email </h3>
+                            <h3 className='bold'>Client Email: </h3>
                             <h3>{user.email}</h3>
                             <h3 className='bold'>Photo Date: </h3>
                             <h3>{new Date(order.photoDate).toLocaleDateString()}</h3>

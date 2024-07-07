@@ -61,7 +61,7 @@ function PrivateArea() {
                 {(user && user.userID) &&(<button onClick={handleDisConnectionClick}>Disconnection</button>)}
                 <button onClick={handleBackClick}>Back</button>
             </div>
-            <h1>My Orders</h1>
+            <h1 className="h1Title">My Orders</h1>
             <div className="orderShow">
                 {orders.map(order => (
                     <ClientOrderOnScreen key={order.orderID} order={order} onUpdate={handleUpdateOrder} />

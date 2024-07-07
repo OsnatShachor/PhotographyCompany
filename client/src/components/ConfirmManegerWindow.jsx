@@ -7,8 +7,8 @@ function ConfirmManegerWindow({ onClose, onConfirm }) {
       <div className="modal-content">
         <h2>Approval Request</h2>
         <p>Are you sure you want to approve this request?</p>
-        <button onClick={onConfirm}>Send</button>
-        <button onClick={onClose}>Cancel</button>
+        <button className ="submitBtn" onClick={onConfirm}>Send</button>
+        <button className ="submitBtn" onClick={onClose}>Cancel</button>
       </div>
     </div>
   );

@@ -124,10 +124,17 @@ button:focus-visible {
 }
 
 .filterButtons {
-    margin-top: 40px;
+    margin-top: 10px;
     justify-content: center !important;
     align-items: center !important;
     margin-left: 36.5%;
+}
+.submitBtn{
+    background-color:#006D77 !important;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+    height: 37px;
 }
 .managerBtn{
     height: 50px;

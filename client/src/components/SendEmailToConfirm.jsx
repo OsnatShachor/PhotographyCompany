@@ -12,8 +12,8 @@ function SendEmailToConfirm({ onClose, onSend }) {
     <div className="modal">
       <div className="modal-content">
         <h2>Are You Sure You Want To Confirm This Order?</h2>
-        <button onClick={handleSend}>Send</button>
-        <button onClick={onClose}>Cancel</button>
+        <button className ="submitBtn" onClick={handleSend}>Send</button>
+        <button className ="submitBtn" onClick={onClose}>Cancel</button>
       </div>
     </div>
   );

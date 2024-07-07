@@ -11,8 +11,8 @@ function ConfirmationPopUp({ show, handleClose, handleConfirm }) {
             <div className="modal-content">
                 <span className="close" onClick={handleClose}>&times;</span>
                 <h2>Are you sure you want to delete this category?</h2>
-                <button onClick={handleConfirm}>Confirm</button>
-                <button onClick={handleClose}>Cancel</button>
+                <button className ="submitBtn" onClick={handleConfirm}>Confirm</button>
+                <button className ="submitBtn" onClick={handleClose}>Cancel</button>
             </div>
         </div>
     );

@@ -34,14 +34,31 @@ body {
 /* Modal Content */
 .modal-content {
     background-color: #EDF6F9;
-    padding: 20px;
+    padding: 10px; /* Reduced padding */
     border: 1px solid #343131;
-    width: 80%;
-    max-width: 600px;
+    width: 70%; /* Reduced width */
+    max-width: 500px; /* Reduced max-width */
     border-radius: 8px;
     position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+.close {
+    position: absolute;
+    color: #000;
+    top: 5px;
+    right: 10px;
+    margin-right: 5px;
+    font-size: 28px; /* Reduced font size */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Ensure the spacing between lines is smaller */
+.modal-content h3 {
+    margin: 5px 0; /* Reduced margin */
+}
+
 
 .close {
     position: absolute;
@@ -76,12 +93,45 @@ h2 {
     outline: 0;
     border-color: #636363;
 }
+.btnInOrder{
+    background-color:#83C5BE;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    height: 45px;
+    width: 130px;
+}
 
+.btnInOrder:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
 #finalPrice {
     color: #83C5BE;
     font-size: larger;
 }
+.h3Order {
+    margin-right: 10px;
+    margin-bottom: 2px;
+}
 
+.showDetailBtn {
+    margin-bottom: 0px;
+    width: 160px;
+    height: 35px;
+    background-color: #E29578;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.showDetailBtn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 .close:hover,
 .close:focus {
     color: #006D77;

@@ -83,9 +83,7 @@ function ManagerPage() {
                 <button onClick={handleDisConnectionClick}>DisConnection</button>
                 <button onClick={handleBackClick}>Back</button>
             </div>
-            <div id="space">
-                <br></br>
-            </div>
+            <h1 className="h1Title">Photographer's Requests</h1>
             <div className="filterButtons">
                 <button className="managerBtn" onClick={handleShowAllClick}>Show All Requests</button>
                 <button className="managerBtn" onClick={handleShowWaitingClick}>Show Waiting Requests</button>

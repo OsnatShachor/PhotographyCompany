@@ -1,16 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
-
-body,
-html {
+/* General page styling */
+body, html {
     min-width: 100%;
     background-color: #f8e3db;
     height: 100%;
     font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
+}
+
+.page-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding-bottom: 80px; /* Space for the fixed about me section */
 }
 
 .container {
@@ -21,14 +24,25 @@ html {
     bottom: 20px;
     width: 100%;
 }
-
+.h1Title{
+    margin-top: 140px;
+}
+.onTopBtn {
+    z-index: 10;
+}
+.changeStateBtn{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
 .orderPhotographBox {
     border-color: #006D77;
     border-radius: 3px;
     border-style: solid;
     margin: 10px;
-    width: 420px;
-    height: 290px;
+    width: 320px;
+    height: 210px;
     max-width: 100%;
     box-shadow: 0 1px 13px 0 rgba(0, 0, 0, 0.4);
     text-align: center;
@@ -37,32 +51,11 @@ html {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: center !important;
+    
 }
 
-.h3Order {
-    margin-right: 10px;
-    margin-bottom: 2px;
-}
 
-.showDetailBtn {
-    /* margin-left: 30px; */
-    margin-bottom: 0px;
-    width: 160px;
-    height: 35px;
-    background-color: #83C5BE;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
-}
-
-.showDetailBtn :hover {
-    background-color: #006D77 !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-
-}
 
 .filterButtons {
     display: flex;
@@ -78,7 +71,7 @@ html {
     padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: #83C5BE;
     color: white;
     border: none;
     border-radius: 5px;
@@ -87,20 +80,23 @@ html {
 }
 
 .filterBtn:hover {
-    background-color: #0056b3;
+    background-color: #006D77;
 }
 
 .input-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 0;
+    left: 0;
     width: 100%;
-    max-width: 700px;
-    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8e3db;
+    padding: 10px;
+    height: 70px;
+
+    /* box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); */
+    z-index: 10;
 }
 
 #inputAbout {
@@ -110,10 +106,9 @@ html {
     font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1em;
     margin-bottom: 0;
-    display: inline-block;
-    width: 100%;
-    height: auto;
-    min-width: 50px;
+    width: 80%;
+    height: 70px;
+    max-width: 600px;
 }
 
 #btnUpAbout {

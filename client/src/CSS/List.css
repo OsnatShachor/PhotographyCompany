@@ -57,7 +57,17 @@ body {
   flex-wrap: wrap;
   justify-content: space-around;
 }
-
+.addCategory-content{
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+#addPriceBtn{
+  margin-left: 43%;
+  margin-bottom: 0px !important;
+}
 .bold {
   color: #000000;
 }

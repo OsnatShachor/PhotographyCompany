@@ -18,7 +18,7 @@ function PriceList() {
 
   useEffect(() => {
     getCategories();
-}, [categories]);
+  }, [categories]);
 
   const getCategories = async () => {
     const data = await fetch(`http://localhost:3000/category/${id}`);
@@ -62,19 +62,19 @@ function PriceList() {
 
   const handleAddCategory = async (category) => {
     try {
-      const accessToken=sessionStorage.getItem("accessToken")
+      const accessToken = sessionStorage.getItem("accessToken")
       const response = await fetch(`http://localhost:3000/category`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-           'Authorization': 'Bearer ' +accessToken,
+          'Authorization': 'Bearer ' + accessToken,
         },
         body: JSON.stringify({ ...category, photographerID: id }),
       });
       if (!response.ok) {
         throw new Error('Failed to add category');
       }
-      const newCategory =response.json();  
+      const newCategory = response.json();
       setCategories(prevCategories => [...prevCategories, newCategory]);
       getCategories();
     } catch (error) {
@@ -91,7 +91,9 @@ function PriceList() {
         {(id != user.userID) && (<button onClick={handlePrivateAreaClick}>Private Area</button>)}
         <button onClick={handleBackClick}>Back</button>
       </div>
-      <h1>Price List</h1>
+      <h1 className="h1Title">Price List</h1>
+
+      <div id= "addPriceBtn">{(id == user.userID) && (<button className="managerBtn" onClick={handlePriceListClick}>Add Category</button>)}</div>
       <div className="boxShow">
         {categories.map((category, index) => (
           <SinglePriceList
@@ -102,7 +104,6 @@ function PriceList() {
           />
         ))}
       </div>
-      {(id == user.userID) && (<button onClick={handlePriceListClick}>Add Category</button>)}
       <CategoryPopUp
         showModal={showModal}
         handleClose={() => setShowModal(false)}

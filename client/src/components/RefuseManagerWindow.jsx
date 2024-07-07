@@ -7,8 +7,8 @@ function RefuseManagerWindow({ onClose, onRefuse }) {
       <div className="modal-content">
         <h2>Refuse Request</h2>
         <p>Are you sure you want to refuse this request?</p>
-        <button onClick={onRefuse}>Send</button>
-        <button onClick={onClose}>Cancel</button>
+        <button className ="submitBtn" onClick={onRefuse}>Send</button>
+        <button className ="submitBtn" onClick={onClose}>Cancel</button>
       </div>
     </div>
   );

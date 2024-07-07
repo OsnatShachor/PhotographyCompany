@@ -27,25 +27,27 @@ function CategoryPopUp({ showModal, handleClose, handleSave, initialCategoryData
             <div className="modal-content">
                 <span className="close" onClick={handleClose}>&times;</span>
                 <h2>Add New Category</h2>
-                <input
-                    type="text"
-                    placeholder="Category Name"
-                    value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
-                />
-                <input
-                    type="number"
-                    placeholder="Pay Per Hour"
-                    value={payPerHour}
-                    onChange={(e) => setPayPerHour(e.target.value)}
-                />
-                <input
-                    type="number"
-                    placeholder="Number of Edit Pictures"
-                    value={numOfEditPictures}
-                    onChange={(e) => setNumOfEditPictures(e.target.value)}
-                />
-                <button onClick={handleSubmit}>Save</button>
+                <div className='addCategory-content'>
+                    <input
+                        type="text"
+                        placeholder="Category Name"
+                        value={categoryName}
+                        onChange={(e) => setCategoryName(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        placeholder="Pay Per Hour"
+                        value={payPerHour}
+                        onChange={(e) => setPayPerHour(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        placeholder="Number of Edit Pictures"
+                        value={numOfEditPictures}
+                        onChange={(e) => setNumOfEditPictures(e.target.value)}
+                    />
+                </div>
+                <button  className ="submitBtn"onClick={handleSubmit}>Save</button>
             </div>
         </div>
     );

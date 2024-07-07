@@ -19,8 +19,8 @@ function SendEmailToCancele({ onClose, onSend }) {
                     onChange={(e) => setReason(e.target.value)}
                     value={reason}
                 />
-                <button onClick={handleSend}>Send</button>
-                <button onClick={onClose}>Close</button>
+                <button className ="submitBtn" onClick={handleSend}>Send</button>
+                <button className ="submitBtn" onClick={onClose}>Close</button>
             </div>
         </div>
     );

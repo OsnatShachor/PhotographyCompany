@@ -18,8 +18,8 @@ function SendEmailToUpdate({ onClose, onSend }) {
            placeholder="What do you the client will change?"
            onChange={(e) => setReason(e.target.value)}
            value={reason} />
-        <button onClick={handleSend}>Send</button>
-        <button onClick={onClose}>Cancel</button>
+        <button className ="submitBtn" onClick={handleSend}>Send</button>
+        <button className ="submitBtn" onClick={onClose}>Cancel</button>
       </div>
     </div>
   );

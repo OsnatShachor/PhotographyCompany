@@ -1,7 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
 
-#photo{
-    width: 30px;
-    height: 50px;
-    
+
+img:hover {
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    transform: scale(1.5);
+    -webkit-transition-duration: 5s;
+    transition-duration: 5s;
 }
+.photos img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .photos img.portrait {
+    height: 200px;
+  }
+  
+  .photos img.landscape {
+    width: 200px;
+  }
+  

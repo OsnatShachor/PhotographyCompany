@@ -71,7 +71,7 @@ function Order() {
             const isDisabled = disabledDates.some(disabledDate => 
                 date.getFullYear() === disabledDate.getFullYear() &&
                 date.getMonth() === disabledDate.getMonth() &&
-                date.getDate() === disabledDate.getDate()
+                date.getDate() === disabledDate.getDate()+1
             );
             if (isDisabled) {
                 console.log("Disabled: Unavailable date");

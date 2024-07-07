@@ -40,8 +40,16 @@ async function getUnavailableDates(photographerID) {
         console.log("Model: Fetching unavailable dates for photographer:", photographerID);
         const sql = `SELECT photoDate FROM orders WHERE photographerID = ?`;
         const [rows] = await pool.query(sql, [photographerID]);
-        console.log("Model: Unavailable dates:", rows);
-        return rows.map(row => row.photoDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+        console.log("Model: Unavailable dates from DB:", rows);
+        
+        return rows.map(row => {
+            // קח את התאריך כמו שהוא מהדאטהבייס, בלי תיקונים
+            const date = new Date(row.photoDate);
+            // פורמט את התאריך ל-YYYY-MM-DD
+            const formattedDate = date.toISOString().split('T')[0];
+            console.log(`Model: Formatting ${row.photoDate} to ${formattedDate}`);
+            return formattedDate;
+        });
     } catch (err) {
         console.error("Model: Error fetching unavailable dates:", err);
         throw err;

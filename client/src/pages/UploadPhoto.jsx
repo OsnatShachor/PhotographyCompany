@@ -72,9 +72,15 @@ const UploadPhoto = () => {
     let formData = new FormData();
     formData.append("photo", photo);
 
+    const accessToken = sessionStorage.getItem("accessToken");
     try {
+
       const response = await fetch(`http://localhost:3000/photos/photos/${id}`, {
         method: "POST",
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        },
         body: formData
       });
 

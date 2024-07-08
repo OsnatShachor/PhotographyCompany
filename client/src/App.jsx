@@ -1,6 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import WelcomePage from "./pages/WelcomePage";
 import LogIn from "./pages/LogIn";
 import PhotographerClientPage from "./pages/PhotographerClientPage";

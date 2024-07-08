@@ -111,8 +111,8 @@ function PhotographerClientPage() {
   return (
     <div className="page-container">
       <div className="onTopBtn">
-        <button onClick={handleConnectionClick}>Connection</button>
-        {(user && (user.userID)) && (<button onClick={handleDisconnectionClick}>Disconnection</button>)}
+       
+        {(user && (user.userID)) ? (<button onClick={handleDisconnectionClick}>Disconnection</button>): <button onClick={handleConnectionClick}>Connection</button>}
         <button onClick={handlePrivateAreaClick}>Private Area</button>
       </div>
 
@@ -122,7 +122,6 @@ function PhotographerClientPage() {
       <div id="photographersBtn">
         <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
         <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
-      {user.userName && <h3>Hello {user.userName}</h3>}
       </div>
       <div className="gallery">
         {gallery.length > 0 ? (

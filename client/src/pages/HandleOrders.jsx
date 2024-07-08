@@ -14,12 +14,16 @@ function HandleOrders() {
     const photographer = user;
 
     useEffect(() => {
-        if (!user.userID) {
-            navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
-        }
+        // if (!user.userID) {
+        //     navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
+        // }
         getAllOrders();
     }, []);
-
+    // useEffect(() => {
+    //     if (!user.userID) {
+    //         navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
+    //     }
+    // }, [user.userID]);
     const handleDisConnectionClick = () => {
         navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
         setUser({});

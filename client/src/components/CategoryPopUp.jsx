@@ -4,16 +4,34 @@ function CategoryPopUp({ showModal, handleClose, handleSave, initialCategoryData
     const [categoryName, setCategoryName] = useState('');
     const [payPerHour, setPayPerHour] = useState('');
     const [numOfEditPictures, setNumOfEditPictures] = useState('');
+    const [validationError, setValidationError] = useState('');
 
     useEffect(() => {
         if (showModal) {
-            setCategoryName(initialCategoryData.categoryName);
-            setPayPerHour(initialCategoryData.payPerHour);
-            setNumOfEditPictures(initialCategoryData.numOfEditPictures);
+            setCategoryName(initialCategoryData.categoryName || '');
+            setPayPerHour(initialCategoryData.payPerHour || '');
+            setNumOfEditPictures(initialCategoryData.numOfEditPictures || '');
         }
     }, [showModal, initialCategoryData]);
 
     const handleSubmit = () => {
+        // Validation checks
+        if (!categoryName) {
+            setValidationError('Please enter a category name.');
+            return;
+        }
+        if (!payPerHour) {
+            setValidationError('Please enter pay per hour.');
+            return;
+        }
+        if (!numOfEditPictures) {
+            setValidationError('Please enter the number of edited pictures.');
+            return;
+        }
+
+        // Clear validation error
+        setValidationError('');
+
         handleSave({ categoryName, payPerHour, numOfEditPictures });
         handleClose();
     };
@@ -47,7 +65,8 @@ function CategoryPopUp({ showModal, handleClose, handleSave, initialCategoryData
                         onChange={(e) => setNumOfEditPictures(e.target.value)}
                     />
                 </div>
-                <button  className ="submitBtn"onClick={handleSubmit}>Save</button>
+                {validationError && <p className="error-message">{validationError}</p>}
+                <button className="submitBtn" onClick={handleSubmit}>Save</button>
             </div>
         </div>
     );

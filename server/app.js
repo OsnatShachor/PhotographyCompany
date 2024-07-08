@@ -24,23 +24,12 @@ const PhotographerManagementRouter = require('./routs/PhotographerManagementRout
 const PhotoRouter = require('./routs/PhotoRouter')
 const RequestToManager = require('./routs/RequestToManager')
 const StatusRouter = require('./routs/StatusRouter')
+const AuthenticateRouter=require('./routs/AuthenticateRouter')
 const authorizePhotographer = require('./middleware/authorizePhotographer');
 
 console.log("enjoy!!")
 
-// app.use('/auth', authenticateToken, (req, res, next) => {
-//   try {
-//     if (req.user.roleID == 2) {
-//       if(req.body==)
-//     }
-//     else {
-//       res.json(req.user);
-//     }
-//   }
-//   catch (err) {
-
-//   }
-// })
+app.use("/authenticate",AuthenticateRouter)
 app.use("/aboutMe", PhotographersRouter);
 app.use("/", PhotographersRouter);
 app.use("/users", UsersRouter);

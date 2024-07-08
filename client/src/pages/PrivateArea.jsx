@@ -19,7 +19,7 @@ function PrivateArea() {
 
     useEffect(() => {
         handleViewingMyOrders();
-    }, [id]);
+    }, [user]);
 
     const handleDisConnectionClick = () => {
         setUser({});

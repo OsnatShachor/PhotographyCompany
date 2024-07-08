@@ -56,17 +56,16 @@ function PhotographerPage() {
 
     const getAllPhotos = async () => {
         const accessToken = sessionStorage.getItem("accessToken");
-    
+      
         fetch(`http://localhost:3000/photos/photos/${id}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken,
-                'Content-Type': 'application/json'
-            },
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+          },
         })
           .then((res) => res.json())
           .then((data) => {
-            // Ensure the URLs are correctly formatted for the client
             const formattedData = data.map(photo => ({
               ...photo,
               url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
@@ -74,7 +73,7 @@ function PhotographerPage() {
             setGallery(formattedData);
           })
           .catch((error) => console.error('Error fetching photos:', error));
-      }
+      };
 
     const handleDisconnectionClick = () => {
         setUser({});

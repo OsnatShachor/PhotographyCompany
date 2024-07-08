@@ -70,7 +70,7 @@ router.get("/:id",async (req, res) => {
 
 
 // Route for deleting a photo
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",authorizePhotographer, async (req, res) => {
   const photoId = req.params.id;
   try {
     // Get the photo details to delete the file from the server

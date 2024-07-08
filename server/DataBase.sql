@@ -10,7 +10,6 @@ DROP TABLE IF EXISTS requests;
 DROP TABLE IF EXISTS relations;
 DROP TABLE IF EXISTS photographers;
 DROP TABLE IF EXISTS passwords;
-DROP TABLE IF EXISTS photographer_photos;
 DROP TABLE IF EXISTS photo_upload;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS statuses;
@@ -117,25 +116,13 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE photo_upload (
-    photoID INT AUTO_INCREMENT,
+    photoID INT AUTO_INCREMENT PRIMARY KEY,
     photographerID INT NOT NULL,
-    url_photo TEXT NOT NULL,
-    date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (photoID),
-    FOREIGN KEY (photographerID)
-        REFERENCES users (userID)
+    url_photo VARCHAR(255) NOT NULL,
+    date DATETIME NOT NULL,
+    FOREIGN KEY (photographerID) REFERENCES photographers(photographerID)
 );
 
-CREATE TABLE photographer_photos (
-    photographerPhotoID INT AUTO_INCREMENT,
-    photographerID INT NOT NULL,
-    photoID INT NOT NULL,
-    PRIMARY KEY (photographerPhotoID),
-    FOREIGN KEY (photographerID)
-        REFERENCES users (userID),
-    FOREIGN KEY (photoID)
-        REFERENCES photo_upload (photoID)
-);
 
 /* Insert initial data */
 
@@ -179,11 +166,6 @@ INSERT INTO photographers (photographerID, aboutMe, isActive) VALUES
 (5, 'Experienced in food photography for restaurants and cookbooks.', FALSE),
 (6, 'I am a professional photographer specializing in weddings and portraits.', TRUE);
 
-INSERT INTO photo_upload (photographerID,url_photo, date) VALUES
-( 2,'637475user-details-with-photo-upload-using-react-node.png', '2021-06-29 19:26:41');
-
-INSERT INTO photographer_photos (photographerID, photoID) VALUES
-(2, 1);
 
 INSERT INTO category (photographerID, categoryName, payPerHour, numOfEditPictures) VALUES
 (2, 'New-Born', 300.00, 8),
@@ -193,6 +175,25 @@ INSERT INTO category (photographerID, categoryName, payPerHour, numOfEditPicture
 (6, 'אירוע', 200.00, 0),
 (4, 'חתונה', 1000.00, 15),
 (4, 'פרוטריט', 180.00, 10);
+
+INSERT INTO photo_upload (photographerID, url_photo, date) VALUES
+    (4, 'uploads\\4\\photo_1720428842342.jpg', '2024-07-08 11:54:02'),
+    (4, 'uploads\\4\\photo_1720428862606.jpg', '2024-07-08 11:54:23'),
+    (4, 'uploads\\4\\photo_1720428880143.jpg', '2024-07-08 11:54:40'),
+    (4, 'uploads\\4\\photo_1720428896370.jpg', '2024-07-08 11:54:56'),
+    (4, 'uploads\\4\\photo_1720428910607.jpg', '2024-07-08 11:55:11'),
+    (4, 'uploads\\4\\photo_1720428932466.jpg', '2024-07-08 11:55:32'),
+    (4, 'uploads\\4\\photo_1720436850379.jpg', '2024-07-08 11:55:32'),
+    (2, 'uploads\\2\\photo_1720433608763.JPG', '2024-07-08 11:54:02'),
+    (2, 'uploads\\2\\photo_1720433618551.JPG', '2024-07-08 11:54:23'),
+    (2, 'uploads\\2\\photo_1720434157303.JPG', '2024-07-08 11:54:40'),
+    (2, 'uploads\\2\\photo_1720434191688.JPG', '2024-07-08 12:55:11'),
+    (2, 'uploads\\2\\photo_1720434174936.JPG', '2024-07-08 11:54:56'),
+    (2, 'uploads\\2\\photo_1720434241224.JPG', '2024-07-08 11:55:32'),
+    (2, 'uploads\\2\\photo_1720434527373.jpg', '2024-07-08 11:54:56'),
+    (2, 'uploads\\2\\photo_1720434563336.jpg', '2024-07-08 12:55:11'),
+    (2, 'uploads\\2\\photo_1720434587630.jpg', '2024-07-08 12:55:32');
+
 
 INSERT INTO orders (userID, photographerID, confirmed, statusID, categoryID, photoDate, beginningTime, durationTimePhotography, location, payment) VALUES
 (1, 2, TRUE, 1, 1, '2024-06-02', '12:00:00', 2.5, 'גן הוורדים', 650.00),

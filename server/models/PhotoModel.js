@@ -13,37 +13,35 @@ async function getPhotos(photographerID) {
 }
 
 async function insertPhoto(data) {
-    try {
-        const sql = `
-            INSERT INTO photo_upload (photographerID, url_photo, date)
-            VALUES (?, ?, ?)
-        `;
-        const values = [
-            data.photographerID,
-            data.photo,
-            data.date
-        ];
-        const [result] = await pool.query(sql, values);
-        const photoID=result.insertId
-        console.log("model-photos"+JSON.stringify(photoID));
-        return photoID;  // Return the ID of the inserted photo
-    } catch (err) {
-        console.error("Error inserting photo:", err);
-        throw err;
-    }
+  try {
+      // Log the data object to verify its content
+      console.log("Data received:", data);
+
+      const sql = `
+          INSERT INTO photo_upload (photographerID, url_photo, date)
+          VALUES (?, ?, ?)
+      `;
+      const values = [
+          data.photographerID,
+          data.photo,
+          data.date
+      ];
+
+      // Log the SQL query and values
+      console.log("SQL Query:", sql);
+      console.log("Values:", values);
+
+      const [result] = await pool.query(sql, values);
+      const photoID = result.insertId;
+
+      console.log("Inserted Photo ID:", photoID);
+      return photoID;  // Return the ID of the inserted photo
+  } catch (err) {
+      console.error("Error inserting photo:", err);
+      throw err;
+  }
 }
 
-// async function insertPhotographersPhoto(photographerID,photoID) {
-//     try {
-
-//         const photographerPhotoSql = "INSERT INTO photographer_photos (photographerID, photoID) VALUES (?, ?)";
-//       await pool.query(photographerPhotoSql, [photographerID, photoID]);
-
-//     } catch (err) {
-//         console.error("Error inserting PhotographersPhoto:", err);
-//         throw err;
-//     }
-// }
 async function getPhotoById(photoId) {
     try {
       const sql = 'SELECT * FROM photo_upload WHERE photoID = ?';

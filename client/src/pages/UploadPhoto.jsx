@@ -21,24 +21,51 @@ const UploadPhoto = () => {
   const getAllPhotos = async () => {
     const accessToken = sessionStorage.getItem("accessToken");
 
-    fetch(`http://localhost:3000/photos/photos/${id}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + accessToken,
-        'Content-Type': 'application/json'
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const formattedData = data.map(photo => ({
+    try {
+      const response = await fetch(`http://localhost:3000/photos/photos/${id}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Raw data from server:", data);
+
+      if (!Array.isArray(data)) {
+        console.error("Data is not an array:", data);
+        setGallery([]);
+        return;
+      }
+
+      const formattedData = data.map(photo => {
+        if (!photo || typeof photo !== 'object') {
+          console.error("Invalid photo object:", photo);
+          return null;
+        }
+
+        if (!photo.url_photo) {
+          console.error("Photo object missing url_photo:", photo);
+          return null;
+        }
+
+        return {
           ...photo,
           url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
-        }));
-        setGallery(formattedData);
-      })
-      .catch((error) => console.error('Error fetching photos:', error));
-  };
+        };
+      }).filter(Boolean); // Remove any null entries
 
+      setGallery(formattedData);
+      console.log("data:", formattedData[0].url_photo);
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+    }
+  };
   const handleAddClick = async (e) => {
     e.preventDefault();
     setShowFile(false);
@@ -100,7 +127,6 @@ const UploadPhoto = () => {
         : [...prevSelected, photoID]
     );
   };
-
   const handleDisConnectionClick = () => {
     navigate(`/YO/photographer/${user.userID}`, { state: { photographer: user } });
     setUser({});
@@ -131,7 +157,7 @@ const UploadPhoto = () => {
         {(user && user.userID) && (<button onClick={handleDisConnectionClick}>DisConnection</button>)}
         <button onClick={handleBackClick}>Back</button>
       </div>
-      <h1 className="h1Title">Add Photos</h1>
+      <h1 className="h1Title">Add Photo</h1>
       <div className="upload-section">
         <button className="add-photo-btn" onClick={() => setShowFile(true)}>Add a photo</button>
         {showFile && (

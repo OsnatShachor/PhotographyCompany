@@ -34,10 +34,13 @@ body {
 /* Modal Content */
 .modal-content {
     background-color: #EDF6F9;
-    padding: 10px; /* Reduced padding */
+    padding: 10px;
+    /* Reduced padding */
     border: 1px solid #343131;
-    width: 70%; /* Reduced width */
-    max-width: 500px; /* Reduced max-width */
+    width: 70%;
+    /* Reduced width */
+    max-width: 500px;
+    /* Reduced max-width */
     border-radius: 8px;
     position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -49,14 +52,16 @@ body {
     top: 5px;
     right: 10px;
     margin-right: 5px;
-    font-size: 28px; /* Reduced font size */
+    font-size: 28px;
+    /* Reduced font size */
     font-weight: bold;
     cursor: pointer;
 }
 
 /* Ensure the spacing between lines is smaller */
 .modal-content h3 {
-    margin: 5px 0; /* Reduced margin */
+    margin: 5px 0;
+    /* Reduced margin */
 }
 
 
@@ -93,8 +98,9 @@ h2 {
     outline: 0;
     border-color: #636363;
 }
-.btnInOrder{
-    background-color:#83C5BE;
+
+.btnInOrder {
+    background-color: #83C5BE;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
@@ -104,14 +110,16 @@ h2 {
     width: 130px;
 }
 
-.btnInOrder:hover{
+.btnInOrder:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
 }
+
 #finalPrice {
     color: #83C5BE;
     font-size: larger;
 }
+
 .h3Order {
     margin-right: 10px;
     margin-bottom: 2px;
@@ -132,6 +140,7 @@ h2 {
 .showDetailBtn:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
 .close:hover,
 .close:focus {
     color: #006D77;
@@ -142,6 +151,13 @@ h2 {
 .colorfull {
     color: #83C5BE;
 }
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
 
 /* Responsive Design */
 @media screen and (max-width: 600px) {
@@ -154,10 +170,19 @@ h2 {
     body {
         padding: 10px;
         flex-direction: column;
+        width: 95%;
+        padding: 15px;
     }
 
     .input {
         font-size: 0.9em;
+        width: 100%;
+        padding: 10px;
+    }
+
+    #button-save {
+        padding: 10px;
+        font-size: 14px;
     }
 
     .modal-content {
@@ -165,7 +190,8 @@ h2 {
         padding: 15px;
         height: 60%;
     }
-    h1{
+
+    h1 {
         margin-top: 30px;
     }
 
@@ -196,13 +222,22 @@ h2 {
     }
 
     .modal-content {
-
-        padding: 10px;        
+        width: 95%;
+        padding: 10px;
         height: 55%;
     }
+    #button-save {
+        padding: 8px;
+        font-size: 12px;
+    }   
+    .close {
+        font-size: 24px;
+        top: 10px;
+        right: 15px;
+    }
 
-    h2 {
-        font-size: 25px;
+    h2, h3 {
+        font-size: 18px;
     }
 
     #hour {
@@ -216,7 +251,9 @@ h2 {
     .close {
         font-size: 24px;
     }
+
 }
+
 
 /* Calendar styles */
 #Calendar {

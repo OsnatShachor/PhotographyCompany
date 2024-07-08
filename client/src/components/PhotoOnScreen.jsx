@@ -7,6 +7,7 @@ function PhotoOnScreen(props) {
       <img 
         src={props.src} 
         alt={props.alt} 
+        onError={props.onError}
         className="photo"
       />
     </div>

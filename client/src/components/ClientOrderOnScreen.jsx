@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import UpdateOrderPopUp from '../components/UpdateOrderPopUp';
 import '../CSS/PrivateArea.css'
 function ClientOrderOnScreen(props) {
@@ -12,9 +12,12 @@ function ClientOrderOnScreen(props) {
 
     useEffect(() => {
         getOrderCategory();
-        if (order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 7) {
+        //4- אושר
+        //5- בוטל
+        //6- סוים
+        //7- לקוח לחץ על ביטול
+        if (order.statusID !== 4 && order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 7) {
             setEnableUpdate(true);
-        } if (order.statusID !== 5 && order.statusID !== 6 && order.statusID !== 7) {
             setEnableCancele(true);
         }
     }, [order.statusID, id, order.categoryID]);
@@ -30,9 +33,9 @@ function ClientOrderOnScreen(props) {
     };
 
     const handleUpdateClick = () => {
-        setShowUpdateModal(true);
+        setShowUpdateModal(true);//פתיחת החלונית של עדכון הזמנה
     };
-    const handleDeleteRequestClick = async (e) => {
+    const handleCanceleOrderClick = async (e) => {
         e.preventDefault();
         const updatedOrder = {
             ...order,
@@ -94,7 +97,7 @@ function ClientOrderOnScreen(props) {
 
                 <div className="changeStateBtn">
                     {enableUpdate && <button className="btnInOrder" onClick={handleUpdateClick}>Update</button>}
-                    {enableCancele && <button className="btnInOrder" onClick={handleDeleteRequestClick}>Cancele</button>}
+                    {enableCancele && <button className="btnInOrder" onClick={handleCanceleOrderClick}>Cancele</button>}
                 </div>
 
             </div>
@@ -102,7 +105,7 @@ function ClientOrderOnScreen(props) {
             {showUpdateModal && (
                 <UpdateOrderPopUp
                     order={order}
-                    onClose={handleCloseModal}
+                    onClose={handleCloseModal}//פונקציית של סגירת החלונית ושל ריענון 
                 />
             )}
         </>

@@ -95,7 +95,7 @@ function Order() {
     };
 
     const handlePrivateAreaClick = () => {
-        navigate(`/YO/photographer/${id}/PrivateArea/${user.userID}`, { state: { photographer } });
+        navigate(`/YO/photographer/${id}/PrivateArea`, { state: { photographer } });
     };
 
     const handleDateClick = (value) => {
@@ -104,7 +104,7 @@ function Order() {
     };
 
     const handleHomeClick = () => {
-        navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
+        navigate(`/YO/photographer/${photographer.userID}`);
     };
 
     const handleCloseModal = () => {

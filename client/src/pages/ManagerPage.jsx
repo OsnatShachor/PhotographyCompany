@@ -10,6 +10,7 @@ function ManagerPage() {
     const [allRequests, setAllRequests] = useState([]);
     const [filteredRequests, setFilteredRequests] = useState([]);
     const [filter, setFilter] = useState("all");
+    const [pendingCount, setPendingCount] = useState(0);
     const { user, setUser } = context;
 
     useEffect(() => {
@@ -25,20 +26,21 @@ function ManagerPage() {
 
     const getAllRequest = async () => {
         try {
-            const accessToken=sessionStorage.getItem("accessToken")
-            const response = await fetch('http://localhost:3000/manager/manager',
-                {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' +accessToken,
-                        'Content-Type': 'application/json'
-                    }
-                });
+            const accessToken = sessionStorage.getItem("accessToken");
+            const response = await fetch('http://localhost:3000/manager/manager', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                }
+            });
             const allRequests = await response.json();
             console.log(allRequests);
             setAllRequests(allRequests);
+            setPendingCount(allRequests.filter(request => request.statusID === 1).length);
         } catch (error) {
             setAllRequests([]);
+            setPendingCount(0);
             console.error('Error fetching waiting requests:', error);
         }
     };
@@ -47,12 +49,12 @@ function ManagerPage() {
         if (filter === "all") {
             setFilteredRequests(allRequests);
         } else if (filter === "Waiting") {
-            setFilteredRequests(allRequests => allRequests.filter(request => ((request.statusID != 4) && (request.statusID != 5))));
+            setFilteredRequests(allRequests.filter(request => request.statusID !== 4 && request.statusID !== 5));
         }
     };
 
     const handleRequestUpdate = async () => {
-        await getAllRequest();
+         getAllRequest();
     };
 
     const handleBackClick = () => {
@@ -83,7 +85,8 @@ function ManagerPage() {
                 <button onClick={handleDisConnectionClick}>DisConnection</button>
                 <button onClick={handleBackClick}>Back</button>
             </div>
-            <h1 className="h1Title">Photographer's Requests</h1>
+            <h1 className="h1Title">Photographer's Requests </h1>
+            <h2>({pendingCount} Pending)</h2>
             <div className="filterButtons">
                 <button className="managerBtn" onClick={handleShowAllClick}>Show All Requests</button>
                 <button className="managerBtn" onClick={handleShowWaitingClick}>Show Waiting Requests</button>

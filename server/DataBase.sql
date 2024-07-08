@@ -8,9 +8,9 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS requests;
 DROP TABLE IF EXISTS relations;
+DROP TABLE IF EXISTS photo_upload;
 DROP TABLE IF EXISTS photographers;
 DROP TABLE IF EXISTS passwords;
-DROP TABLE IF EXISTS photo_upload;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS statuses;
 DROP TABLE IF EXISTS roles;
@@ -123,7 +123,6 @@ CREATE TABLE photo_upload (
     FOREIGN KEY (photographerID) REFERENCES photographers(photographerID)
 );
 
-
 /* Insert initial data */
 
 
@@ -146,18 +145,18 @@ INSERT INTO statuses (statusName) VALUES
 INSERT INTO users (userName, email, phone, roleID) VALUES 
 ('Osnat Shachor', 'osnaty16@gmail.com', '0556777410',  1),
 ('Yael Korenfeld', 'yaelr5754@gmail.com', '050-456-7890',  2),
-('Chaya Smith', 'chayaosn@g.jct.ac.il', '987-654-3210', 3),
+('Chaya Smith', 'chayaosn@g.jct.ac.il', '987-654-3210', 2),
 ('Ariel Kramer', 'torasolider@gmail.com', '555-123-4567', 2),
-('Ayala Herz', 'ayala369h@gmail.com', '444-555-6666', 3),
+('Ayala Herz', 'ayala369h@gmail.com', '444-555-6666', 2),
 ('Mosh Davis', 'osnaty999@gmail.com', '052-444-5555', 2);
 
 INSERT INTO passwords (userID, password) VALUES
-(1, '123'),
-(2, '1'),
+(1, '$2b$10$fVihzL0ZBuFBFR4Y3maUFOjfLJ2qwiqGlQid6Hjz7XevP8z/1tc9O'),
+(2, '$2b$10$865KDpY0T1FvHQPhYwaOUemV4nogoDBd9S8vitegl/.moVyvzOmkC'),
 (3, 'password123'),
-(4, 'paty123'),
+(4, '$2b$10$JK1ZKM2H1UxEctmFHb6bKetvHDELNCBAK/KmhjMmRNdJr5ndjSHha'),
 (5, 'pass456'),
-(6, 'patry123');
+(6, '$2b$10$p3.mZIYNAT9hvTGaSwzYCe9Gt3HHZjroW2ELhscqvvewwHQ3h6l1e');
 
 INSERT INTO photographers (photographerID, aboutMe, isActive) VALUES 
 (2, 'Nature and landscape photographer with 10 years of experience.', TRUE),

@@ -7,7 +7,7 @@ function RequestOnScreen(props) {
   const [photographer, setPhotographer] = useState(null);
   const [showOkModal, setShowOkModal] = useState(false);
   const [showRefuseModal, setShowRefuseModal] = useState(false);
-  const [request, setRequest] = useState(props.request);
+  const [request, setRequest] = useState(props.request);//מכיל את תוכן הבקשה
 
   useEffect(() => {
     getPhotographer();
@@ -24,13 +24,13 @@ function RequestOnScreen(props) {
   };
 
   const handleConfirmClick = () => {
-    setShowOkModal(true);
+    setShowOkModal(true);// פתיחצ הקומפוננטה של אישור הבקשה 
   };
   const handleRefuseClick = () => {
     setShowRefuseModal(true);
   };
 
-  const handleSendOkEmail = async () => {
+  const handleSendOkEmail = async () => {// כשהמנהל מאשר את הבקשה של הצלם
     const emailDetails = {
       from_name: `${photographer.userName}`,
       To_Email: photographer.email,
@@ -41,18 +41,18 @@ function RequestOnScreen(props) {
     };
 
     emailjs.send(
-      'service_u2ebeds',  // Your service ID
-      'template_1r1fvrt', // Your template ID
+      'service_u2ebeds',  
+      'template_1r1fvrt', 
       emailDetails,
-      'sVdp577QDfBGZC2gO' // Your user ID
+      'sVdp577QDfBGZC2gO'
     )
       .then(async (response) => {
         console.log('Email sent successfully!', response.status, response.text);
-        setShowOkModal(false);
+        setShowOkModal(false);//סגירת חלונית האישור
 
-        updateRequestStatus(request.requestID, 4, request.photographerID);
-        setRequest({ ...request, statusID: 4 });
-        props.onRequestUpdate();
+        updateRequestStatus(request.requestID, 4, request.photographerID);//מעדכן בנתונים את סטטוס הבקשה
+        setRequest({ ...request, statusID: 4 });// מעדכן בבקשה הנוכחית - ביוזסטייט
+        props.onRequestUpdate();// ריענון העמוד
 
       }, (error) => {
         console.error('Failed to send email:', error);
@@ -70,10 +70,10 @@ function RequestOnScreen(props) {
     };
 
     emailjs.send(
-      'service_u2ebeds',  // Your service ID
-      'template_1r1fvrt', // Your template ID
+      'service_u2ebeds',  
+      'template_1r1fvrt', 
       emailDetails,
-      'sVdp577QDfBGZC2gO' // Your user ID
+      'sVdp577QDfBGZC2gO' 
     )
       .then(async (response) => {
         console.log('Email sent successfully!', response.status, response.text);
@@ -87,6 +87,7 @@ function RequestOnScreen(props) {
         console.error('Failed to send email:', error);
       });
   };
+  
 
   const updateRequestStatus = async (requestID, statusID, photographerID) => {
     try {

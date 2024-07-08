@@ -71,24 +71,22 @@ const UploadPhoto = () => {
     setShowFile(false);
     let formData = new FormData();
     formData.append("photo", photo);
-
+  
     const accessToken = sessionStorage.getItem("accessToken");
     try {
-
       const response = await fetch(`http://localhost:3000/photos/photos/${id}`, {
         method: "POST",
         headers: {
           'Authorization': 'Bearer ' + accessToken,
-          'Content-Type': 'application/json'
         },
         body: formData
       });
-
+  
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText);
       }
-
+  
       const resData = await response.json();
       const formattedPhoto = {
         ...resData,
@@ -99,6 +97,7 @@ const UploadPhoto = () => {
       console.error("Error uploading the photo:", err.message);
     }
   };
+  
 
   const handleDeleteClick = async () => {
     const accessToken = sessionStorage.getItem("accessToken");

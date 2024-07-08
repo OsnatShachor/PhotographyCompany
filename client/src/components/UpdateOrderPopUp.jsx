@@ -17,7 +17,7 @@ const UpdateOrderPopUp = (props) => {
 
     useEffect(() => {
         getAllCategories();
-    }, [id]); 
+    }, [order]); 
     
     const getAllCategories = async () => {
         try {

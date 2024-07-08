@@ -12,7 +12,7 @@ const controller = require('../controllers/PhotoController');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const photographerID = req.params.id;
-console.log(photographerID);
+    console.log(photographerID);
     if (!photographerID) {
       return cb(new Error('Missing photographer ID in request'));
     }
@@ -32,8 +32,9 @@ console.log(photographerID);
 });
 
 const upload = multer({ storage: storage });
+
 // Route for uploading a photo
-router.post("/:id",  upload.single('photo'), async (req, res) => {
+router.post("/:id", [authorizePhotographer, upload.single('photo')], async (req, res) => {
   const photographerID = req.params.id;
   console.log(photographerID);
   const photoPath = path.join('uploads', photographerID.toString(), req.file.filename);
@@ -56,10 +57,9 @@ router.post("/:id",  upload.single('photo'), async (req, res) => {
 });
 
 // Route for fetching photos
-router.get("/:id",async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-
-    console.log(("GET PHOTOS"));
+    console.log("GET PHOTOS");
     const gallery = await controller.getPhotos(req.params.id);
     res.status(200).send(gallery);
   } catch (err) {
@@ -68,9 +68,7 @@ router.get("/:id",async (req, res) => {
   }
 });
 
-
-// Route for deleting a photo
-router.delete("/:id",authorizePhotographer, async (req, res) => {
+router.delete("/:id", authorizePhotographer, async (req, res) => {
   const photoId = req.params.id;
   try {
     // Get the photo details to delete the file from the server

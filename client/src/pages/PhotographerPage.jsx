@@ -11,18 +11,17 @@ function PhotographerPage() {
     const { id } = useParams();
     const { user, setUser } = useContext(UserContext);
     const [gallery, setGallery] = useState([]);
-
     useEffect(() => {
-       
         getAbout();
         getAllPhotos();
     }, []);
-    // useEffect(() => {
-       
-    //     if (!user.userID) {
-    //         navigate('/');
-    //     }
-    // }, [user]);
+
+    useEffect(() => {
+        if (user.userID != id) {
+            navigate(`/YO/photographerManagement/${user.userID}`);
+        }
+    }, [user]);
+
     const getAbout = async () => {
         try {
             const response = await fetch(`http://localhost:3000/aboutMe/${id}`);
@@ -59,24 +58,24 @@ function PhotographerPage() {
 
     const getAllPhotos = async () => {
         const accessToken = sessionStorage.getItem("accessToken");
-      
+
         fetch(`http://localhost:3000/photos/photos/${id}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + accessToken,
-            'Content-Type': 'application/json'
-          },
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            },
         })
-          .then((res) => res.json())
-          .then((data) => {
-            const formattedData = data.map(photo => ({
-              ...photo,
-              url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
-            }));
-            setGallery(formattedData);
-          })
-          .catch((error) => console.error('Error fetching photos:', error));
-      };
+            .then((res) => res.json())
+            .then((data) => {
+                const formattedData = data.map(photo => ({
+                    ...photo,
+                    url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
+                }));
+                setGallery(formattedData);
+            })
+            .catch((error) => console.error('Error fetching photos:', error));
+    };
 
     const handleDisconnectionClick = () => {
         setUser({});
@@ -125,7 +124,7 @@ function PhotographerPage() {
             </div>
             <p className="spaceBeforeTite"></p>
             <h1 className="h1Title">{user.userName}</h1>
-            
+
             <div id="photographersBtn">
                 <button className="btnPhotographer" onClick={handleAddingPhotosClick}>Add photos to the gallery</button>
                 <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>

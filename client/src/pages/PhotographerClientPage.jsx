@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation, useNavigate, useParams, Outlet } from 'react-router-dom';
+import { useNavigate, useParams, Outlet } from 'react-router-dom';
 import { UserContext } from '../App';
 import "../CSS/PhotographerPage.css";
 import PhotoOnScreen from '../components/PhotoOnScreen';
@@ -7,29 +7,23 @@ import PhotoOnScreen from '../components/PhotoOnScreen';
 function PhotographerClientPage() {
   const context = useContext(UserContext);
   const { user, setUser } = context;
-  const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [aboutMe, setAboutMe] = useState("");
   const [gallery, setGallery] = useState([]);
+  const [photosToShow, setPhotosToShow] = useState(8);
   const roleID = 3;
-  const [photographer, setPhotographer] = useState(null); // Adding state variable for photographer
+  const [photographer, setPhotographer] = useState(null);
 
   useEffect(() => {
-    getAllPhotos()
+    getAllPhotos();
   }, []);
 
   useEffect(() => {
-    if (location.state && location.state.photographer) {
-      setPhotographer(location.state?.photographer);
-      getInformation(id);
-      console.log(JSON.stringify(user));
-    } else {
-      getPhotographer(id);
-    }
-  }, [id, location.state]);
+    getInformation(id);
+    getPhotographer(id);
+  }, [id]);
 
-  
   const getAllPhotos = async () => {
     const accessToken = sessionStorage.getItem("accessToken");
   
@@ -50,11 +44,10 @@ function PhotographerClientPage() {
       })
       .catch((error) => console.error('Error fetching photos:', error));
   };
-  
 
   const handleDisconnectionClick = () => {
     setUser({});
-    sessionStorage.setItem("accessToken"," ");
+    sessionStorage.setItem("accessToken", " ");
   };
 
   const handleConnectionClick = () => {
@@ -67,7 +60,7 @@ function PhotographerClientPage() {
 
   const handlePrivateAreaClick = () => {
     if (user && (user.userID)) {
-      navigate(`/YO/photographer/${id}/PrivateArea/${user.userID}`, { state: { photographer } });
+      navigate(`/YO/photographer/${id}/PrivateArea`, { state: { photographer } });
     } else {
       navigate('/YO/SignUp', { state: { roleID, photographer } });
     }
@@ -93,7 +86,7 @@ function PhotographerClientPage() {
       console.error('Error fetching about me:', error);
     }
   };
-  //הבאת הצלם שהאתר שלו
+
   const getPhotographer = async (userID) => {
     try {
       const data = await fetch(`http://localhost:3000/users/${userID}`);
@@ -105,15 +98,22 @@ function PhotographerClientPage() {
     }
   };
 
+  const handleViewMoreClick = () => {
+    setPhotosToShow(prevCount => prevCount + 8);
+  };
+
   if (!photographer) {
-    return null; // Return early if photographer data is not yet loaded
+    return null;
   }
 
   return (
     <div className="page-container">
       <div className="onTopBtn">
-       
-        {(user && (user.userID)) ? (<button onClick={handleDisconnectionClick}>Disconnection</button>): <button onClick={handleConnectionClick}>Connection</button>}
+        {(user && (user.userID)) ? (
+          <button onClick={handleDisconnectionClick}>Disconnection</button>
+        ) : (
+          <button onClick={handleConnectionClick}>Connection</button>
+        )}
         <button onClick={handlePrivateAreaClick}>Private Area</button>
       </div>
       <p className="spaceBeforeTite"></p>
@@ -126,20 +126,22 @@ function PhotographerClientPage() {
       </div>
       <div className="gallery">
         {gallery.length > 0 ? (
-          gallery.map((photo) => (
+          gallery.slice(0, photosToShow).map((photo) => (
             <PhotoOnScreen key={photo.photoID} src={photo.url_photo} alt={`Photo ${photo.photoID}`} />
           ))
         ) : (
           <p>No photos available</p>
         )}
       </div>
+      {photosToShow < gallery.length && (
+        <button onClick={handleViewMoreClick}>View More Photos</button>
+      )}
       <p className="spaceBeforeAbout"></p>
       <div id="aboutMe">
         <h4 id="abouth4">{aboutMe}</h4>
       </div>
 
       <Outlet />
-
     </div>
   );
 }

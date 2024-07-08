@@ -77,7 +77,7 @@ function App() {
           <Route path="/YO/photographerManagement/:id" element={<PhotographerPage />} />
           <Route path="/YO/photographer/:id/order" element={<Order />} />
           <Route path="/YO/photographer/:id/PriceList" element={<PriceList />} />
-          <Route path="/YO/photographer/:id/PrivateArea/:id" element={<PrivateArea />} />
+          <Route path="/YO/photographer/:id/PrivateArea" element={<PrivateArea />} />
           <Route path="/YO/photographer/:id/PhotoManagement" element={<UploadPhoto />} />
           <Route path="/YO/photographer/:id/PhotoManagement/orders" element={<HandleOrders />} />
         </Routes>

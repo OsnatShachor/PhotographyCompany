@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/ManagerController");
-const authorizeManager = require('../middleware/authorizeManager');
+// const authorizeManager = require('../middleware/authorizeManager');
 
-router.get("/", authorizeManager, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const waitingRequests = await controller.getALLRequests();
         res.status(200).send(waitingRequests);
@@ -12,7 +12,7 @@ router.get("/", authorizeManager, async (req, res) => {
     }
 });
 
-router.put("/:orderId", authorizeManager, async (req, res) => {
+router.put("/:orderId", async (req, res) => {
     try {
         const { requestID, statusID, photographerID } = req.body;
         const updatedStatus = await controller.updateStatus(requestID, statusID, photographerID);

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from "../App.jsx"
 import "../CSS/Request.css"
 
@@ -9,7 +9,6 @@ function Request() {
   const { user, setUser } = context;
   const [fillRequest, setFillRequest] = useState('');
   const navigate = useNavigate();
-  const { id } = useParams();
   const location = useLocation();
   const photographer = location.state?.user;
   
@@ -62,7 +61,7 @@ function Request() {
         </div>
         <h1>Sent Request</h1>
         <h3>{user.userName}, {user.email}, {user.phone}</h3>
-        <textarea type="text" className="input" id="inputRequest" placeholder="Your Request" onChange={(e) => setFillRequest(e.target.value)} value={fillRequest} />
+        <textarea type="text" className="input" id="inputRequest" placeholder="Your Request To YO-Photography" onChange={(e) => setFillRequest(e.target.value)} value={fillRequest} />
         <button id="button-save" onClick={handleRequestButton}>SEND YOUR REQUEST</button>
 
       </form>

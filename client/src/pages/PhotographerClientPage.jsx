@@ -14,11 +14,11 @@ function PhotographerClientPage() {
   const [gallery, setGallery] = useState([]);
   const roleID = 3;
   const [photographer, setPhotographer] = useState(null); // Adding state variable for photographer
-  
+
   useEffect(() => {
     getAllPhotos()
   }, []);
-  
+
   useEffect(() => {
     if (location.state && location.state.photographer) {
       setPhotographer(location.state?.photographer);
@@ -29,21 +29,19 @@ function PhotographerClientPage() {
     }
   }, [id, location.state]);
 
+  
   const getAllPhotos = async () => {
     const accessToken = sessionStorage.getItem("accessToken");
-
-    fetch(`http://localhost:3000/photos/photos/${id}`,{
-
+  
+    fetch(`http://localhost:3000/photos/photos/${id}`, {
       method: 'GET',
       headers: {
-          'Authorization': 'Bearer ' + accessToken,
-          'Content-Type': 'application/json'
+        'Authorization': 'Bearer ' + accessToken,
+        'Content-Type': 'application/json'
       },
-
     })
       .then((res) => res.json())
       .then((data) => {
-        // Ensure the URLs are correctly formatted for the client
         const formattedData = data.map(photo => ({
           ...photo,
           url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
@@ -51,7 +49,8 @@ function PhotographerClientPage() {
         setGallery(formattedData);
       })
       .catch((error) => console.error('Error fetching photos:', error));
-  }
+  };
+  
 
   const handleDisconnectionClick = () => {
     setUser({});
@@ -66,15 +65,15 @@ function PhotographerClientPage() {
   };
 
   const handlePrivateAreaClick = () => {
-    if (user &&(user.userID)) {
+    if (user && (user.userID)) {
       navigate(`/YO/photographer/${id}/PrivateArea/${user.userID}`, { state: { photographer } });
-    }else {
+    } else {
       navigate('/YO/SignUp', { state: { roleID, photographer } });
     }
   };
 
   const handleOrderClick = () => {
-    if (user &&(user.userID)) {
+    if (user && (user.userID)) {
       navigate(`/YO/photographer/${id}/order`, { state: { photographer } });
     } else {
       navigate('/YO/SignUp', { state: { roleID, photographer } });
@@ -93,7 +92,7 @@ function PhotographerClientPage() {
       console.error('Error fetching about me:', error);
     }
   };
-//הבאת הצלם שהאתר שלו
+  //הבאת הצלם שהאתר שלו
   const getPhotographer = async (userID) => {
     try {
       const data = await fetch(`http://localhost:3000/users/${userID}`);
@@ -110,14 +109,16 @@ function PhotographerClientPage() {
   }
 
   return (
-    <div>
+    <div className="page-container">
       <div className="onTopBtn">
         <button onClick={handleConnectionClick}>Connection</button>
-        {(user &&(user.userID))&&(<button onClick={handleDisconnectionClick}>Disconnection</button>)}
+        {(user && (user.userID)) && (<button onClick={handleDisconnectionClick}>Disconnection</button>)}
         <button onClick={handlePrivateAreaClick}>Private Area</button>
       </div>
 
       <h1 className="h1Title">{photographer.userName}</h1>
+      {user.userName && <h3 id="helloh3">Hello {user.userName}</h3>}
+
       <div id="photographersBtn">
         <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
         <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
@@ -132,11 +133,11 @@ function PhotographerClientPage() {
           <p>No photos available</p>
         )}
       </div>
-      
+
       <div id="aboutMe">
         <h4 id="abouth4">{aboutMe}</h4>
       </div>
-      
+
       <Outlet />
 
     </div>

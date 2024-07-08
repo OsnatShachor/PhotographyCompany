@@ -13,13 +13,16 @@ function PhotographerPage() {
     const [gallery, setGallery] = useState([]);
 
     useEffect(() => {
-        if (!user.userID) {
-            navigate('/');
-        }
+       
         getAbout();
         getAllPhotos();
     }, []);
-
+    // useEffect(() => {
+       
+    //     if (!user.userID) {
+    //         navigate('/');
+    //     }
+    // }, [user]);
     const getAbout = async () => {
         try {
             const response = await fetch(`http://localhost:3000/aboutMe/${id}`);

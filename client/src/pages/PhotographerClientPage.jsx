@@ -111,8 +111,8 @@ function PhotographerClientPage() {
   return (
     <div className="page-container">
       <div className="onTopBtn">
-        <button onClick={handleConnectionClick}>Connection</button>
-        {(user && (user.userID)) && (<button onClick={handleDisconnectionClick}>Disconnection</button>)}
+       
+        {(user && (user.userID)) ? (<button onClick={handleDisconnectionClick}>Disconnection</button>): <button onClick={handleConnectionClick}>Connection</button>}
         <button onClick={handlePrivateAreaClick}>Private Area</button>
       </div>
       <p className="spaceBeforeTite"></p>

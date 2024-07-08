@@ -33,7 +33,7 @@ console.log(photographerID);
 
 const upload = multer({ storage: storage });
 // Route for uploading a photo
-router.post("/:id", upload.single('photo'), async (req, res) => {
+router.post("/:id",  upload.single('photo'), async (req, res) => {
   const photographerID = req.params.id;
   console.log(photographerID);
   const photoPath = path.join('uploads', photographerID.toString(), req.file.filename);

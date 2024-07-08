@@ -7,6 +7,7 @@ import '../CSS/UploadPhoto.css'; // Import CSS for styling
 const UploadPhoto = () => {
   const [photo, setPhoto] = useState(null);
   const [gallery, setGallery] = useState([]);
+  const [selectedPhotos, setSelectedPhotos] = useState([]);
   const [showFile, setShowFile] = useState(false);
   const { id } = useParams();
   const { user, setUser } = useContext(UserContext);
@@ -66,6 +67,40 @@ const UploadPhoto = () => {
     }
   };
 
+  const handleDeleteClick = async () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    try {
+      await Promise.all(selectedPhotos.map(async (photoId) => {
+        const response = await fetch(`http://localhost:3000/photos/photos/${photoId}`, {
+          method: "DELETE",
+          headers: {
+            'Authorization': 'Bearer ' + accessToken,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText);
+        }
+      }));
+
+      setGallery(gallery.filter(photo => !selectedPhotos.includes(photo.photoID)));
+      setSelectedPhotos([]);
+    } catch (err) {
+      console.error("Error deleting photos:", err.message);
+    }
+  };
+
+  const toggleSelectPhoto = (photoID) => {
+    setSelectedPhotos((prevSelected) =>
+      prevSelected.includes(photoID)
+        ? prevSelected.filter(id => id !== photoID)
+        : [...prevSelected, photoID]
+    );
+  };
+
   const handleDisConnectionClick = () => {
     navigate(`/YO/photographer/${user.userID}`, { state: { photographer: user } });
     setUser({});
@@ -112,12 +147,16 @@ const UploadPhoto = () => {
           </div>
         )}
       </div>
-
+      {selectedPhotos.length > 0 && (
+        <button onClick={handleDeleteClick}>Delete Selected Photos</button>
+      )}
       {/* Gallery section */}
       <div className="gallery">
         {gallery.length > 0 ? (
           gallery.map((photo) => (
-            <PhotoOnScreen key={photo.photoID} src={photo.url_photo} alt={`Photo ${photo.photoID}`} />
+            <div key={photo.photoID} onClick={() => toggleSelectPhoto(photo.photoID)} className={`photo-item ${selectedPhotos.includes(photo.photoID) ? 'selected' : ''}`}>
+              <PhotoOnScreen src={photo.url_photo} alt={`Photo ${photo.photoID}`} />
+            </div>
           ))
         ) : (
           <p>No photos available</p>

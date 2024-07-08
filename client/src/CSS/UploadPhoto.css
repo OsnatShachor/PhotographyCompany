@@ -3,6 +3,9 @@
     text-align: center;
     margin-bottom: 20px;
   }
+  .photo-item.selected {
+    border: 2px solid red;
+  }
   
   .add-photo-btn {
     margin-bottom: 10px;

@@ -68,10 +68,22 @@ router.get("/:id",async (req, res) => {
   }
 });
 
+
 // Route for deleting a photo
 router.delete("/:id", async (req, res) => {
   const photoId = req.params.id;
   try {
+    // Get the photo details to delete the file from the server
+    const photo = await controller.getPhotoById(photoId);
+    if (!photo) {
+      return res.status(404).send({ error: "Photo not found" });
+    }
+
+    // Delete the file from the server
+    const filePath = path.join(__dirname, '..', photo.url_photo);
+    fs.unlinkSync(filePath);
+
+    // Delete the photo from the database
     const result = await controller.deletePhoto(photoId);
     res.status(200).send(result);
   } catch (err) {
@@ -79,5 +91,6 @@ router.delete("/:id", async (req, res) => {
     res.status(500).send({ error: "Internal Server Error" });
   }
 });
+
 
 module.exports = router;

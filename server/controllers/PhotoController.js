@@ -20,6 +20,14 @@ async function createPhoto(data) {
   }
 }
 
+async function getPhotoById(photoId) {
+  try {
+    return await model.getPhotoById(photoId);
+  } catch (err) {
+    throw err;
+  }
+}
+
 async function deletePhoto(photoId) {
   try {
     return await model.deletePhoto(photoId);
@@ -28,4 +36,6 @@ async function deletePhoto(photoId) {
   }
 }
 
-module.exports = { getPhotos, createPhoto, deletePhoto };
+module.exports = { getPhotos, createPhoto, deletePhoto, getPhotoById };
+
+

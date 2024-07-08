@@ -33,26 +33,38 @@ async function insertPhoto(data) {
     }
 }
 
-async function insertPhotographersPhoto(photographerID,photoID) {
+// async function insertPhotographersPhoto(photographerID,photoID) {
+//     try {
+
+//         const photographerPhotoSql = "INSERT INTO photographer_photos (photographerID, photoID) VALUES (?, ?)";
+//       await pool.query(photographerPhotoSql, [photographerID, photoID]);
+
+//     } catch (err) {
+//         console.error("Error inserting PhotographersPhoto:", err);
+//         throw err;
+//     }
+// }
+async function getPhotoById(photoId) {
     try {
-
-        const photographerPhotoSql = "INSERT INTO photographer_photos (photographerID, photoID) VALUES (?, ?)";
-      await pool.query(photographerPhotoSql, [photographerID, photoID]);
-
+      const sql = 'SELECT * FROM photo_upload WHERE photoID = ?';
+      const result = await pool.query(sql, [photoId]);
+      return result[0][0];
     } catch (err) {
-        console.error("Error inserting PhotographersPhoto:", err);
-        throw err;
+      console.error("Error getting photo:", err);
+      throw err;
     }
-}
-async function deletePhoto(photoId) {
+  }
+  
+  async function deletePhoto(photoId) {
     try {
-        const sql = "DELETE FROM `photo_upload` WHERE photoID = ?";
-        const result = await pool.query(sql, [photoId]);
-        return result;
+      const sql = "DELETE FROM photo_upload WHERE photoID = ?";
+      const result = await pool.query(sql, [photoId]);
+      return result;
     } catch (err) {
-        console.error("Error deleting photo:", err);
-        throw err;
+      console.error("Error deleting photo:", err);
+      throw err;
     }
-}
-
-module.exports = { getPhotos, insertPhoto, deletePhoto, insertPhotographersPhoto };
+  }
+  
+  module.exports = { getPhotos, insertPhoto, deletePhoto, getPhotoById };
+  

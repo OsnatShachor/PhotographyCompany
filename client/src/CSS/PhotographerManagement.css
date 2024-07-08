@@ -1,10 +1,15 @@
 /* General page styling */
-body, html {
+body,
+html {
     min-width: 100%;
     background-color: #f8e3db;
     height: 100%;
     font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
+}
+
+body {
+    overflow-y: hidden;
 }
 
 .page-container {
@@ -13,7 +18,8 @@ body, html {
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    padding-bottom: 80px; /* Space for the fixed about me section */
+    padding-bottom: 80px;
+    /* Space for the fixed about me section */
 }
 
 .container {
@@ -24,19 +30,31 @@ body, html {
     bottom: 20px;
     width: 100%;
 }
-.h1Title{
-    margin-top: 180px;
 
+.h1Title {
+    margin-top: 180px;
+    margin-bottom: 2px;
 }
+
+.spaceBeforeTite {
+    margin: 170px;
+    padding-bottom: 70px;
+}
+/* .spaceBeforeAbout{
+    padding: 50px;
+} */
+
 .onTopBtn {
     z-index: 10;
 }
-.changeStateBtn{
+
+.changeStateBtn {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
+
 .orderPhotographBox {
     border-color: #006D77;
     border-radius: 3px;
@@ -120,6 +138,11 @@ body, html {
 @media (max-width: 1024px) {
     #inputAbout {
         font-size: 0.9em;
+    }
+
+    .spaceBeforeTite {
+        margin: 120px;
+        padding-bottom: 40px;
     }
 }
 

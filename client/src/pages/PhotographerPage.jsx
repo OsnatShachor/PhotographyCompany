@@ -120,7 +120,7 @@ function PhotographerPage() {
                 <button onClick={handleOrderClick}>Handle Orders</button>
                 <button onClick={handleRequestClick}>Sent Request to YO-Photography</button>
             </div>
-            
+            <p className="spaceBeforeTite"></p>
             <h1 className="h1Title">{user.userName}</h1>
             
             <div id="photographersBtn">

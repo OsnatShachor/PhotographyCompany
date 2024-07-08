@@ -115,7 +115,7 @@ function PhotographerClientPage() {
         {(user && (user.userID)) && (<button onClick={handleDisconnectionClick}>Disconnection</button>)}
         <button onClick={handlePrivateAreaClick}>Private Area</button>
       </div>
-
+      <p className="spaceBeforeTite"></p>
       <h1 className="h1Title">{photographer.userName}</h1>
       {user.userName && <h3 id="helloh3">Hello {user.userName}</h3>}
 
@@ -132,7 +132,7 @@ function PhotographerClientPage() {
           <p>No photos available</p>
         )}
       </div>
-
+      <p className="spaceBeforeAbout"></p>
       <div id="aboutMe">
         <h4 id="abouth4">{aboutMe}</h4>
       </div>

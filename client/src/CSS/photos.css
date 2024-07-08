@@ -22,4 +22,32 @@ img:hover {
   .photos img.landscape {
     width: 200px;
   }
-  
+  @media (max-width: 1024px) {
+    .photos img.portrait {
+        height: 150px;
+    }
+
+    .photos img.landscape {
+        width: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .photos img.portrait {
+        height: 120px;
+    }
+
+    .photos img.landscape {
+        width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .photos img.portrait {
+        height: 100px;
+    }
+
+    .photos img.landscape {
+        width: 100px;
+    }
+}

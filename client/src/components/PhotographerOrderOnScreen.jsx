@@ -114,7 +114,7 @@ function PhotographerOrderOnScreen(props) {
             const updatedOrder = { ...order, statusID };
             const updatedOrders = allOrders.map(o => o.orderID === order.orderID ? updatedOrder : o);
             props.setAllOrders(updatedOrders);
-
+            getStatus();
             props.handleCloseModal();
             onClose();
         } catch (error) {

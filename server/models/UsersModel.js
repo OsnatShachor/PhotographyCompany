@@ -2,7 +2,7 @@ const pool = require('../DB.js');
 async function getUserByEmail(email) {
   try {
     const sql = 'SELECT * from users WHERE users.email=?';
-    const [rows, fields] = await pool.query(sql, [email]);
+    const [rows] = await pool.query(sql, [email]);
     console.log(`model=> ${rows}`)
     return rows;
   } catch (err) {
@@ -73,10 +73,8 @@ async function createClient(photographerId, userName, email, phone, roleID, cryp
     const sqlPassword = `INSERT INTO passwords (userID, password) values (?, ?)`;
     await pool.query(sqlPassword, [userID, cryptedPassword]);
 
-    const relations = await checkRelation(userID, photographerId);
-    if (relations.length === 0) {
-      await createRelation(userID, photographerId);
-    }
+    await createRelation(userID, photographerId);
+
     return { userID, userName, email, phone, roleID };
   } catch (err) {
     throw err;

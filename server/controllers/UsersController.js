@@ -43,7 +43,7 @@ async function CheckIfExist(email) {
 async function createUser(body) {
     try {
         switch (body.roleID) {
-            case 2:
+            case 2:// אם נרשם בתור צלם
                 const user2 = await CheckIfExist(body.email);
                 console.log("User existence check result:", user2);
                 if (!user2) {
@@ -58,7 +58,7 @@ async function createUser(body) {
                     throw new Error("User already exists");
                 }
                 break;
-            case 3:
+            case 3://נרשם בתור לקוח
                 let returnedUser = {};
                 const user3 = await CheckIfExist(body.email);
                 console.log(`client ${body.photographerId}`);
@@ -155,4 +155,4 @@ async function getUserByUserID(userID) {
         throw err;
     }
 }
-module.exports = { createUser, CheckIfExist,logIn, getUserByUserID }
+module.exports = { createUser, CheckIfExist, logIn, getUserByUserID }

@@ -87,11 +87,11 @@ function Order() {
 
     const handleDisConnectionClick = () => {
         setUser({});
-        navigate(`/YO/photographer/${photographer.userID}`, { state: { photographer } });
+        navigate(`/YO/photographer/${photographer.userID}`);
     };
 
     const handleConnectionClick = () => {
-        navigate('/YO/SignUp', { state: { roleID, photographer } });
+        navigate('/YO/SignUp', { state: { roleID, photographer} });
     };
 
     const handlePrivateAreaClick = () => {

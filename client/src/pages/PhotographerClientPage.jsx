@@ -54,6 +54,7 @@ function PhotographerClientPage() {
 
   const handleDisconnectionClick = () => {
     setUser({});
+    sessionStorage.setItem("accessToken"," ");
   };
 
   const handleConnectionClick = () => {

@@ -121,7 +121,7 @@ function LogIn() {
             <Link to="/YO/SignUp" state={{ roleID, photographer }} className="link-btn">Sign Up</Link>
           </li>
           <li className="tab active">
-            <Link to="/YO/logIn" className="link-btn">Log In</Link>
+            <Link to="/YO/logIn" state={{ roleID, photographer }} className="link-btn">Log In</Link>
           </li>
         </ul>
         <div>

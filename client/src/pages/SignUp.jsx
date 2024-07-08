@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from '../App';
 import '../CSS/Registation.css';
@@ -11,20 +11,45 @@ function SignUp() {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
+    const [validationError, setValidationError] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
     const roleID = location.state?.roleID;
     const photographer = location.state?.photographer;
     let body = {};
 
+    useEffect(() => {
+        if (validationError) {
+            setValidationError('');
+        }
+    }, [userName, email, phone, password, verifyPassword]);
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validatePhone = (phone) => {
+        const phoneRegex = /^[0-9]{10}$/; // Adjust regex based on the expected phone number format
+        return phoneRegex.test(phone);
+    };
+
     const handleRegisterButton = (e) => {
         e.preventDefault();
         if (!userName || !email || !phone || !password || !verifyPassword) {
-            alert('Please fill in all fields.');
+            setValidationError('Please fill in all fields.');
+            return;
+        }
+        if (!validateEmail(email)) {
+            setValidationError('Please enter a valid email address.');
+            return;
+        }
+        if (!validatePhone(phone)) {
+            setValidationError('Please enter a valid phone number.');
             return;
         }
         if (password !== verifyPassword) {
-            alert('Passwords do not match.');
+            setValidationError('Passwords do not match.');
             return;
         }
 
@@ -80,7 +105,6 @@ function SignUp() {
             });
     };
 
-
     const handleBackClick = () => {
         navigate(-1);
     };
@@ -93,7 +117,7 @@ function SignUp() {
             <form id="form">
                 <ul id="tabs" className="register-buttons active">
                     <li className="tab active">
-                        <Link to="/YO/SignUp" className="link-btn">Sign Up</Link>
+                        <Link to="/YO/SignUp" state={{ roleID, photographer }} className="link-btn">Sign Up</Link>
                     </li>
                     <li className="tab">
                         <Link to="/YO/logIn" state={{ photographer, roleID }} className="link-btn">Log In</Link>
@@ -104,12 +128,11 @@ function SignUp() {
                     <input type="text" className="input" name="userName" placeholder="User Name" onChange={(e) => setUserName(e.target.value)} value={userName} />
                     <input type="text" className="input" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} value={email} />
                     <input type="text" className="input" name="phone" placeholder="Phone Number" onChange={(e) => setPhone(e.target.value)} value={phone} />
-
                     <div className="password">
                         <input type="password" className="input" name="password" placeholder="Set A Password" onChange={(e) => setPassword(e.target.value)} value={password} required />
                         <input type="password" className="input" name="verify-password" placeholder="Verify-Password" onChange={(e) => setVerifyPassword(e.target.value)} value={verifyPassword} required />
                     </div>
-
+                    {validationError && <p className="error-message">{validationError}</p>}
                     <button id="button-save" onClick={handleRegisterButton}>GET STARTED</button>
                 </div>
             </form>

@@ -41,7 +41,7 @@ function ManagerPage() {
         } catch (error) {
             setAllRequests([]);
             setPendingCount(0);
-            console.error('Error fetching waiting requests:', error);
+            alert('Error fetching waiting requests:', error);
         }
     };
 

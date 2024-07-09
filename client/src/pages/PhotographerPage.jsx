@@ -34,7 +34,7 @@ function PhotographerPage() {
             const aboutMeData = await response.json();
             setAboutMe(aboutMeData.aboutMe || '');
         } catch (error) {
-            console.error('Error fetching about me:', error);
+            alert('Error fetching about me:', error);
         }
     };
 

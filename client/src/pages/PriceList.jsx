@@ -79,7 +79,7 @@ function PriceList() {
       setCategories(prevCategories => [...prevCategories, newCategory]);
       getCategories();
     } catch (error) {
-      console.error('Error adding category:', error);
+      alert('Error adding category:', error);
     }
   };
 

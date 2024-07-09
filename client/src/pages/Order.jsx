@@ -45,7 +45,7 @@ function Order() {
             navigate(`/YO/photographer/${id}`);
           }
         } catch (error) {
-          console.error('Error checking relation:', error);
+          alert('Error checking relation:', error);
         }
       };
 
@@ -71,7 +71,7 @@ function Order() {
             console.log("Received disabled dates:", data);
             setDisabledDates(data.map(d => new Date(d)));
         } catch (error) {
-            console.error('Error fetching disabled dates:', error);
+            alert('Error fetching disabled dates:', error);
         }
     };
 

@@ -12,10 +12,14 @@ function WelcomePage() {
   const roleID = 2;
 
   const getAllActivePhotographers = async () => {
-    const data = await fetch(`http://localhost:3000`);
+    try
+    {const data = await fetch(`http://localhost:3000`);
     console.log(data)
     const photographers = await data.json();
     setPhotographersArray(photographers);
+  }catch(err){
+    alert ('ERROR fetching active photographers: ',err)
+  }
   };
 
   useEffect(() => {

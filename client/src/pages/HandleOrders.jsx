@@ -74,7 +74,7 @@ function HandleOrders() {
         } catch (error) {
             setAllOrders([]);
             setFilteredOrders([]);
-            console.error('Error fetching waiting Orders:', error);
+            alert('Error fetching waiting Orders:', error);
         }
     };
 

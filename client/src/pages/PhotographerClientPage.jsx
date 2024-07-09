@@ -45,7 +45,7 @@ function PhotographerClientPage() {
         }));
         setGallery(formattedData);
       })
-      .catch((error) => console.error('Error fetching photos:', error));
+      .catch((error) => alert('Error fetching photos:', error));
   };
 
   const checkRelation = async (userID, photographerID) => {
@@ -57,7 +57,7 @@ function PhotographerClientPage() {
         setUser({});
       }
     } catch (error) {
-      console.error('Error checking relation:', error);
+      alert('Error checking relation:', error);
     }
   };
 
@@ -99,7 +99,7 @@ function PhotographerClientPage() {
       const aboutMeData = await response.json();
       setAboutMe(aboutMeData.aboutMe);
     } catch (error) {
-      console.error('Error fetching about me:', error);
+      alert('Error fetching about me:', error);
     }
   };
 
@@ -110,7 +110,7 @@ function PhotographerClientPage() {
       setPhotographer(photographerData[0]);
       getInformation(userID);
     } catch (error) {
-      console.error("Error fetching photographer:", error);
+      alert("Error fetching photographer:", error);
     }
   };
 

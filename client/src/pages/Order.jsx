@@ -11,6 +11,7 @@ function Order() {
     const [showCreateOrder, setShowCreateOrder] = useState(false);
     const [categories, setCategories] = useState([]);
     const [disabledDates, setDisabledDates] = useState([]);
+    const [isRelated, setIsRelated] = useState(null);  // Initialize with null
     const { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
@@ -25,6 +26,28 @@ function Order() {
             getDisabledDates(id);
         }
     }, [], [id]);
+
+    useEffect(() => {
+        if (user && user.userID && user.roleID != 2) {
+          checkRelation(user.userID, id);// בודק אם הלקוח רשום לצלם הנוכחי
+        } else {
+          setIsRelated(false);//
+        }
+      }, [user, id]);
+
+      const checkRelation = async (userID, photographerID) => {
+        try {
+          const response = await fetch(`http://localhost:3000/users/check-relation/${userID}/${photographerID}`);
+          const data = await response.json();
+          setIsRelated(data.related);
+          if (!data.related) {
+            setUser({});
+            navigate(`/YO/photographer/${id}`);
+          }
+        } catch (error) {
+          console.error('Error checking relation:', error);
+        }
+      };
 
     const fetchCategories = async () => {
         const response = await fetch(`http://localhost:3000/category/${id}`);
@@ -54,17 +77,13 @@ function Order() {
 
     const tileDisabled = ({ date, view }) => {
         if (view === 'month') {
-            console.log("Checking date:", date);
-            console.log("Disabled dates:", disabledDates);
 
             // תאריכים שעברו
             if (date < new Date().setHours(0, 0, 0, 0)) {
-                console.log("Disabled: Past date");
                 return true;
             }
             // שבת
             if (date.getDay() === 6) {
-                console.log("Disabled: Saturday");
                 return true;
             }
             // תאריכים תפוסים

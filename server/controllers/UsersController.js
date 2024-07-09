@@ -11,7 +11,14 @@ async function CheckIfExist(email) {
         throw err;
     }
 }
-
+async function checkRelation(userID, photographerID) {
+    try {
+        const relation = await model.checkRelation(userID, photographerID);
+        return relation;
+    } catch (err) {
+        throw err;
+    }
+}
 async function createUser(body) {
     try {
         switch (body.roleID) {
@@ -115,4 +122,4 @@ async function getUserByUserID(userID) {
     }
 }
 
-module.exports = { createUser, CheckIfExist, logIn, getUserByUserID }
+module.exports = { createUser, CheckIfExist, logIn, getUserByUserID,checkRelation }

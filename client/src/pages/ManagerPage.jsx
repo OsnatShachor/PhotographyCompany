@@ -67,6 +67,7 @@ function ManagerPage() {
 
     const handleDisConnectionClick = () => {
         setUser({});
+        sessionStorage.setItem("accessToken","")
         navigate('/');
     };
 

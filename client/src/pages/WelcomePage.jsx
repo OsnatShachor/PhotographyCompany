@@ -40,8 +40,10 @@ function WelcomePage() {
   };
   const handleDisConnectionClick = () => {
     setUser({});
+    sessionStorage.setItem("accessToken","")
     navigate('/');
 };
+
   return (
     <div id="welcomePage">
       <div className="onTopBtn">

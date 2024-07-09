@@ -1,12 +1,11 @@
 import { useState, React, useEffect, useContext } from "react";
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
 import PhotographerOrderOnScreen from "../components/PhotographerOrderOnScreen";
-import '../CSS/HandleOrders.css';  // Ensure you import the CSS file
+import '../CSS/HandleOrders.css'; 
 
 function HandleOrders() {
     const { id } = useParams();
-    const location = useLocation();
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext);
     const [allOrders, setAllOrders] = useState([]);
@@ -14,19 +13,29 @@ function HandleOrders() {
     const photographer = user;
 
     useEffect(() => {
-        // if (!user.userID) {
-        //     navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
-        // }
         getAllOrders();
     }, []);
-    // useEffect(() => {
-    //     if (!user.userID) {
-    //         navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
-    //     }
-    // }, [user.userID]);
+
+    useEffect(() => {
+        if (user.roleID !=2){
+            navigate(`/`); 
+        }
+        if (user.userID != id) {
+            navigate(`/YO/photographerManagement/${user.userID}`);
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if (!user.userID) {
+            navigate(`/YO/photographer/${user.userID}`);
+        }
+    }, [allOrders]);
+
     const handleDisConnectionClick = () => {
-        navigate(`/YO/photographer/${user.userID}`, { state: { photographer } });
         setUser({});
+        sessionStorage.setItem("accessToken","")
+        navigate(`/YO/photographer/${user.userID}`);
+        
     };
 
     const handleConnectionClick = () => {
@@ -61,7 +70,7 @@ function HandleOrders() {
             });
             const allFetchOrders = await response.json();
             setAllOrders(allFetchOrders);
-            setFilteredOrders(allFetchOrders); // Initialize with all orders
+            setFilteredOrders(allFetchOrders); 
         } catch (error) {
             setAllOrders([]);
             setFilteredOrders([]);

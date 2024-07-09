@@ -35,6 +35,9 @@ html {
   overflow: hidden;
   /* מונע גלילה אם כל התוכן נכנס בעמוד */
 }
+body{
+  overflow-y: auto;
+}
 
 #form {
   margin-top: 300px;

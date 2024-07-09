@@ -23,6 +23,7 @@ function PrivateArea() {
 
     const handleDisConnectionClick = () => {
         setUser({});
+        sessionStorage.setItem("accessToken","")
         navigate(`/YO/photographer/${photographer.userID}`);
     };
 

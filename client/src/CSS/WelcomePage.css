@@ -13,7 +13,10 @@ html {
     flex-direction: column;
     align-items: center;
 }
-
+#everything {
+    justify-content: center;
+    align-items: center;
+}
 #mainTitle {
     color: #00AFB9;
     text-align: center;
@@ -152,6 +155,9 @@ button:focus-visible {
 }
 
 @media (max-width: 768px) {
+    #everything {
+       margin: 100px;
+    }
     #photographers {
         margin: 1% 5%;
     }

@@ -65,23 +65,26 @@ function App() {
   }, []);
 
   return (
+
     <BrowserRouter>
-      <UserContext.Provider value={{ user, setUser }}>
-        <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/YO/logIn" element={<LogIn />} />
-          <Route path="/YO/SignUp" element={<SignUp />} />
-          <Route path="/YO/manager" element={<ManagerPage />} />
-          <Route path="/YO/Request" element={<Request />} />
-          <Route path="/YO/photographer/:id" element={<PhotographerClientPage />} />
-          <Route path="/YO/photographerManagement/:id" element={<PhotographerPage />} />
-          <Route path="/YO/photographer/:id/order" element={<Order />} />
-          <Route path="/YO/photographer/:id/PriceList" element={<PriceList />} />
-          <Route path="/YO/photographer/:id/PrivateArea" element={<PrivateArea />} />
-          <Route path="/YO/photographer/:id/PhotoManagement" element={<UploadPhoto />} />
-          <Route path="/YO/photographer/:id/PhotoManagement/orders" element={<HandleOrders />} />
-        </Routes>
-      </UserContext.Provider>
+      <div id="everything">
+        <UserContext.Provider value={{ user, setUser }}>
+          <Routes>
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="/YO/logIn" element={<LogIn />} />
+            <Route path="/YO/SignUp" element={<SignUp />} />
+            <Route path="/YO/manager" element={<ManagerPage />} />
+            <Route path="/YO/Request" element={<Request />} />
+            <Route path="/YO/photographer/:id" element={<PhotographerClientPage />} />
+            <Route path="/YO/photographerManagement/:id" element={<PhotographerPage />} />
+            <Route path="/YO/photographer/:id/order" element={<Order />} />
+            <Route path="/YO/photographer/:id/PriceList" element={<PriceList />} />
+            <Route path="/YO/photographer/:id/PrivateArea" element={<PrivateArea />} />
+            <Route path="/YO/photographer/:id/PhotoManagement" element={<UploadPhoto />} />
+            <Route path="/YO/photographer/:id/PhotoManagement/orders" element={<HandleOrders />} />
+          </Routes>
+        </UserContext.Provider>
+      </div>
     </BrowserRouter>
   );
 }

@@ -14,9 +14,12 @@ function PhotographerPage() {
     useEffect(() => {
         getAbout();
         getAllPhotos();
-    }, []);
+    }, [id]);
 
     useEffect(() => {
+        if (user.roleID !=2){
+            navigate(`/`); 
+        }
         if (user.userID != id) {
             navigate(`/YO/photographerManagement/${user.userID}`);
         }
@@ -57,12 +60,10 @@ function PhotographerPage() {
     };
 
     const getAllPhotos = async () => {
-        const accessToken = sessionStorage.getItem("accessToken");
 
         fetch(`http://localhost:3000/photos/photos/${id}`, {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + accessToken,
                 'Content-Type': 'application/json'
             },
         })
@@ -79,7 +80,8 @@ function PhotographerPage() {
 
     const handleDisconnectionClick = () => {
         setUser({});
-        navigate(`/YO/photographer/${user.userID}`, { state: { user } });
+        navigate(`/YO/photographer/${id}`);
+        sessionStorage.setItem("accessToken","")
     };
 
     const handlePriceListClick = () => {
@@ -92,23 +94,6 @@ function PhotographerPage() {
 
     const handleAddingPhotosClick = async () => {
         navigate(`/YO/photographer/${id}/PhotoManagement`);
-    };
-
-    const handleUpdateCategory = async (category) => {
-        try {
-            const response = await fetch(`http://localhost:3000/category`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ...category, photographerID: id }),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to add category');
-            }
-        } catch (error) {
-            console.error('Error adding category:', error);
-        }
     };
 
     const handleRequestClick = () => {

@@ -4,26 +4,25 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 const controller = require('../controllers/PhotoController');
- const authorizePhotographer = require('../middleware/authorizePhotographer');
+const authorizePhotographer = require('../middleware/authorizePhotographer');
 
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req, file, cb) => {// שומר בתיקייה של הצלם הספציפי
     const photographerID = req.params.id;
-    console.log(photographerID);
     if (!photographerID) {
       return cb(new Error('Missing photographer ID in request'));
     }
 
-    const uploadPath = path.join(__dirname, '..', 'uploads', photographerID.toString());
+    const uploadPath = path.join(__dirname, '..', 'uploads', photographerID.toString());//הנתיב שבו יישמרו התמונות
 
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
-
+    //cb=Call Back func
     cb(null, uploadPath);
   },
-  filename: (req, file, cb) => {
+  filename: (req, file, cb) => {// מגדיר את שם הקובץ
     cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
   }
 });
@@ -44,7 +43,7 @@ router.post("/:id", [authorizePhotographer, upload.single('photo')], async (req,
 
   try {
     const result = await controller.createPhoto(data);
-    console.log("ROUTER-PHOTO"+JSON.stringify(req.file.filename));
+    console.log("ROUTER-PHOTO" + JSON.stringify(req.file.filename));
     res.json(result);
   } catch (err) {
     res.status(500).send({ error: "Internal Server Error" });

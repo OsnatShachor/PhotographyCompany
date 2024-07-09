@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PhotoOnScreen from '../components/PhotoOnScreen';
 import { UserContext } from '../App';
-import '../CSS/UploadPhoto.css'; // Import CSS for styling
+import '../CSS/UploadPhoto.css'; 
 
 const UploadPhoto = () => {
   const [photo, setPhoto] = useState(null);
@@ -13,29 +13,33 @@ const UploadPhoto = () => {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  // Fetch photos from the server when component mounts
   useEffect(() => {
     getAllPhotos();
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    if (user.roleID != 2) {
+      navigate(`/`);
+    }
+    if (user.userID != id) {
+      navigate(`/YO/photographerManagement/${user.userID}`);
+    }
+  }, [user]);
 
   const getAllPhotos = async () => {
-    const accessToken = sessionStorage.getItem("accessToken");
-
     try {
       const response = await fetch(`http://localhost:3000/photos/photos/${id}`, {
         method: 'GET',
         headers: {
-          'Authorization': 'Bearer ' + accessToken,
           'Content-Type': 'application/json'
         },
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        alert(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log("Raw data from server:", data);
 
       if (!Array.isArray(data)) {
         console.error("Data is not an array:", data);
@@ -45,12 +49,12 @@ const UploadPhoto = () => {
 
       const formattedData = data.map(photo => {
         if (!photo || typeof photo !== 'object') {
-          console.error("Invalid photo object:", photo);
+          alert("Invalid photo object:", photo);
           return null;
         }
 
         if (!photo.url_photo) {
-          console.error("Photo object missing url_photo:", photo);
+          alert("Photo object missing url_photo:", photo);
           return null;
         }
 
@@ -58,7 +62,7 @@ const UploadPhoto = () => {
           ...photo,
           url_photo: `http://localhost:3000/${photo.url_photo.replace(/\\/g, '/')}`
         };
-      }).filter(Boolean); // Remove any null entries
+      }).filter(Boolean);// מחזיר רק את התמונות הטובות, מי שחזר נל
 
       setGallery(formattedData);
       console.log("data:", formattedData[0].url_photo);
@@ -66,12 +70,12 @@ const UploadPhoto = () => {
       console.error('Error fetching photos:', error);
     }
   };
+
   const handleAddClick = async (e) => {
     e.preventDefault();
     setShowFile(false);
     let formData = new FormData();
     formData.append("photo", photo);
-  
     const accessToken = sessionStorage.getItem("accessToken");
     try {
       const response = await fetch(`http://localhost:3000/photos/photos/${id}`, {
@@ -81,12 +85,12 @@ const UploadPhoto = () => {
         },
         body: formData
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText);
       }
-  
+
       const resData = await response.json();
       const formattedPhoto = {
         ...resData,
@@ -97,13 +101,12 @@ const UploadPhoto = () => {
       console.error("Error uploading the photo:", err.message);
     }
   };
-  
 
   const handleDeleteClick = async () => {
-    const accessToken = sessionStorage.getItem("accessToken");
-
     try {
-      await Promise.all(selectedPhotos.map(async (photoId) => {
+      const accessToken = sessionStorage.getItem("accessToken");
+
+      for (const photoId of selectedPhotos) {
         const response = await fetch(`http://localhost:3000/photos/photos/${photoId}`, {
           method: "DELETE",
           headers: {
@@ -116,7 +119,7 @@ const UploadPhoto = () => {
           const errorText = await response.text();
           throw new Error(errorText);
         }
-      }));
+      }
 
       setGallery(gallery.filter(photo => !selectedPhotos.includes(photo.photoID)));
       setSelectedPhotos([]);
@@ -132,9 +135,11 @@ const UploadPhoto = () => {
         : [...prevSelected, photoID]
     );
   };
+
   const handleDisConnectionClick = () => {
-    navigate(`/YO/photographer/${user.userID}`, { state: { photographer: user } });
     setUser({});
+    sessionStorage.setItem("accessToken","")
+    navigate(`/YO/photographer/${id}`);
   };
 
   const handleConnectionClick = () => {
@@ -181,7 +186,7 @@ const UploadPhoto = () => {
       {selectedPhotos.length > 0 && (
         <button onClick={handleDeleteClick}>Delete Selected Photos</button>
       )}
-      {/* Gallery section */}
+    
       <div className="gallery">
         {gallery.length > 0 ? (
           gallery.map((photo) => (

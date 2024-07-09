@@ -11,26 +11,29 @@ function PhotographerClientPage() {
   const { id } = useParams();
   const [aboutMe, setAboutMe] = useState("");
   const [gallery, setGallery] = useState([]);
-  const [photosToShow, setPhotosToShow] = useState(8);
+  const [photosToShow, setPhotosToShow] = useState(7);
+  const [isRelated, setIsRelated] = useState(null);  // Initialize with null
   const roleID = 3;
   const [photographer, setPhotographer] = useState(null);
 
   useEffect(() => {
-    getAllPhotos();
-  }, []);
+    if (user && user.userID && user.roleID != 2) {
+      checkRelation(user.userID, id);// בודק אם הלקוח רשום לצלם הנוכחי
+    } else {
+      setIsRelated(false);//
+    }
+  }, [user, id]);
 
   useEffect(() => {
+    getAllPhotos();
     getInformation(id);
     getPhotographer(id);
   }, [id]);
 
   const getAllPhotos = async () => {
-    const accessToken = sessionStorage.getItem("accessToken");
-  
     fetch(`http://localhost:3000/photos/photos/${id}`, {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer ' + accessToken,
         'Content-Type': 'application/json'
       },
     })
@@ -43,6 +46,19 @@ function PhotographerClientPage() {
         setGallery(formattedData);
       })
       .catch((error) => console.error('Error fetching photos:', error));
+  };
+
+  const checkRelation = async (userID, photographerID) => {
+    try {
+      const response = await fetch(`http://localhost:3000/users/check-relation/${userID}/${photographerID}`);
+      const data = await response.json();
+      setIsRelated(data.related);
+      if (!data.related) {
+        setUser({});
+      }
+    } catch (error) {
+      console.error('Error checking relation:', error);
+    }
   };
 
   const handleDisconnectionClick = () => {
@@ -67,7 +83,7 @@ function PhotographerClientPage() {
   };
 
   const handleOrderClick = () => {
-    if (user && (user.userID)) {
+    if (user && (user.userID) && isRelated) {
       navigate(`/YO/photographer/${id}/order`, { state: { photographer } });
     } else {
       navigate('/YO/SignUp', { state: { roleID, photographer } });
@@ -107,7 +123,7 @@ function PhotographerClientPage() {
   }
 
   return (
-    <div className="page-container">
+    <>
       <div className="onTopBtn">
         {(user && (user.userID)) ? (
           <button onClick={handleDisconnectionClick}>Disconnection</button>
@@ -116,33 +132,35 @@ function PhotographerClientPage() {
         )}
         <button onClick={handlePrivateAreaClick}>Private Area</button>
       </div>
-      <p className="spaceBeforeTite"></p>
-      <h1 className="h1Title">{photographer.userName}</h1>
-      {user.userName && <h3 id="helloh3">Hello {user.userName}</h3>}
+      <div className="page-container">
+        <p className="spaceBeforeTite"></p>
+        <h1 className="h1Title">{photographer.userName}</h1>
+        {user.userName && <h3 id="helloh3">Hello {user.userName}</h3>}
 
-      <div id="photographersBtn">
-        <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
-        <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
-      </div>
-      <div className="gallery">
-        {gallery.length > 0 ? (
-          gallery.slice(0, photosToShow).map((photo) => (
-            <PhotoOnScreen key={photo.photoID} src={photo.url_photo} alt={`Photo ${photo.photoID}`} />
-          ))
-        ) : (
-          <p>No photos available</p>
+        <div id="photographersBtn">
+          <button className="btnPhotographer" onClick={handlePriceListClick}>Price List</button>
+          <button className="btnPhotographer" onClick={handleOrderClick}>Order a Photo Day</button>
+        </div>
+        <div className="gallery">
+          {gallery.length > 0 ? (
+            gallery.slice(0, photosToShow).map((photo) => (
+              <PhotoOnScreen key={photo.photoID} src={photo.url_photo} alt={`Photo ${photo.photoID}`} />
+            ))
+          ) : (
+            <p>No photos available</p>
+          )}
+        </div>
+        {photosToShow < gallery.length && (
+          <button id="viewPhotosBtn" onClick={handleViewMoreClick}>View More Photos</button>
         )}
-      </div>
-      {photosToShow < gallery.length && (
-        <button id="viewPhotosBtn" onClick={handleViewMoreClick}>View More Photos</button>
-      )}
-      <p className="spaceBeforeAbout"></p>
-      <div id="aboutMe">
-        <h4 id="abouth4">{aboutMe}</h4>
-      </div>
+        <p className="spaceBeforeAbout"></p>
+        <div id="aboutMe">
+          <h4 id="abouth4">{aboutMe}</h4>
+        </div>
 
-      <Outlet />
-    </div>
+        <Outlet />
+      </div>
+    </>
   );
 }
 

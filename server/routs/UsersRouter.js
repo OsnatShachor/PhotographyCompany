@@ -62,4 +62,20 @@ router.get("/:userID", async (req, res) => {
         res.status(500).send({ error: "Failed to get user" });
     }
 },);
+
+router.get('/check-relation/:userID/:photographerID', async (req, res) => {
+    try {
+        const { userID, photographerID } = req.params;
+        console.log("/check-relation router");
+        const relation = await controller.checkRelation(userID, photographerID); 
+        console.log("/check-relation router" + JSON.stringify(relation));
+        if (relation.length > 0) {
+            res.status(200).send({ related: true });
+        } else {
+            res.status(200).send({ related: false });
+        }
+    } catch (err) {
+        res.status(500).send({ error: 'Error checking relation' });
+    }
+});
 module.exports = router;

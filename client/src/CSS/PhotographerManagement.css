@@ -37,9 +37,10 @@ body {
 }
 
 .spaceBeforeTite {
-    margin: 170px;
+    margin: 10%;
     padding-bottom: 70px;
 }
+
 /* .spaceBeforeAbout{
     padding: 50px;
 } */
@@ -71,7 +72,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center !important;
-    
+
 }
 
 
@@ -147,6 +148,12 @@ body {
 }
 
 @media (max-width: 768px) {
+    .page-container {
+        margin-top: 100px;
+        margin-bottom: 100px;
+
+    }
+
     #inputAbout {
         font-size: 0.8em;
     }
@@ -168,6 +175,7 @@ body {
         margin-left: 0;
         width: 100%;
     }
+
     .spaceBeforeTite {
         margin: 270px;
         padding-bottom: 70px;

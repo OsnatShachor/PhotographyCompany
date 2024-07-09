@@ -8,7 +8,7 @@ import { UserContext } from '../App';
 
 function Order() {
     const [date, setDate] = useState(new Date());
-    const [showModal, setShowModal] = useState(false);
+    const [showCreateOrder, setShowCreateOrder] = useState(false);
     const [categories, setCategories] = useState([]);
     const [disabledDates, setDisabledDates] = useState([]);
     const { id } = useParams();
@@ -24,7 +24,7 @@ function Order() {
             console.log("Calling getDisabledDates with id:", id);
             getDisabledDates(id);
         }
-    },[], [id]);
+    }, [], [id]);
 
     const fetchCategories = async () => {
         const response = await fetch(`http://localhost:3000/category/${id}`);
@@ -56,22 +56,22 @@ function Order() {
         if (view === 'month') {
             console.log("Checking date:", date);
             console.log("Disabled dates:", disabledDates);
-    
-            // Disable past dates
+
+            // תאריכים שעברו
             if (date < new Date().setHours(0, 0, 0, 0)) {
                 console.log("Disabled: Past date");
                 return true;
             }
-            // Disable Saturdays (day 6)
+            // שבת
             if (date.getDay() === 6) {
                 console.log("Disabled: Saturday");
                 return true;
             }
-            // Disable dates that already have orders
-            const isDisabled = disabledDates.some(disabledDate => 
+            // תאריכים תפוסים
+            const isDisabled = disabledDates.some(disabledDate =>
                 date.getFullYear() === disabledDate.getFullYear() &&
                 date.getMonth() === disabledDate.getMonth() &&
-                date.getDate() === disabledDate.getDate()+1
+                date.getDate() === disabledDate.getDate() + 1
             );
             if (isDisabled) {
                 console.log("Disabled: Unavailable date");
@@ -91,7 +91,7 @@ function Order() {
     };
 
     const handleConnectionClick = () => {
-        navigate('/YO/SignUp', { state: { roleID, photographer} });
+        navigate('/YO/SignUp', { state: { roleID, photographer } });
     };
 
     const handlePrivateAreaClick = () => {
@@ -100,16 +100,14 @@ function Order() {
 
     const handleDateClick = (value) => {
         setDate(value);
-        setShowModal(true);
+        setShowCreateOrder(true);
     };
 
     const handleHomeClick = () => {
         navigate(`/YO/photographer/${photographer.userID}`);
     };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
+
 
     return (
         <div id="welcomePage">
@@ -129,13 +127,12 @@ function Order() {
                     locale="en-US"
                 />
             </div>
-            {showModal && (
+            {showCreateOrder && (
                 <OrderPopUp
                     photographerID={id}
                     date={date}
-                    photographer={photographer}
                     categories={categories}
-                    onClose={handleCloseModal}
+                    onClose={() => setShowCreateOrder(false)}
                 />
             )}
         </div>

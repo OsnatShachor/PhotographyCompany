@@ -1,10 +1,8 @@
 // src/components/ConfirmationModal.js
 import React from 'react';
 
-function ConfirmationPopUp({ show, handleClose, handleConfirm }) {
-    if (!show) {
-        return null;
-    }
+function ConfirmationPopUp({ handleClose, handleConfirm }) {
+
 
     return (
         <div className="modal">

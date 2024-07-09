@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-function UpdateCategoryPopUp({ show, handleClose, handleSave, category }) {
-    const [categoryName, setCategoryName] = useState('');
-    const [payPerHour, setPayPerHour] = useState('');
-    const [numOfEditPictures, setNumOfEditPictures] = useState('');
+function UpdateCategoryPopUp({  handleClose, handleSave, category }) {
+    const [categoryName, setCategoryName] = useState(category.categoryName);
+    const [payPerHour, setPayPerHour] = useState(category.payPerHour);
+    const [numOfEditPictures, setNumOfEditPictures] = useState(category.numOfEditPictures);
 
-    useEffect(() => {
-        if (category) {
-            setCategoryName(category.categoryName);
-            setPayPerHour(category.payPerHour);
-            setNumOfEditPictures(category.numOfEditPictures);
-        }
-    }, [category]);
 
     const handleSubmit = () => {
-        handleSave({ categoryName, payPerHour, numOfEditPictures, categoryID: category.categoryID });
+        handleSave({ categoryName, payPerHour, numOfEditPictures, categoryID: category.categoryID });// הפונקציה מהעמוד הקודם, שמעדכנת בדטה-בייס
     };
 
-    if (!show) return null;
 
     return (
         <div className="modal">

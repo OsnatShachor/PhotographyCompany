@@ -141,8 +141,8 @@ body {
     }
 
     .spaceBeforeTite {
-        margin: 120px;
-        padding-bottom: 40px;
+        margin: 220px;
+        padding-bottom: 60px;
     }
 }
 
@@ -167,5 +167,9 @@ body {
     #btnUpAbout {
         margin-left: 0;
         width: 100%;
+    }
+    .spaceBeforeTite {
+        margin: 270px;
+        padding-bottom: 70px;
     }
 }

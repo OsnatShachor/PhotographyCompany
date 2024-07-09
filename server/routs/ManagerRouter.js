@@ -18,7 +18,6 @@ router.put("/:orderId", async (req, res) => {
         const updatedStatus = await controller.updateStatus(requestID, statusID, photographerID);
         res.status(200).send(updatedStatus);
     } catch (error) {
-        console.error('Error updating order:', error);
         res.status(500).send({ error: "Failed to update order" });
     }
 });

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-function CategoryPopUp({ showModal, handleClose, handleSave, initialCategoryData }) {
+function CategoryPopUp({ handleClose, handleSave, initialCategoryData }) {
     const [categoryName, setCategoryName] = useState('');
     const [payPerHour, setPayPerHour] = useState('');
     const [numOfEditPictures, setNumOfEditPictures] = useState('');
     const [validationError, setValidationError] = useState('');
 
     useEffect(() => {
-        if (showModal) {
-            setCategoryName(initialCategoryData.categoryName || '');
-            setPayPerHour(initialCategoryData.payPerHour || '');
-            setNumOfEditPictures(initialCategoryData.numOfEditPictures || '');
-        }
-    }, [showModal, initialCategoryData]);
+
+        setCategoryName(initialCategoryData.categoryName || '');
+        setPayPerHour(initialCategoryData.payPerHour || '');
+        setNumOfEditPictures(initialCategoryData.numOfEditPictures || '');
+
+    }, [ initialCategoryData]);
 
     const handleSubmit = () => {
         // Validation checks
@@ -36,9 +36,7 @@ function CategoryPopUp({ showModal, handleClose, handleSave, initialCategoryData
         handleClose();
     };
 
-    if (!showModal) {
-        return null;
-    }
+   
 
     return (
         <div className="modal">

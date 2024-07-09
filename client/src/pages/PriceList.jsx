@@ -1,17 +1,17 @@
 import { useState, React, useEffect, useContext } from "react";
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import SinglePriceList from "../components/SinglePriceList";
+import SingleCategoryOnScreen from "../components/SingleCategoryOnScreen";
 import { UserContext } from '../App';
-import CategoryPopUp from '../components/CategoryPopUp'; // Import the new modal component
+import CategoryPopUp from '../components/CategoryPopUp'; 
 import '../CSS/List.css'
 function PriceList() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [categories, setCategories] = useState([]); // Changed from category to categories
+  const [categories, setCategories] = useState([]); 
   const { user, setUser } = useContext(UserContext);
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
-  const [initialCategoryData, setInitialCategoryData] = useState({ categoryName: '', payPerHour: '', numOfEditPictures: '' }); // State for initial category data
+  const [showCategoryPopUp, setShowCategoryPopUp] = useState(false);
+  const [initialCategoryData, setInitialCategoryData] = useState({ categoryName: '', payPerHour: '', numOfEditPictures: '' });//התוכן שיוצג לי בקומפוננטה של עדכון / הוספה
 
   const photographer = location.state?.photographer;
   const roleID = 3;
@@ -44,8 +44,8 @@ function PriceList() {
   };
 
   const handlePriceListClick = () => {
-    setInitialCategoryData({ categoryName: '', payPerHour: '', numOfEditPictures: '' }); // Reset initial category data
-    setShowModal(true); // Show the modal when button is clicked
+    setInitialCategoryData({ categoryName: '', payPerHour: '', numOfEditPictures: '' });//אתחול הערכים שיהיו ריקים בקומפוננטה
+    setShowCategoryPopUp(true); 
   };
 
   const handleHomeClick = () => {
@@ -96,20 +96,19 @@ function PriceList() {
       <div id= "addPriceBtn">{(id == user.userID) && (<button className="managerBtn" onClick={handlePriceListClick}>Add Category</button>)}</div>
       <div className="boxShow">
         {categories.map((category, index) => (
-          <SinglePriceList
+          <SingleCategoryOnScreen
             key={index}
-            // user={user}
             category={category}
             refreshCategories={getCategories}
           />
         ))}
       </div>
-      <CategoryPopUp
-        showModal={showModal}
-        handleClose={() => setShowModal(false)}
+
+     {showCategoryPopUp&& <CategoryPopUp
+        handleClose={() => setShowCategoryPopUp(false)}
         handleSave={handleAddCategory}
         initialCategoryData={initialCategoryData} // Pass initial data to modal
-      />
+      />}
     </div>
   );
 }

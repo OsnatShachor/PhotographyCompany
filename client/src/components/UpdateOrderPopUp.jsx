@@ -22,7 +22,7 @@ const UpdateOrderPopUp = (props) => {
     const getAllCategories = async () => {
         try {
             const data = await fetch(`http://localhost:3000/category/${id}`);
-            const categories = await data.json(); // Changed 'category' to 'categories'
+            const categories = await data.json(); 
             setCategories(categories);
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -75,7 +75,7 @@ const UpdateOrderPopUp = (props) => {
                 throw new Error(error.error);
             }
             alert("Order updated successfully!");
-            props.onClose(updatedOrder); 
+            props.onClose(updatedOrder); // שולח לפונקציה שמעמוד של האזור אישי - שהיא סוגרת את החלונית של העדכון, ומרעננת את התצוגה אם יש שינוי
         } catch (error) {
             alert(error.message);
         }

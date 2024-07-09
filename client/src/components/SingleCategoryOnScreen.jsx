@@ -5,7 +5,7 @@ import UpdateCategoryPopUp from './UpdateCategoryPopUp';
 import '../CSS/List.css';
 import { UserContext } from '../App';
 
-function SinglePriceList(props) {
+function SingleCategoryOnScreen(props) {
     const context = useContext(UserContext);
     const { user, setUser } = context;
     const category = props.category;
@@ -32,7 +32,7 @@ function SinglePriceList(props) {
                 }
             });
             setShowConfirmModal(false);
-            props.refreshCategories();
+            props.refreshCategories();//פונקציה בעמוד הכללי שמציגה מחדש את הקטגוריות על המסך - ריענון
         } catch (error) {
             console.error('Error deleting category:', error);
         }
@@ -41,7 +41,7 @@ function SinglePriceList(props) {
     const handleUpdateCategory = async (updatedCategory) => {
         try {
             const accessToken = sessionStorage.getItem("accessToken");
-            updatedCategory.categoryID = category.categoryID; // Add this line
+            updatedCategory.categoryID = category.categoryID; 
             await fetch(`http://localhost:3000/category/${category.categoryID}`, {
                 method: 'PUT',
                 headers: {
@@ -50,7 +50,7 @@ function SinglePriceList(props) {
                 },
                 body: JSON.stringify(updatedCategory),
             });
-            setShowUpdateModal(false);
+            setShowUpdateModal(false);//סגירת החלונית
             props.refreshCategories();
         } catch (error) {
             console.error('Error updating category:', error);
@@ -70,19 +70,18 @@ function SinglePriceList(props) {
                     </div>
                 )}
             </div>
-            <ConfirmationPopUp
-                show={showConfirmModal}
+           {showConfirmModal&& <ConfirmationPopUp
                 handleClose={() => setShowConfirmModal(false)}
                 handleConfirm={handleConfirmDelete}
-            />
-            <UpdateCategoryPopUp
-                show={showUpdateModal}
+            />}
+
+           {showUpdateModal && <UpdateCategoryPopUp
                 handleClose={() => setShowUpdateModal(false)}
-                handleSave={handleUpdateCategory}
+                handleSave={handleUpdateCategory}//שליחת הפונקציה של עדכון הקטגוריה לחלונית העדכון 
                 category={category}
-            />
+            />}
         </>
     );
 }
 
-export default SinglePriceList;
+export default SingleCategoryOnScreen;

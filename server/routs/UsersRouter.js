@@ -60,7 +60,6 @@ router.get("/:userID", async (req, res) => {
         res.status(200).send(user);
     } catch (error) {
         res.status(500).send({ error: "Failed to get user" });
-        throw error;
     }
 },);
 module.exports = router;

@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require("../controllers/CategoryController");
 const authorizePhotographer = require('../middleware/authorizePhotographer');
 
+//מביא את כל הקטגוריות של הצלם
 router.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -10,21 +11,20 @@ router.get("/:id", async (req, res) => {
         res.status(200).send(category);
     } catch (error) {
         res.status(500).send({ error: "Failed to fetch price list" });
-        throw error;
     }
 },);
-
+//מביא את הקטגוריה של ההזמנה הספציפית
 router.get("/:photographerId/:categoryID", async (req, res) => {
     try {
         const categoryID = req.params.categoryID;
         const orderCategory = await controller.getOrderCategory(categoryID);
         res.status(200).send(orderCategory);
     } catch (error) {
-        console.error('Error fetching categories:', error);
         res.status(500).send({ error: "Failed to fetch categories" });
     }
 });
 
+//עדכון הקטגוריה
 router.put('/:id', authorizePhotographer, async (req, res) => {
     try {
         const body = req.body;

@@ -134,7 +134,7 @@ function PhotographerClientPage() {
         )}
       </div>
       {photosToShow < gallery.length && (
-        <button onClick={handleViewMoreClick}>View More Photos</button>
+        <button id="viewPhotosBtn" onClick={handleViewMoreClick}>View More Photos</button>
       )}
       <p className="spaceBeforeAbout"></p>
       <div id="aboutMe">

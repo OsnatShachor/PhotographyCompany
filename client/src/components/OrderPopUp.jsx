@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
 import '../CSS/Order.css';
 
-const OrderPopUp = ({ photographerID, date, photographer, categories, onClose }) => {
+const OrderPopUp = ({ photographerID, date, categories, onClose }) => {
     const context = useContext(UserContext);
     const { user } = context;
     const navigate = useNavigate();
     const [startTime, setStartTime] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [hours, setHours] = useState(1); // ברירת מחדל של שעה אחת
+    const [hours, setHours] = useState(1); 
     const [totalPrice, setTotalPrice] = useState(0);
     const [location, setLocation] = useState('');
     const [validationError, setValidationError] = useState('');
@@ -31,8 +31,6 @@ const OrderPopUp = ({ photographerID, date, photographer, categories, onClose })
 
     const handleConfirmOrder = (e) => {
         e.preventDefault();
-
-        // Validation checks
         if (!startTime) {
             setValidationError('Please select a start time.');
             return;
@@ -50,7 +48,6 @@ const OrderPopUp = ({ photographerID, date, photographer, categories, onClose })
             return;
         }
 
-        // Clear validation error
         setValidationError('');
 
         const localDate = new Date(date);
@@ -90,7 +87,7 @@ const OrderPopUp = ({ photographerID, date, photographer, categories, onClose })
                 return response.json();
             })
             .then(() => {
-                alert(`Your order has been sent for ${date.toDateString()} with ${photographer.userName}. Final price: $${totalPrice.toFixed(2)}`);
+                alert(`Your order has been sent for ${date.toDateString()}. Final price: $${totalPrice.toFixed(2)}`);
                 navigate(-1);
             })
             .catch(error => {

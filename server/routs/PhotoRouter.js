@@ -7,8 +7,6 @@ const controller = require('../controllers/PhotoController');
  const authorizePhotographer = require('../middleware/authorizePhotographer');
 
 
-
-// Configure storage for Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const photographerID = req.params.id;
@@ -19,7 +17,6 @@ const storage = multer.diskStorage({
 
     const uploadPath = path.join(__dirname, '..', 'uploads', photographerID.toString());
 
-    // Create directory if it doesn't exist
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
@@ -33,7 +30,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Route for uploading a photo
 router.post("/:id", [authorizePhotographer, upload.single('photo')], async (req, res) => {
   const photographerID = req.params.id;
   console.log(photographerID);
@@ -51,12 +47,10 @@ router.post("/:id", [authorizePhotographer, upload.single('photo')], async (req,
     console.log("ROUTER-PHOTO"+JSON.stringify(req.file.filename));
     res.json(result);
   } catch (err) {
-    console.error("Error creating photo:", err);
     res.status(500).send({ error: "Internal Server Error" });
   }
 });
 
-// Route for fetching photos
 router.get("/:id", async (req, res) => {
   try {
     console.log("GET PHOTOS");
@@ -71,17 +65,14 @@ router.get("/:id", async (req, res) => {
 router.delete("/:id", authorizePhotographer, async (req, res) => {
   const photoId = req.params.id;
   try {
-    // Get the photo details to delete the file from the server
     const photo = await controller.getPhotoById(photoId);
     if (!photo) {
       return res.status(404).send({ error: "Photo not found" });
     }
 
-    // Delete the file from the server
     const filePath = path.join(__dirname, '..', photo.url_photo);
     fs.unlinkSync(filePath);
 
-    // Delete the photo from the database
     const result = await controller.deletePhoto(photoId);
     res.status(200).send(result);
   } catch (err) {

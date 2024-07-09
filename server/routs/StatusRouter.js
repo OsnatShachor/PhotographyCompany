@@ -9,7 +9,6 @@ router.get("/:id", async (req, res) => {
         res.status(200).send(status);
     } catch (error) {
         res.status(500).send({ error: "Failed to fetch stauses" });
-        throw error;
     }
 },);
 

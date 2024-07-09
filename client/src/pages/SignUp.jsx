@@ -30,7 +30,7 @@ function SignUp() {
     };
 
     const validatePhone = (phone) => {
-        const phoneRegex = /^[0-9]{10}$/; // Adjust regex based on the expected phone number format
+        const phoneRegex = /^[0-9]{10}$/;
         return phoneRegex.test(phone);
     };
 
